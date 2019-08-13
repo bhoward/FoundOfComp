@@ -1,0 +1,3379 @@
+% !TEX root = main.tex
+\chapter{Sets, Functions, and Relations}\label{C-sets}
+
+\startchapter{We deal with the complexity} of the world by putting
+things into categories.  There are not just hordes of individual
+creatures.  There are dogs, cats, elephants, and mice.  There are
+mammals, insects, and fish.  Animals, vegetables, and minerals.
+Solids, liquids, and gases.  Things that are red.  Big cities.
+Pleasant memories\dots.  Categories build on categories.  They are the
+subject and the substance of thought.
+
+In mathematics, which operates in its own abstract and rigorous world,
+categories are modeled by \nw{sets}.  A set is just a collection of
+elements.  Along with logic, sets form the ``foundation'' of
+mathematics, just as categories are part of the foundation of
+day-to-day thought.  In this chapter, we study sets and relationships
+among sets.
+
+
+\section{Basic Concepts}\label{S-sets-1}
+
+A \nw{set} is a collection of \nw[element (of a set)]{elements}.
+A set is defined entirely by the elements that it contains.
+An element can be anything, including another set.  You will notice
+that this is not a precise mathematical definition.  Instead, it is
+an intuitive description of what the word ``set'' is supposed to mean:
+Any time you have a bunch of entities and you consider them as a unit,
+you have a set.  Mathematically, sets are really defined by the operations
+that can be performed on them.  These operations model things that
+can be done with collections of objects in the real world.  These operations
+are the subject of the branch of mathematics known as \nw{set theory}.
+
+The most basic operation in set theory is forming a set from a given
+list of specific entities.  The set that is formed in this way is denoted
+by enclosing the list of entities between  a left brace, ``$\{$'', and
+a right brace,~``$\}$''.  The entities in the list are separated by
+commas.  For example, the set denoted by
+\[\{\ 17,\ \pi,\ \texttt{New York City},\ \texttt{Barack Obama},\ \texttt{Big Ben}\ \}\]
+is the set that contains the entities 17, $\pi$, New York City, Barack Obama,
+and Big Ben.  These entities are the elements of the set.  Since we assume
+that a set is completely defined by the elements that it contains, the
+set is well-defined.  Of course, we still haven't said what it means to
+be an ``entity.''  Something as definite as ``New York City'' should qualify,
+except that it doesn't seem like New York City really belongs in the world
+of Mathematics.  The problem is that mathematics is supposed to be its own
+self-contained world, but it is supposed to model the real world.  When we 
+use mathematics to model the real world, we admit entities such as New
+York City and even Big Ben.  But when we are doing mathematics {\it per se},
+we'll generally stick to obviously mathematical entities such as the
+integer 17 or the real number~$\pi$.  We will also use letters such
+as $a$ and $b$ to refer to entities.  For example, when I say
+something like ``Let $A$ be the set $\{a,b,c\}$,'' I mean $a$, $b$, and
+$c$ to be particular, but unspecified, entities.
+
+It's important to understand that a set is defined by the elements that
+it contains, and not by the order in which those elements might be listed.
+For example, the notations $\{a,b,c,d\}$ and $\{b,c,a,d\}$ define the same
+set.   Furthermore, a set can only contain one copy of a given element,
+even if the notation that specifies the set lists the element twice.
+This means that $\{a,b,a,a,b,c,a\}$ and $\{a,b,c\}$ specify exactly the
+same set.  Note in particular that it's incorrect to say that
+the set $\{a,b,a,a,b,c,a\}$ contains seven elements, since some of the
+elements in the list are identical.  The notation $\{a,b,c\}$ can lead
+to some confusion, since it might not be clear whether the letters $a$,
+$b$, and $c$ are assumed to refer to three \emph{different} entities.
+A mathematician would generally \emph{not} make this assumption without
+stating it explicitly, so that the set denoted by $\{a,b,c\}$ could
+actually contain either one, two, or three elements.  When it is important
+that different letters refer to different entities, I will say so explicitly,
+as in ``Consider the set $\{a,b,c\}$, where $a$, $b$, and $c$ are distinct.''
+
+The symbol $\in$ is used to express the relation ``is an element of.''
+That is, if $a$ is an entity and $A$ is a set, then $a\in A$ is a statement
+that is true if and only if $a$ is one of the elements of $A$.  In that
+case, we also say that $a$ is a \nw[member (of a set)]{member} of
+the set~$A$.  The assertion that $a$ is not an element of $A$ is
+expressed by the notation $a\not\in A$.  Note that both $a\in A$
+and $a\not\in A$ are statements in the sense of propositional logic.
+That is, they are assertions which can be either true or false.
+The statement $a\not\in A$ is equivalent to $\NOT(a\in A)$.
+
+It is possible for a set to be empty, that is, to contain no elements
+whatsoever.  Since a set is completely determined by the elements
+that it contains, there is only one set that contains no elements.
+This set is called the \nw{empty set}, and it is denoted by the
+symbol~$\emptyset$.  Note that for any element $a$, the
+statement $a\in\emptyset$ is false.  The empty set, $\emptyset$, can also
+be denoted by an empty pair of braces, $\{$~$\}$.
+
+If $A$ and $B$ are sets, then, by definition, $A$ is equal to $B$ if and only
+if they contain exactly the same elements.  In this case, we write $A=B$.
+Using the notation of predicate logic, we can say that $A=B$ if and only
+if $\forall x(x\in A \IFF x\in B)$.  
+
+Suppose now that $A$ and $B$ are sets such that every element of $A$ is
+an element of $B$.  
+In that case, we say that $A$ is a \nw{subset} of~$B$, i.e. $A$ is a subset
+of $B$ if and only if  $\forall x(x\in A \IMP x\in B)$. The fact that 
+$A$ is a subset of $B$ is denoted by $A\SUB B$.  Note that $\emptyset$ is a
+subset of every set $B$: $x \in \emptyset$ is false for any $x$, and so given
+any $B$, $(x\in \emptyset \IMP x\in B)$ is true for all $x$.
+
+If $A=B$, then it is automatically true that $A\SUB B$ and that
+$B\SUB A$.  The converse is also true: If $A\SUB B$ and $B\SUB A$,
+then $A=B$.  This follows from the fact that for any $x$, the statement 
+$(x\in A \IFF x\in B)$ is logically equivalent to the statement $(x\in A\IMP x\in B)
+\AND (x\in B\IMP x\in A)$.  This fact is important enough to state as a
+theorem.
+
+\begin{theorem}\label{T-setequality}
+Let $A$ and $B$ be sets.  Then $A=B$ if and only if both $A\SUB B$ and $B\SUB A$.
+\end{theorem}
+
+This theorem expresses the following advice:  If you want to check that two
+sets, $A$ and $B$, are equal, you can do so in two steps.  First check that
+every element of $A$ is also an element of $B$, and then check that every 
+element of $B$ is also an element of $A$.
+
+If $A\SUB B$ but $A\not= B$, we say that $A$ is a \nw{proper subset} of $B$.
+We use the notation $A\PSUB B$ to mean that $A$ is a proper subset of $B$.
+That is, $A\PSUB B$ if and only if $A\SUB B \AND A\not= B$.  We will sometimes
+use $A\SUP B$ as an equivalent notation for $B\SUB A$, and $A\PSUP B$ as
+an equivalent for $B\PSUB A$.
+
+ 
+\medbreak
+
+A set can contain an infinite number of elements.  In such a case, it
+is not possible to list all the elements in the set.  Sometimes the
+ellipsis ``\dots'' is used to indicate a list that continues on infinitely.
+For example, $\N$, the set of natural numbers, can be specified as
+\[\N = \{ 0, 1, 2, 3, \dots \}\]
+However, this is an informal notation, which is not really well-defined,
+and it should only be used in cases where it is clear what it means.
+It's not very useful to say that ``the set of prime numbers is
+$\{2,3,5,7,11,13,\dots\}$,'' and it is completely meaningless to talk
+about ``the set $\{17,42,105,\dots\}$.''  Clearly, we need another way to
+specify sets besides listing their elements.  The need is fulfilled
+by predicates\index{predicate}.
+
+If $P(x)$ is a predicate, then we can form the set that contains all entities $a$ such
+that $a$ is in the domain of discourse for $P$ and $P(a)$ is true.  The
+notation $\{x \st P(x)\}$ is used to denote this set.  The name of the variable,
+$x$, is arbitrary, so the same set could equally well be denoted as 
+$\{z\st P(z)\}$ or $\{r\st P(r)\}$.   The notation $\{x\st P(x)\}$ can be read
+``the set of $x$ such that $P(x)$.''  For example, if $E(x)$ is the predicate
+``$x$ is an even number,'' and if the domain of discourse for $E$ is the 
+set $\N$ of natural numbers, then the notation $\{x\st E(x)\}$ specifies the 
+set of even natural numbers.  That is, 
+\[\{x\st E(x)\} = \{0,2,4,6,8,\dots\}\]
+It turns out, for deep and surprising reasons that we will discuss later in this
+section, 
+that we have to be a little careful about what
+counts as a predicate.  
+In order for the notation $\{x\st P(x)\}$ to be valid,
+we have to assume that the domain of discourse of $P$ is in fact a set.  
+(You might wonder how it could be anything else.  That's the surprise!)
+Often, it is useful to specify the domain of discourse explicitly in 
+the notation that defines a set.  In the above example, to make it clear that $x$ must 
+be a natural number, we could write the set as $\{x\in\N \st  E(x)\}$.  This notation 
+can be read as ``the set of all $x$ in $\N$ such that $E(x)$.''  More generally,
+if $X$ is a set and $P$ is a predicate whose domain of discourse includes
+all the elements of $X$, then the notation
+\[\{x\in X\st P(x)\}\]
+is the set that consists of all entities $a$ that are members of the set $X$ and
+for which $P(a)$ is true.  In this notation, we don't have to assume that the
+domain of discourse for $P$ is a set, since we are effectively limiting the
+domain of discourse to the set $X$.  The set denoted by $\{x\in X\st P(x)\}$ could
+also be written as $\{x\st x\in X\AND P(x)\}$.
+
+We can use this notation to define the set of prime numbers in a rigorous
+way.  A prime number is a natural number $n$ which is greater than 1 and which
+satisfies the property that for any factorization $n=xy$, where $x$ and $y$ are
+natural numbers, either $x$ or $y$ must be $n$.  We can express this definition
+as a predicate and define the set of prime numbers as
+\[\{n\in\N\st (n>1)\AND\forall x\forall y\big((x\in\N\AND y\in\N\AND n=xy)\IMP(x=n\OR y=n)\big)\}.\]
+Admittedly, this definition is hard to take in in one gulp.  But this example
+shows that it is possible to define complex sets using predicates.
+
+
+
+\medbreak
+
+Now that we have a way to express a wide variety of sets, we turn to operations that
+can be performed on sets.  The most basic operations on sets are 
+\nw{union} and \nw{intersection}.  If $A$ and $B$ are sets, then we define
+the union of $A$ and $B$ to be the set that contains all the elements of
+$A$ together with all the elements of $B$.  The union of $A$ and $B$ is
+denoted by $A\cup B$.  The union can be defined formally as
+\[A\cup B = \{x\st x\in A \OR x\in B\}.\]
+The intersection of $A$ and $B$ is defined to be the set that contains
+every entity that is both a member of $A$ and a member of $B$. The intersection
+of $A$ and $B$ is denoted by $A\cap B$.  Formally,
+\[A\cap B = \{x\st x\in A \AND x\in B\}.\]
+An entity gets into $A\cup B$ if it is in \emph{either} $A$ or $B$.
+It gets into $A\cap B$ if it is in \emph{both} $A$ and $B$.  Note that
+the symbol for the logical ``or'' operator, $\OR$, is similar to the
+symbol for the union operator,~$\cup$, while the logical ``and'' operator,
+$\AND$, is similar to the intersection operator,~$\cap$.
+
+The \nw{set difference} of two sets, $A$ and $B$, is defined to be
+the set of all entities that are members of $A$ but are not members
+of $B$.  The set difference of $A$ and $B$ is denoted $A\SETDIFF B$.
+The idea is that $A\SETDIFF B$ is formed by starting with
+$A$ and then removing any element that is also found in $B$.  Formally,
+\[A\SETDIFF B = \{x\st x\in A \AND x\not\in B\}.\]
+Union and intersection are clearly commutative operations.  That
+is, $A\cup B=B\cup A$ and $A\cap B=B\cap A$ for any sets $A$ and $B$.
+However, set difference is not commutative.  In general,
+$A\SETDIFF B \not= B\SETDIFF A$.
+
+Suppose that $A=\{a,b,c\}$, that $B=\{b,d\}$, and
+that $C=\{d,e,f\}$.  Then we can apply the definitions of
+union, intersection, and set difference to compute, for example,
+that:
+\begin{align*}
+   A\cup B &= \{a,b,c,d\} &  A\cap B &= \{b\}   &  A\SETDIFF B &= \{a,c\}\\
+   A\cup C &= \{a,b,c,d,e,f\}&A\cap C&= \emptyset & A\SETDIFF C &= \{a,b,c\}
+\end{align*}
+In this example, the sets $A$ and $C$ have no elements in common, so
+that $A\cap C=\emptyset$.  There is a term for this:
+Two sets are said to be \nw[disjoint sets]{disjoint} if they
+have no elements in common.  That is, for any sets $A$ and $B$,
+$A$ and $B$ are said to be disjoint if and only if $A\cap B=\emptyset$.
+
+
+Of course, the set operations can also be applied to sets
+that are defined by predicates.   For example, let 
+$L(x)$ be the predicate ``$x$ is lucky,'' and let $W(x)$ be
+the predicate ``$x$ is wise,'' where the domain of discourse for
+each predicate is the set of people.  Let $X = \{x\st L(x)\}$,
+and let $Y=\{x\st W(x)\}$.  Then
+\begin{align*}
+  X\cup Y &= \{x\st L(x)\OR W(x)\} = \{\text{people who are lucky or wise}\}\\
+  X\cap Y &= \{x\st L(x)\AND W(x)\} = \{\text{people who are lucky and wise}\}\\
+  X\SETDIFF Y &= \{x\st L(x)\AND \NOT W(x)\} = \{\text{people who are lucky but not wise}\}\\
+  Y\SETDIFF X &= \{x\st W(x)\AND \NOT L(x)\} = \{\text{people who are wise but not lucky}\}
+\end{align*}
+You have to be a little careful with the English word ``and.''  We might say that
+the set $X\cup Y$ contains people who are lucky \emph{and} people who are
+wise.   But what this means is that a person gets into the set
+$X\cup Y$ either by being lucky \emph{or} by being wise, so
+$X\cup Y$ is defined using the logical ``or'' operator,~$\OR$.
+
+\medbreak
+
+\fig
+  {F-setops}
+  {Some of the notations that are defined in this section.  $A$ and $B$ are
+   sets, and $a$ is an entity.}
+  {\begin{tabular}{|c|l|}
+        \hline
+        \strut\textbf{Notation} & \textbf{Definition}\\
+        \hline
+        \strut $a\in A$      & $a$ is a member (or element) of $A$\\ 
+        \strut $a\not\in A$  & $\NOT(a\in A)$, $a$ is not a member of $A$\\
+        \strut $\emptyset$   & the empty set, which contains no elements\\
+        \strut $A\SUB B$     & $A$ is a subset of $B$, $\forall x(x\in A\IMP x\in B)$\\
+        \strut $A\PSUB B$    & $A$ is a proper subset of $B$, $A\SUB B \AND A\not=B$\\
+        \strut $A\SUP B$     & $A$ is a superset of $B$, same as $B\SUB A$\\
+        \strut $A\PSUP B$    & $A$ is a proper superset of $B$, same as $B\PSUP A$\\
+        \strut $A=B$         & $A$ and $B$ have the same members, $A\SUB B\AND B\SUB A$\\
+        \strut $A\cup B$     & union of $A$ and $B$, $\{x\st x\in A\OR x\in B\}$\\
+        \strut $A\cap B$     & intersection of $A$ and $B$, $\{x\st x\in A\AND x\in B\}$\\
+        \strut $A\SETDIFF B$ & set difference of $A$ and $B$, $\{x\st x\in A\AND x\not\in B\}$\\
+        \strut $\POW(A)$     & power set of $A$, $\{X\st X\SUB A\}$\\
+        \hline
+     \end{tabular}
+   }
+
+Sets can contain other sets as elements.  For example, the notation $\{a,\{b\}\}$
+defines a set that contains two elements, the entity $a$ and the set $\{b\}$.
+Since the set $\{b\}$ is a 
+member of the set $\{a,\{b\}\}$, we have that $\{b\}\in\{a,\{b\}\}$.
+On the other hand, provided that $a\not=b$, the statement $\{b\}\SUB\{a,\{b\}\}$
+is false, since saying $\{b\}\SUB\{a,\{b\}\}$ is equivalent to saying that
+$b\in\{a,\{b\}\}$, and the entity $b$ is not one of the two members
+of $\{a,\{b\}\}$.   For the entity $a$, it is true that $\{a\}\SUB\{a,\{b\}\}$.
+
+Given a set $A$, we can construct the set that contains all the
+subsets of $A$.  This set is called the \nw{power set} of $A$, and
+is denoted $\POW(A)$.  Formally, we define
+\[\POW(A)=\{X\st X\SUB A\}.\]
+For example, if $A=\{a,b\}$, then the subsets of $A$ are the empty set,
+$\{a\}$, $\{b\}$, and $\{a,b\}$, so the power set of $A$ is set given by
+\[\POW(A) = \{\,\emptyset,\,\{a\},\,\{b\},\,\{a,b\}\,\}.\]
+Note that since the empty set is a \emph{subset} of any set, the empty
+set is an \emph{element} of the power set of any set.  That is, for
+any set $A$, $\emptyset\SUB A$ and $\emptyset\in\POW(A)$.  Since the
+empty set is a subset of itself, and is its only subset, we have
+that $\POW(\emptyset) = \{\emptyset\}$.  The set $\{\emptyset\}$ is not
+empty.  It contains one element, namely~$\emptyset$.
+
+
+\medbreak
+
+We remarked earlier in this section that the notation $\{x \st P(x)\}$
+is only valid if the domain of discourse of $P$ is a set.  This might
+seem a rather puzzling thing to say---after all, why and how would
+the domain of discourse be anything else?  The answer is related to
+Russell's Paradox, which we mentioned briefly in Chapter~\ref{C-proof}
+and which 
+shows that it is logically impossible for the
+set of all sets to exist. This impossibility can be demonstrated using a proof by 
+contradiction.  In the proof, we use the existence of the set of
+all sets to define another set which cannot exist because
+its existence would lead to a logical contradiction.
+
+\begin{theorem}\label{T-Russell}
+There is no set of all sets.
+\end{theorem}
+\begin{proof}
+Suppose that the set of all sets exists.  We will show that this
+assumption leads to a contradiction.  Let $V$ be the set of all
+sets.  We can then define the set $R$ to be the set which contains
+every set that does not contain itself.  That is,
+\[R=\{X\in V\st X\not\in X\}\]
+Now, we must have either $R\in R$ or $R\not\in R$.  We will show
+that either case leads to a contradiction.
+
+Consider the case where $R\in R$.  Since $R\in R$, $R$ must satisfy the
+condition for membership in $R$.  A set $X$ is in $R$ iff $X\not\in X$.
+To say that $R$ satisfies this condition means that $R\not\in R$.
+That is, from the fact that $R\in R$, we deduce the contradiction
+that $R\not\in R$.
+
+Now consider the remaining case, where $R\not\in R$.  Since
+$R\not\in R$, $R$ does not satisfy the condition for membership
+in $R$.  Since the condition for membership is that $R\not\in R$,
+and this condition is false,
+the statement $R\not\in R$ must be false.
+But this means that the statement $R\in R$ is true.  From the
+fact that $R\not\in R$, we deduce the contradiction that $R\in R$.
+
+Since both possible cases, $R\in R$ and $R\not\in R$, lead to contradictions,
+we see that it is not possible for $R$ to exist.  Since the existence of
+$R$ follows from the existence of $V$, we see that $V$ also cannot
+exist.
+\end{proof}
+
+To avoid Russell's paradox, we must put limitations on the construction
+of new sets.  We can't force the set of all sets into existence
+simply by thinking of it.  We can't form the set $\{x\st P(x)\}$
+unless the domain of discourse of $P$ is a set.  Any predicate $Q$
+can be used to form a set $\{x\in X\st Q(x)\}$, but this notation
+requires a pre-existing set $X$.
+Predicates can be used to form subsets of existing sets, but they
+can't be used to form new sets completely from scratch.
+
+\medskip
+
+The notation $\{x\in A\st P(x)\}$ is a convenient way to effectively limit
+the domain of discourse of a predicate, $P$, to members of a set, $A$, that
+we are actually interested in.  We will use a similar notation with the
+quantifiers $\forall$ and~$\exists$.  The proposition $(\forall x\in A)(P(x))$
+is true if and only if $P(a)$ is true for every element $a$ of the set $A$.
+And the proposition $(\exists x\in A)(P(x))$ is true if and only if there
+is some element $a$ of the set $A$ for which $P(a)$ is true.  These notations
+are valid only when $A$ is contained in the domain of discourse for~$P$.
+As usual, we can leave out parentheses when doing so introduces no
+ambiguity.  So, for example, we might write $\forall x\in A\;P(x)$.
+
+\medskip
+
+We end this section with proofs of the two forms of the
+principle of mathematical induction.  These proofs were omitted 
+from the previous chapter, but only for the lack of a bit of set
+notation. In fact, the principle of mathematical induction is
+valid only because it follows from one of the basic axioms that
+define the natural numbers, namely the fact that any non-empty
+set of natural numbers has a smallest element.  Given this axiom,
+we can use it to prove the following two theorems:
+
+
+\begin{theorem}\label{T-induction}
+Let $P$ be a one-place predicate whose domain of discourse includes
+the natural numbers.  Suppose that $P(0)\AND \big(\forall k\in\N\;(P(k)\IMP P(k+1))\big)$.
+Then $\forall n\in\N,\,P(n)$.
+\end{theorem}
+\begin{proof}
+Suppose that both $P(0)$ and $\big(\forall k\in\N\,(P(k)\IMP P(k+1))\big)$ are true,
+but that $\big(\forall n\in\N,\,P(n)\big)$ is false.  We show that this assumption
+leads to a contradiction.
+
+Since the statement $\forall n\in\N,\,P(n)$ is false, its negation, $\NOT(\forall n\in\N,\,P(n))$,
+is true.  The negation is equivalent to $\exists n\in\N,\,\NOT P(n)$.
+Let $X=\{n\in\N\st \NOT P(n)\}$.  Since $\exists n\in\N,\,\NOT P(n)$ is true,
+we know that $X$ is not empty.  Since $X$~is a non-empty set of natural numbers,
+it has a smallest element.  Let $x$ be
+the smallest element of $X$.  That is, $x$ is the smallest natural number
+such that $P(x)$ is false.  Since we know that $P(0)$ is true,
+$x$ cannot be~0.  Let $y=x-1$.  Since $x\not=0$, $y$ is a natural number.
+Since $y<x$, we know, by the definition of $x$, that $P(y)$ is true.
+We also know that $\forall k\in\N\,(P(k)\IMP P(k+1))$ is true.
+In particular, taking $k=y$, we know that $P(y)\IMP P(y+1)$.
+Since $P(y)$ and $P(y)\IMP P(y+1)$, we deduce by \textit{modus ponens}
+that $P(y+1)$ is true.  But $y+1=x$, so we have deduced that 
+$P(x)$ is true.  This contradicts the fact that $P(x)$ is false.
+This contradiction proves the theorem.
+\end{proof}
+
+
+\begin{theorem}
+Let $P$ be a one-place predicate whose domain of discourse includes
+the natural numbers.  Suppose that $P(0)$ is true and that
+\[(P(0)\AND P(1)\AND\cdots\AND P(k))\IMP P(k+1)\]
+is true for each natural number $k\geq 0$.  
+Then it is true that $\forall n\in\N,\,P(n)$.
+\end{theorem}
+\begin{proof}
+Suppose that $P$ is a predicate that satisfies the hypotheses of the
+theorem, and suppose that the statement $\forall n\in\N,\,P(n)$ is false.
+We show that this assumption leads to a contradiction.
+
+Let $X=\{n\in\N\st \NOT P(n)\}$.  Because of the assumption that
+$\forall n\in\N,\,P(n)$ is false, $X$ is non-empty.  It follows
+that $X$ has a smallest element.  Let $x$ be the smallest element of
+$X$.  The assumption that $P(0)$ is true means that $0\not\in X$,
+so we must have $x>0$.
+Since $x$ is the smallest natural number for which $P(x)$ is false,
+we know that $P(0)$, $P(1)$, \dots, and $P(x-1)$ are all true.
+From this and the fact that $(P(0)\AND P(1)\AND\cdots\AND P(x-1))\IMP P(x)$,
+we deduce that $P(x)$ is true.  But this contradicts
+the fact that $P(x)$ is false.  This contradiction proves the theorem.
+\end{proof}
+
+
+
+
+\begin{exercises}
+
+\problem If we don't make the assumption that $a$, $b$, and $c$ are distinct,
+then the set denoted by $\{a,b,c\}$ might actually contain either 1, 2, or 3 
+elements.  How many different elements might the set
+$\{\,a,\,b,\,\{a\},\,\{a,c\},\,\{a,b,c\}\,\}$
+contain?  Explain your answer.
+
+\problem Compute $A\cup B$, $A\cap B$, and $A\SETDIFF B$ for each of the following
+pairs of sets
+\pparts{
+     A =\{a,b,c\},\ B=\emptyset \cr
+     A =\{1,2,3,4,5\},\ B=\{2,4,6,8,10\} \cr
+     A =\{a,b\},\ B=\{a,b,c,d\} \cr
+     A =\{a,b,\{a,b\}\},\ B=\{\{a\},\{a,b\}\}
+}
+
+\problem Recall that $\N$ represents the set of natural numbers.  That is,
+$\N=\{0,1,2,3,\dots\}$.  Let $X=\{n\in\N\st n\ge 5\}$,
+let $Y=\{n\in\N\st n\le10\}$, and let $Z=\{n\in\N\st \text{$n$ is an even number}\}$.
+Find each of the following sets:
+\pparts{
+     X\cap Y  & X\cup Y   & X\SETDIFF Y &\N\SETDIFF Z\cr
+     X\cap Z  & Y\cap Z   & Y\cup Z   & Z\SETDIFF\N\cr
+}
+
+
+\problem Find $\POW\big(\{1,2,3\}\big)$. (It has eight elements.)
+
+\problem Assume that $a$ and $b$ are entities and that $a\not=b$. Let $A$ and $B$ be the sets defined by
+$A=\{\,a,\,\{b\},\,\{a,b\}\,\}$ and $B=\{\,a,\,b,\,\{a,\{b\}\}\,\}$.
+Determine whether each of the following statements is true or false.  Explain
+your answers.
+\pparts{
+    b\in A & \{a,b\}\SUB A & \{a,b\}\SUB B\cr 
+    \{a,b\}\in B & \{a,\{b\}\}\in A & \{a,\{b\}\}\in B
+}
+
+\problem Since $\POW(A)$ is a set, it is possible to form the set
+$\POW\big(\POW(A)\big)$.  What is $\POW\big(\POW(\emptyset)\big)\,$?
+What is $\POW\big(\POW(\{a,b\})\big)\,$? (It has sixteen elements.)
+
+\problem In the English sentence, ``She likes men who are tall, dark, and
+handsome,'' does she like an intersection or a union of sets of men?
+How about in the sentence, ``She likes men who are tall, men who are dark,
+and men who are handsome?''
+
+\problem If $A$ is any set, what can you say about $A\cup A\,$?
+About $A\cap A\,$?  About $A\SETDIFF A\,$?  Why?
+
+\problem Suppose that $A$ and $B$ are sets such that $A\SUB B$.
+What can you say about $A\cup B\,$?  About $A\cap B\,$?
+About $A\SETDIFF B\,$?  Why?
+
+\problem Suppose that $A$, $B$, and $C$ are sets.  Show that
+$C\SUB A\cap B$ if and only if $(C\SUB A)\AND (C\SUB B)$.
+
+\problem\label{E-subtrans}Suppose that $A$, $B$, and $C$ are sets, and that
+$A\SUB B$ and $B\SUB C$.  Show that $A\SUB C$.
+
+\problem Suppose that $A$ and $B$ are sets such that $A\SUB B$.
+Is it necessarily true that $\POW(A)\SUB \POW(B)\,$?
+Why or why not?
+
+
+\problem Let $M$ be any natural number, and let $P(n)$ be a
+predicate whose domain of discourse includes all natural numbers
+greater than or equal to $M$.  Suppose that $P(M)$ is true,
+and suppose that $P(k)\IMP P(k+1)$ for all $k\ge M$.
+Show that $P(n)$ is true for all $n\ge M$.
+
+
+\end{exercises}
+
+
+
+
+\section{The Boolean Algebra of Sets}\label{S-sets-2}
+
+It is clear that set theory is closely related to logic.
+The intersection\index{intersection} and union\index{union}
+of sets can be defined in terms of the logical ``and''\index{and (logical operator)}
+and logical ``or''\index{or (logical operator)} operators.
+The notation $\{x\st P(x)\}$ makes it possible to use predicates
+to specify sets.  And if $A$ is any set, then the formula
+$x\in A$ defines a one place predicate that is true for an entity $x$
+if and only if $x$ is a member of~$A$.  So it should not be a
+surprise that many of the rules of logic have analogs in
+set theory.
+
+For example, we have already noted that $\cup$ and $\cap$ are
+commutative operations.   This fact can be verified using the
+rules of logic.  Let $A$ and $B$ be sets.  According to the definition 
+of equality of sets, we can show that $A\cup B=B\cup A$ by showing
+that $\forall x\,\big((x\in A\cup B)\IFF(x\in B\cup A)\big)$.
+But for any $x$,
+\begin{align*}
+x\in A\cup B &\IFF x\in A \OR x\in B  &&\text{(definition of $\cup$)}\\
+             &\IFF x\in B \OR x\in A  &&\text{(commutativity of $\OR$)}\\
+             &\IFF x\in B \cup A      &&\text{(definition of $\cup$)}
+\end{align*}
+The commutativity of $\cap$ follows in the same way from the
+definition of $\cap$ in terms of~$\AND$ and the commutativity of~$\AND$,
+and a similar argument shows that union and intersection are
+associative operations.
+
+The distributive laws for propositional logic give rise to two
+similar rules in set theory.  Let $A$, $B$, and $C$ be any sets.
+Then
+\begin{align*}
+A\cup(B\cap C)&=(A\cup B)\cap(A\cup C)\\
+\intertext{and}
+A\cap(B\cup C)&=(A\cap B)\cup(A\cap C)
+\end{align*}
+These rules are called the distributive laws\index{distributive law} for
+set theory.  To verify the first of these laws, we just have to
+note that for any~$x$,
+\begin{align*}
+x\in A&\cup(B\cap C) \\
+                    &\IFF (x\in A)\OR((x\in B)\AND (x\in C))  
+                              &&\text{(definition of $\cup$, $\cap$)}\\
+                    &\IFF ((x\in A)\OR(x\in B)) \AND((x \in A)\OR (x\in C))
+                              &&\text{(distributivity of $\OR$)}\\
+                    &\IFF (x\in A\cup B) \AND (x \in A\cup C)
+                              &&\text{(definition of $\cup$)}\\
+                    &\IFF x\in ((A\cup B)\cap(A\cup C))
+                              &&\text{(definition of $\cap$)}
+\end{align*}
+The second distributive law for sets follows in exactly the
+same way.
+
+\medbreak
+
+While $\cup$ is analogous to $\OR$ and $\cap$ is analogous to
+$\AND$, we have not yet seen any operation is set theory that
+is analogous to the logical ``not'' operator,$\NOT$.  Given a
+set $A$, it is tempting to try to define $\{x\st \NOT(x\in A)\}$,
+the set that contains everything that does not belong to~$A$. 
+Unfortunately, the rules of set theory do not allow us to define 
+such a set.  The notation $\{x\st P(x)\}$ can only be used when
+the domain of discourse of $P$ is a set, so there must be an underlying
+set from which the elements that are/are not in $A$ are chosen,
+i.e. some underlying set of which $A$ is a subset.  We can get around
+this problem by restricting the discussion to subsets of
+some fixed set.  This set will be known as the \nw{universal set}.
+Keep in mind that the universal set is only universal for some
+particular discussion.  It is simply some set that is large 
+enough to contain all the sets under discussion as subsets.
+Given a universal set $U$ and any subset $A$ of $U$,
+we can define the set $\{x\in U\st \NOT(x\in A)\}$.
+
+\begin{definition}
+Let $U$ be a given universal set, and let $A$ be any subset
+of $U$.  We define the \nw{complement} of $A$ in $U$ to be the
+set $\overline{A}$ that is defined by $\overline{A}=\{x\in U\st x\not\in A\}$.
+\end{definition}
+
+Usually, we will refer to the complement of $A$ in $U$ simply as
+the complement of $A$, but you should remember that whenever complements
+of sets are used, there must be some universal set in the background.
+
+Given the complement operation on sets, we can look for
+analogs to the rules of logic that involve negation.
+For example, we know that $p\AND\NOT p=\F$ for any
+proposition~$p$.  It follows that for any subset $A$ of $U$,
+\begin{align*}
+A\cap\overline{A} &= \{x\in U\st (x\in A)\AND (x\in \overline{A})\}
+                        &&\text{(definition of $\cap$)}\\
+                  &= \{x\in U\st (x\in A)\AND (x\not\in A)\}
+                        &&\text{(definition of complement)}\\
+                  &= \{x\in U\st (x\in A)\AND \NOT(x\in A)\}
+                        &&\text{(definition of $\not\in$)}\\
+                  &= \emptyset
+\end{align*}
+the last equality following because the proposition $(x\in A)\AND \NOT(x\in A)$ is false for
+any $x$.  Similarly, we can show that
+$A\cup\overline{A}=U$ and that $\overline{\overline{A}}=A$
+(where $\overline{\overline{A}}$ is the complement of the
+complement of $A$, that is, the set obtained by taking the
+complement of~$\overline{A}$.)
+
+The most important laws for working with complements of sets
+are DeMorgan's Laws\index{DeMorgan's Laws} for sets.  These
+laws, which follow directly from DeMorgan's Laws for logic, state
+that for any subsets $A$ and $B$ of a universal set~$U$,
+\begin{align*}
+\overline{A\cup B}&=\overline{A}\cap\overline{B}\\
+\intertext{and}
+\overline{A\cap B}&=\overline{A}\cup\overline{B}
+\end{align*}
+For example, we can verify the first of these laws with the calculation
+\begin{align*}
+\overline{A\cup B}&= \{x\in U\st x \not\in (A\cup B)\}
+                       &&\text{(definition of complement)}\\
+                  &= \{x\in U\st \NOT( x\in A\cup B)\}
+                       &&\text{(definition of $\not\in$)}\\
+                  &= \{x\in U\st \NOT(x\in A \OR x\in B)\}
+                       &&\text{(definition of $\cup$)}\\
+                  &= \{x\in U\st (\NOT(x\in A))\AND(\NOT(x\in B))\}
+                       &&\text{(DeMorgan's Law for logic)}\\
+                  &= \{x\in U\st (x\not\in A) \AND (x\not\in B)\}
+                       &&\text{(definition of $\not\in$)}\\
+                  &= \{x\in U\st (x\in\overline{A}) \AND (x\in\overline{B})\}
+                       &&\text{(definition of complement)}\\
+                  &= \overline{A}\cap\overline{B}
+                       &&\text{(definition of $\cap$)}
+\end{align*}
+
+
+\fig{F-setboole}
+  {Some Laws of Boolean Algebra for sets.  $A$, $B$, and $C$ are
+  sets.  For the laws that involve the complement operator, 
+  they are assumed to be subsets of some universal set,~$U$.
+  For the most part, these laws correspond directly to laws
+  of Boolean Algebra for propositional logic as given in
+  Figure~\ref{F-boole1}.}
+  {\begin{tabular}{|l|l|}
+      \hline
+      \strut Double complement&   \bigstrut$\overline{\overline{A}}=A$\\
+      \hline
+      \strut Miscellaneous laws&   $A\cup\overline{A}=U$\\
+      \strut&    $A\cap\overline{A}=\emptyset$\\
+      \strut&    $\emptyset\cup A=A$\\
+      \strut&    $\emptyset\cap A=\emptyset$\\
+      \hline
+      \strut Idempotent laws&    $A\cap A= A$\\
+      \strut&                   $A\cup A= A$\\
+      \hline
+      \strut Commutative laws&   $A\cap B = B\cap A$\\
+      \strut&                   $A\cup B=B\cup A$\\
+      \hline
+      \strut Associative laws&   $A\cap (B\cap C) = (A\cap B)\cap C$\\
+      \strut&                   $A\cup (B\cup C) = (A\cup B)\cup C$\\
+      \hline
+      \strut Distributive laws&  $A\cap(B\cup C) = (A\cap B)\cup (A\cap C)$\\
+      \strut&                   $A\cup (B\cap C) = (A\cup B)\cap (A\cup C)$\\
+      \hline
+      \strut DeMorgan's laws&   $\overline{A\cap B} = \overline{A}\cup\overline{B}$\\
+      \strut&                   $\overline{A\cup B} = \overline{A}\cap\overline{B}$\\
+      \hline
+   \end{tabular}
+  }
+
+\medbreak
+
+An easy inductive proof
+can be used to verify generalized versions of DeMorgan's Laws
+for set theory.  
+(In this context, all sets are assumed to be subsets of some unnamed
+universal set.)  A simple calculation verifies DeMorgan's
+Law for three sets:
+\begin{align*}
+   \overline{A\cup B\cup C}&=\overline{(A\cup B)\cup C}\\
+             &=\overline{(A\cup B)}\cap\overline{C} &\text{(by DeMorgan's Law for two sets)}\\
+             &=(\overline{A}\cap\overline{B})\cap\overline{C} &\text{(by DeMorgan's Law for two sets)}\\
+             &=\overline{A}\cap\overline{B}\cap\overline{C}
+\end{align*}
+From there, we can derive similar laws for four sets, five sets, and
+so on.  However, just saying ``and so on'' is not a rigorous
+proof of this fact.  Here is a rigorous inductive proof of a generalized
+DeMorgan's Law:
+
+\begin{theorem}
+For any natural number $n\geq 2$ and for any sets $X_1$, $X_2$, \dots, $X_n$,
+\[\overline{X_1\cup X_2\cup \cdots \cup X_n} =
+     \overline{X_1} \cap \overline{X_2} \cap\cdots\cap \overline{X_2}\]
+\end{theorem}
+\begin{proof}
+We give a proof by induction.  In the base case, $n=2$, the
+statement is that $\overline{X_1\cup X_2}=\overline{X_1}\cap\overline{X_n}$.
+This is true since it is just an application of DeMorgan's law for two sets.
+
+For the inductive case, suppose that the statement is true for $n=k$.
+We want to show that it is true for $n=k+1$. Let $X_1$, $X_2$, 
+\dots, $X_{k+1}$ be any $k$ sets.  Then we have:
+\begin{align*}
+   \overline{X_1\cup X_2\cup \cdots \cup X_{k+1}}
+        &= \overline{(X_1\cup X_2\cup \cdots \cup X_k) \cup X_{k+1}}\\
+        &= \overline{(X_1\cup X_2\cup \cdots \cup X_k)}\cap\overline{X_{k+1}}\\
+        &= (\overline{X_1}\cap\overline{X_2}\cap\cdots\cap\overline{X_k})\cap\overline{X_{k+1}}\\
+        &= \overline{X_1}\cap\overline{X_2}\cap\cdots\cap\overline{X_{k+1}}
+\end{align*}
+In this computation, the second step follows by DeMorgan's Law for
+two sets, while the third step follows from the induction hypothesis.
+\end{proof}
+
+Just as the laws of logic allow us to do algebra with logical formulas,
+the laws of set theory allow us to do algebra\index{algebra} with sets.
+Because of the close relationship between logic and set theory,
+their algebras are very similar.  The algebra of sets,
+like the algebra of logic, is Boolean algebra.\index{Boolean algebra!in set theory}
+When George Boole wrote his 1854 book about logic, it was really as
+much about set theory as logic.  In fact, Boole did not make a
+clear distinction between a predicate and the set of objects
+for which that predicate is true.  His algebraic laws and formulas
+apply equally to both cases.  More exactly, if we consider only
+subsets of some given universal set $U$, then there is a direct
+correspondence between the basic symbols and operations of propositional
+logic and certain symbols and operations in set theory, as shown in this
+table:
+
+\begin{center}
+   \begin{tabular}{|c|c|}
+      \hline
+      \strut \textbf{Logic}& \textbf{Set Theory}\cr
+      \hline
+      \strut $\T$& $U$\cr
+      \strut $\F$& $\emptyset$\cr
+      \strut $p\AND q$& $A\cap B$\cr
+      \strut $p\OR q$& $A\cup B$\cr
+      \strut $\NOT p$& $\overline{A}$\cr
+      \hline
+   \end{tabular}
+\end{center}
+
+\noindent Any valid logical formula or computation involving
+propositional variables and the symbols $\T$, $\F$, $\AND$, $\OR$,
+and~$\NOT$ can be transformed into a valid formula or computation in
+set theory by replacing the propositions in the formula with subsets of $U$ and
+replacing the logical symbols with $U$, $\emptyset$, $\cap$, $\cup$, and the
+complement operator.  
+
+Just as in logic, the operations of set theory can be combined
+to form complex expressions such as $(A\cup C)\cap\overline{(B\cup \overline{C} \cup D)}$.
+Parentheses can always be used in such expressions to specify the
+order in which the operations are to be performed.  In the absence of
+parentheses, we need precedence\index{precedence rule} rules to determine
+the order of operation.  The precedence rules for the Boolean algebra
+of sets are carried over directly from the Boolean algebra of
+propositions.  When union and intersection are used together without
+parentheses, intersection has precedence over union.  Furthermore,
+when several operators of the same type are used without parentheses,
+then they are evaluated in order from left to right.
+(Of course, since $\cup$ and $\cap$ are both associative operations,
+it really doesn't matter whether the order of evaluation is left-to-right
+or right-to-left.)  For example, $A\cup B\cap C \cup D$ is evaluated as 
+$(A\cup((B\cap C))\cup D$.  The complement operation is a special case.
+Since it is denoted by drawing a line over its operand, there is
+never any ambiguity about which part of a formula it applies to.
+
+The laws of set theory can be used to simplify complex expressions
+involving sets.  (As usual, of course, the meaning of ``simplification'' is
+partly in the eye of the beholder.)  For example, for any sets $X$
+and~$Y$,
+\begin{align*}
+(X\cup Y)\cap(Y\cup X)&=(X\cup Y)\cap(X\cup Y) &&\text{(Commutative Law)}\\
+                      &=(X\cup Y)              &&\text{(Idempotent Law)}
+\end{align*}
+where in the second step, the Idempotent Law, which says that
+$A\cap A=A$, is applied with $A=X\cup Y$.  For expressions that
+use the complement operation, it is usually considered to be simpler
+to apply the operation to an individual set, as in~$\overline{A}$,
+rather than to a formula, as in $\overline{A\cap B}$.  DeMorgan's
+Laws can always be used to simplify an expression in which the 
+complement operation is applied to a formula.  For example,
+\begin{align*}
+A\cap \overline{B\cup\overline{A}}
+        &= A\cap (\overline{B}\cap\overline{\overline{A}})   && \text{(DeMorgan's Law)}\\
+        &= A\cap (\overline{B}\cap A)   && \text{(Double Complement)}\\
+        &= A\cap (A\cap\overline{B})    && \text{(Commutative Law)}\\
+        &= (A\cap A)\cap \overline{B})  && \text{(Associative Law)}\\
+        &= A \cap \overline{B}          && \text{(Idempotent Law)}
+\end{align*}
+
+\medbreak
+
+As a final example of the relationship between set theory and logic,
+consider the set-theoretical expression $A\cap (A\cup B)$ and
+the corresponding compound proposition $p\AND(p\OR q)$.  (These
+correspond since for any $x$, $x\in A\cap(A\cup B) \equiv
+(x\in A)\AND ((x\in A)\OR (x\in B))$.)  You might find it intuitively
+clear that $A\cap(A\cup B)=A$.  Formally, this follows from the
+fact that $p\AND(p\OR q)\equiv p$, which might be less intuitively
+clear and is surprising difficult to prove algebraically from the laws
+of logic.  However, there is another way to check that a logical
+equivalence is valid: Make a truth table.  Consider a truth table
+for $p\AND(p\OR q)$:
+   \begin{center}
+     \begin{tabular}{|c|c||c|c|}
+        \hline
+        $p$& $q$& $p\OR q$& $p\AND (p\OR q)$\\
+        \hline
+        \strut 
+        false&  false&  false&  false\\
+        false&  true&   true&   false \\
+        true&   false&  true&   true \\
+        true&   true&   true&   true  \\
+        \hline
+      \end{tabular}
+   \end{center}
+The fact that the first column and the last column of this table are
+identical shows that $p\AND(p\OR q)\equiv p$.  Taking $p$ to 
+be the proposition $x\in A$ and $q$ to be the proposition $x\in B$,
+it follows that the sets $A$ and $A\cap (A\cup B)$ have the same
+members and therefore are equal.
+
+
+\begin{exercises}
+
+\problem Use the laws of logic to verify the associative laws for
+union and intersection.  That is, show that if $A$, $B$, and $C$ are
+sets, then $A\cup(B\cup C)= (A\cup B)\cup C$ and
+$A\cap(B\cap C)= (A\cap B)\cap C$.
+
+\problem Show that for any sets $A$ and $B$, $A\SUB A\cup B$
+and $A\cap B\SUB A$.
+
+\problem Recall that the symbol $\XOR$ denotes the logical
+exclusive or operation.  If $A$ and $B$ sets, define the
+set $A\bigtriangleup B$ by $A\bigtriangleup B = \{x\st (x\in A)\XOR (x\in B)\}$.
+Show that $A\bigtriangleup B = (A\SETDIFF B)\cup(B\SETDIFF A)$.
+($A\bigtriangleup B$ is known as the \nw{symmetric difference} of
+$A$ and $B$.)
+
+\problem Let $A$ be a subset of some given universal set $U$.
+Verify that $\overline{\overline{A}}=A$ and that
+$A\cup\overline{A}=U$.
+
+\problem Verify the second of DeMorgan's Laws for sets, 
+$\overline{A\cap B}=\overline{A}\cup\overline{B}$.  For each step
+in your verification, state why that step is valid.
+
+\problem The subset operator, $\SUB$, is defined in terms of
+the logical implication operator,~$\IMP$.  However, $\SUB$
+differs from the $\cap$ and $\cup$ operators in that $A\cap B$ 
+and $A\cup B$ are \emph{sets}, while $A\SUB B$ is a \emph{statement}.
+So the relationship between $\SUB$ and $\IMP$ isn't quite the same
+as the relationship between $\cup$ and $\OR$ or between $\cap$ and~$\AND$.
+Nevertheless, $\SUB$ and $\IMP$ do share some similar properties.
+This problem shows one example.
+\ppart Show that the following three compound propositions are
+logically equivalent: $p\IMP q$, $(p\AND q)\IFF p$, and $(p\OR q)\IFF q$.
+\ppart Show that for any sets $A$ and $B$, the following three statements
+are equivalent: $A\SUB B$, $A\cap B = A$, and $A\cup B = B$.
+
+\problem DeMorgan's Laws apply to subsets of some given universal
+set~$U$.  Show that for a subset $X$ of~$U$, $\overline{X}=U\SETDIFF X$.
+It follows that DeMorgan's Laws can be written as
+$U\SETDIFF(A\cup B)=(U\SETDIFF A)\cap(U\SETDIFF B)$ and
+$U\SETDIFF(A\cap B)=(U\SETDIFF A)\cup(U\SETDIFF B)$.  Show that
+these laws hold whether or not $A$ and $B$ are subsets of $U$.
+That is, show that for any sets $A$, $B$, and $C$,
+$C\SETDIFF(A\cup B)=(C\SETDIFF A)\cap(C\SETDIFF B)$ and
+$C\SETDIFF(A\cap B)=(C\SETDIFF A)\cup(C\SETDIFF B)$.  
+
+
+\problem Show that $A\cup (A\cap B)= A$ for any sets $A$ and $B$.
+
+\problem Let $X$ and $Y$ be sets.  Simplify each of the
+following expressions.  Justify each step in the simplification
+with one of the rules of set theory.
+\pparts{
+    X\cup (Y\cup X)               & (X\cap Y) \cap \overline{X} \cr
+    (X\cup Y)\cap \overline{Y}    & (X\cup Y) \cup (X\cap Y)
+}
+
+\problem Let $A$, $B$, and $C$ be sets.  Simplify each of the following
+expressions.  In your answer, the complement operator should only
+be applied to the individual sets $A$, $B$, and~$C$.
+\pparts{
+    \overline{A\cup B \cup C}       & 
+    \overline{A\cup B \cap C}       &
+    \overline{\overline{A\cup B}}   \cr\noalign{\smallskip}
+    \overline{B\cap \overline{C}}   &
+    \overline{A\cap \overline{B\cap \overline C}} &
+    A\cap \overline{A\cup B}
+}
+
+\problem Use induction to prove the following generalized DeMorgan's Law
+for set theory: 
+For any natural number $n\geq 2$ and for any sets $X_1$, $X_2$, \dots, $X_n$,
+\[\overline{X_1\cap X_2\cap \cdots \cap X_n} =
+     \overline{X_1} \cup \overline{X_2} \cup\cdots\cup \overline{X_n}\]
+
+\problem State and prove generalized distributive laws for set theory.
+
+
+\end{exercises}
+
+
+\section{Application: Programming with Sets}\label{S-sets-3}
+
+On a computer, all data are represented, ultimately, as strings
+of zeros and ones.  At times, computers need to work with
+sets.  How can sets be represented as strings of zeros and ones?
+
+A set is determined by its elements.  Given a set $A$ and an
+entity $x$, the fundamental question is, does $x$ belong to $A$
+or not?  If we know the answer to this question for each possible
+$x$, then we know the set.  For a given $x$, the answer to the
+question, ``Is $x$ a member of $A$,'' is either \textit{yes} or
+\textit{no}.  The answer can be encoded by letting 1 stand for
+yes and 0 stand for no.  The answer, then, is a single
+\nw{bit}, that is, a value that can be either zero or one.
+To represent the set $A$ as a string of zeros and ones, 
+we could use one bit for each possible member of $A$.
+If a possible member $x$ is in the set, then the corresponding
+bit has the value one.  If $x$ is not in the set, then the
+corresponding bit has the value zero.
+
+Now, in cases where the number of possible elements of the set
+is very large or infinite, it is not practical to represent the
+set in this way.  It would require too many bits, perhaps an infinite
+number.  In such cases, some other representation for the set
+can be used.  However, suppose we are only interested in subsets
+of some specified small set.  Since this set plays the role of
+a universal set, let's call it~$U$.  To represent a subset of
+$U$, we just need one bit for each member of~$U$.  If the number of members
+of $U$ is~$n$, then a subset of $U$ is represented by a string
+of $n$ zeros and ones.  Furthermore, every string of $n$ zeros
+and ones determines a subset of $U$, namely that subset
+that contains exactly the elements of $U$ that correspond to
+ones in the string.  A string of $n$ zeros and ones is
+called an $n$-bit \nw{binary number}.  So, we see that if
+$U$ is a set with $n$ elements, then the subsets of $U$ correspond
+to $n$-bit binary numbers.
+
+To make things more definite, let $U$ be the set $\{0,1,2,\dots,31\}$.
+This set consists of the 32 integers between 0 and 31, inclusive.
+Then each subset of $U$ can be represented by a 32-bit binary
+number.  We use 32 bits because most computer languages can work
+directly with 32-bit numbers.  For example, the programming
+languages Java, C, and C++ have a data type named \textit{int}.
+A value of type \textit{int} is a 32-bit binary number.\footnote{Actually, in 
+some versions of C and C++, a value of type \textit{int} is a 16-bit
+number.  A 16-bit number can be used to represent a subset of
+the set $\{0,1,2,\dots,15\}$.  The principle, of course, is the same.}
+Before we get a definite correspondence between subsets of
+$U$ and 32-bit numbers, we have to decide which bit in the number
+will correspond to each member of $U$.  Following tradition,
+we assume that the bits are numbered from right to left.  That
+is, the rightmost bit corresponds to the element 0 in $U$,
+the second bit from the right corresponds to 1, the third bit
+from the right to 2, and so on.  For example, the 32-bit number
+\[1000000000000000000001001110110\]
+corresponds to the subset $\{1,2,4,5,6,9,31\}$. Since the leftmost
+bit of the number is 1, the number 31 is in the set; since the
+next bit is 0, the number 30 is not in the set; and so on.
+
+From now on,
+I will write binary numbers with a subscript of~2 to avoid confusion
+with ordinary numbers.  Furthermore, I will often leave out leading
+zeros.  For example, 1101$_2$ is the binary number that would
+be written out in full as
+\[00000000000000000000000000001101\]
+and which corresponds to the set $\{0,2,3\}$.  On the other hand
+1101 represents the ordinary number one thousand one hundred and one.
+
+
+\fig
+  {F-hex}
+  {The 16 hexadecimal digits and the corresponding binary numbers.
+   Each hexadecimal digit corresponds to a 4-bit binary number.
+   Longer binary numbers can be written using two or more hexadecimal
+   digits.  For example, $101000011111_2 = 0xA1F$.}
+  {\begin{tabular}{|c|c||c|c|}
+        \hline
+        \strut\textbf{Hex.} & \textbf{Binary} & \textbf{Hex.} & \textbf{Binary} \cr
+        \hline
+        \strut 0 & $0000_2$ &  8  & $1000_2$  \cr
+        \hline
+        \strut 1 & $0001_2$ &  9  & $1001_2$  \cr
+        \hline
+        \strut 2 & $0010_2$ &  A  & $1010_2$  \cr
+        \hline
+        \strut 3 & $0011_2$ &  B & $1011_2$  \cr
+        \hline
+        \strut 4 & $0100_2$ &  C & $1100_2$  \cr
+        \hline
+        \strut 5 & $0101_2$ &  D & $1101_2$  \cr
+        \hline
+        \strut 6 & $0110_2$ &  E & $1110_2$  \cr
+        \hline
+        \strut 7 & $0111_2$ &  F & $1111_2$  \cr
+        \hline
+     \end{tabular}
+   }
+
+
+Even with this notation, it can be very annoying to write out long
+binary numbers---and almost impossible to read them.  So binary numbers
+are never written out as sequences of zeros and ones in computer
+programs.  An alternative is to use \nw[hexadecimal number]{hexadecimal
+numbers}.  Hexadecimal numbers are written using the sixteen
+symbols 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, and~F.
+These symbols are knows as the hexadecimal digits.  Each hexadecimal
+digit corresponds to a 4-bit binary number, as shown in 
+Figure~\ref{F-hex}.  To represent a longer binary number, several
+hexadecimal digits can be strung together.  For example,
+the hexadecimal number C7 represents the binary number 
+11000111$_2$.  In Java and many related languages, a hexadecimal
+number is written with the prefix ``0x''.  Thus, the hexadecimal
+number C7 would appear in the program as 0xC7.  I will follow
+the same convention here.  Any 32-bit binary number can be written
+using eight hexadecimal digits (or fewer if leading zeros are omitted).
+Thus, subsets of $\{0,1,2,\dots,31\}$ correspond to 
+8-digit hexadecimal numbers.  For example,
+the subset $\{1,2,4,5,6,9,31\}$ corresponds to
+0x80000276, which represents the binary number
+1000000000000000000001001110110$_2$.  Similarly,
+0xFF corresponds to $\{0,1,2,3,4,5,6,7\}$ and
+0x1101 corresponds to the binary number 0001000100000001$_2$
+and to the set $\{0,8,12\}$.
+
+Now, if you have worked with binary numbers or with hexadecimal
+numbers, you know that they have another, more common interpretation.
+They represent ordinary integers.  Just as 342 represents the
+integer $3\cdot 10^2 + 4\cdot 10^1 +2\cdot 10^0$, the
+binary number 1101$_2$ represents the integer
+$1\cdot 2^3 +1\cdot 2^2 +0\cdot 2^1 +1\cdot 2^0$, or~13.
+When used in this way, binary numbers are known as 
+\nw[base-2 number]{base-2 numbers}, just as ordinary numbers
+are base-10 numbers.  Hexadecimal numbers can be interpreted
+as base-16 numbers.  For example, 0x3C7 represents the
+integer $3\cdot 16^2 + 12\cdot 16^1 + 7\cdot 16^0$, or~874.
+So, does 1101$_2$ really represent the integer 13, or does it
+represent the set $\{0,2,3\}\,$?  The answer is that to a person,
+1101$_2$ can represent either.  Both are valid interpretations,
+and the only real question is which interpretation is useful in
+a given circumstance.  On the other hand, to the computer,
+1101$_2$ doesn't represent \emph{anything}.  It's just a string
+of bits, and the computer manipulates the bits according to its
+program, without regard to their interpretation.
+
+Of course, we still have to answer the question of whether it
+is ever useful to interpret strings of bits in a computer as
+representing sets.
+
+\medbreak
+
+If all we could do with sets were to ``represent'' them, it wouldn't
+be very useful.  We need to be able to compute with sets.  That
+is, we need to be able to perform set operations such as 
+union and complement.
+
+Many programming languages provide operators that perform set
+operations.  In Java and related languages, the operators
+that perform union, intersection, and complement are written
+as $\,|\,$, $\&$, and~\texttt{\char`\~}.  For example, 
+if $x$ and $y$ are 32-bit integers representing two subsets,
+$X$ and $Y$, of $\{0,1,2,\dots,31\}$, then
+$x\,|\,y$ is a 32-bit integer that represents the set $X\cup Y$.
+Similarly, $x\,\&\,y$ represents the set $X\cap Y$, and
+\texttt{\char`\~}$x$ represents the complement,
+$\overline{X}$.
+
+The operators $\,|\,$, \&, and~\texttt{\char`\~}
+are called \nw[bitwise logical operator]{bitwise logical operators}\index{logical operator!bitwise}
+because of the way they operate on the individual bits of the numbers
+to which they are applied.  If 0 and 1 are interpreted as the
+logical values \textit{false} and \textit{true}, then the
+bitwise logical operators perform the logical operations
+$\OR$, $\AND$, and~$\NOT$ on individual bits.  To see why this
+is true, let's look at the computations that these operators
+have to perform.
+
+Let $k$ be one of the members of $\{0,1,2,\dots,31\}$.  In the
+binary numbers $x$, $y$, $x\,|\,y$, $x\,\&\,y$, and \texttt{\char`\~}$x$,
+the number $k$ corresponds to the bit in position $k$.  That is,
+$k$ is in the set represented by a binary number if and only if the
+bit in position $k$ in that binary number is~1.
+Considered as sets, $x\,\&\,y$ is the intersection of $x$ and $y$,
+so $k$ is a member of the set represented by $x\,\&\,y$ if and only if 
+$k$ is a member of both of the sets represented by $x$ and $y$.
+That is, bit $k$ is 1 in the binary number $x\,\&\,y$ if and only if bit
+$k$ is 1 in $x$ and bit $k$ is 1 in~$y$.  When we interpret
+1 as \textit{true} and 0 as \textit{false}, we see that
+bit $k$ of $x\,\&\,y$ is computed by applying the logical ``and''
+operator, $\AND$,  to bit $k$ of $x$ and bit $k$ of $y$.
+Similarly, bit $k$ of $x\,|\,y$ is computed by applying the
+logical ``or'' operator, $\OR$, to bit $k$ of $x$ and bit $k$ of $y$.
+And bit $k$ of \texttt{\char`\~}$x$ is computed by applying the
+logical ``not'' operator, $\NOT$, to bit $k$ of~$x$.  In each
+case, the logical operator is applied to each bit position
+separately.  (Of course, this discussion is just a translation
+to the language of bits of the definitions of the set
+operations in terms of logical operators:  
+$A\cap B=\{x\st x\in A \AND x\in B\}$,
+$A\cup B=\{x\st x\in A \OR x\in B\}$, and
+$\overline{A}=\{x\in U\st \NOT(x\in A)\}$.)
+
+For example, consider the binary numbers 1011010$_2$ and
+10111$_2$, which represent the sets $\{1,3,4,6\}$ and
+$\{0,1,2,4\}$.  Then 1011010$_2$ $\&$ 10111$_2$ is
+10010$_2$.  This binary number represents the set $\{1,4\}$,
+which is the intersection $\{1,3,4,6\}\cap\{0,1,2,4\}$.
+It's easier to see what's going on if we write out the
+computation in columns, the way you probably first learned to
+do addition:
+\begin{center}
+\begin{tabular}{rrrrrrrrrrrr}
+       &1 0 1 1 0 1 0&\hbox to 0.4in{}& $\{$&6, &\ &4, &3, &   &1  & &$\}$\\
+ $\&$  &0 0 1 0 1 1 1&                & $\{$&   &\ &4, &   &2, &1\rlap{,} &0&$\}$\\ \cline{2-2}\cline{4-12}
+ \strut&0 0 1 0 0 1 0&                & $\{$&   &  &4, &   &   &1  & &$\}$
+\end{tabular}
+\end{center}
+Note that in each column in the binary numbers, the bit in the
+bottom row is computed as the logical ``and'' of the two bits
+that lie above it in the column.  I've written out the sets that
+correspond to the binary numbers to show how the bits in the
+numbers correspond  to the presence or absence of elements in the sets.
+Similarly, we can see how the union of two sets is computed as
+a bitwise ``or'' of the corresponding binary numbers.
+\begin{center}
+\begin{tabular}{rrrrrrrrrrrr}
+       &1 0 1 1 0 1 0&\hbox to 0.4in{}& $\{$&6, &\ &4, &3, &   &1  & &$\}$\\
+ $|$   &0 0 1 0 1 1 1&                & $\{$&   &\ &4, &   &2, &1\rlap{,} &0&$\}$\\ \cline{2-2}\cline{4-12}
+ \strut&1 0 1 1 1 1 1&                & $\{$&6, &  &4, &3, &2, &1\rlap{,}  &0&$\}$
+\end{tabular}
+\end{center}
+The complement of a set is computed using a bitwise ``not'' operation.
+Since we are working with 32-bit binary numbers, the complement is
+taken with respect to the universal set $\{0,1,2,\dots,31\}$.
+So, for example, 
+\begin{center}
+\texttt{\char`\~}1011010$_2$ = 11111111111111111111111110100101$_2$
+\end{center}
+Of course, we can apply the operators $\&$, $\,|\,$, and~\texttt{\char`\~}
+to numbers written in hexadecimal form, or even in ordinary, base-10
+form.  When doing such calculations by hand, it is probably best
+to translate the numbers into binary form.  For example,
+\begin{align*}
+0\hbox{x}AB7\ \&\ 0\hbox{x}168E &= 1010\,1011\,0111_2\ \&\ 1\,0110\,1000\,1110_2\\
+                &= 0\,0010\,1000\,0110_2\\
+                &= 0\hbox{x}286
+\end{align*}
+
+\medbreak
+
+When computing with sets, it is sometimes necessary to work
+with individual elements.  Typical operations include adding
+an element to a set, removing an element from a set, and
+testing whether an element is in a set.  However, instead of
+working with an element itself, it's convenient to work with
+the set that contains that element as its only member.  For example,
+testing whether $5\in A$ is the same as testing whether
+$\{5\}\cap A\not=\emptyset$.  The set $\{5\}$ is represented by
+the binary number 100000$_2$ or by the hexadecimal number 0x20.
+Suppose that the set $A$ is represented by the number~$x$.
+Then, testing whether $5\in A$ is equivalent to testing
+whether 0x20 $\&$ $x\not=0$.  Similarly, the set
+$A\cup\{5\}$, which is obtained by adding 5 to~$A$, can
+be computed as $x$ $|$ 0x20.  The set $A\SETDIFF \{5\}$,
+which is the set obtained by removing 5 from $A$ if it occurs in~$A$,
+is represented by \hbox{$x$ $\&$ \texttt{\char`\~}0x20}.
+
+The sets $\{0\}$, $\{1\}$, $\{2\}$, $\{3\}$, $\{4\}$, $\{5\}$, $\{6\}$, \dots, $\{31\}$ are
+represented by the hexadecimal numbers 0x1, 0x2, 0x4, 0x8, 0x10, 0x20, \dots, 0x80000000. 
+In typical computer applications, some of these numbers are given names,
+and these names are thought of as names for the possible elements of a set
+(although, properly speaking, they are names for sets containing those elements).
+Suppose, for example, that $a$, $b$, $c$, and $d$ are names for four of the
+numbers from the above list.  Then $a\,|\,c$ is the set that contains
+the two elements corresponding to the numbers $a$ and~$c$.  If $x$ is a
+set, then $x\,\&\,\texttt{\char`\~}d$ is the set obtained by removing
+$d$ from~$x$.  And we can test whether $b$ is in $x$ by testing if
+$x\,\&\,b\not=0$.
+
+Here is an actual example, which is used in the Macintosh operating system.
+Characters can be printed or displayed on the screen in various sizes and
+styles.  A \nw{font} is a collection of pictures of characters in a particular
+size and style.  On the Macintosh, a basic font can be modified by 
+specifying any of the following style attributes: \textit{bold},
+\textit{italic}, \textit{underline}, \textit{outline}, \textit{shadow}, 
+\textit{condense}, and \textit{extend}.  The style of a font is a subset
+of this set of attributes.  A style set can be specified by
+or-ing together individual attributes.  For example, an underlined, bold, italic
+font has style set \textit{underline} $|$ \textit{bold} $|$ \textit{italic}.
+For a plain font, with none of the style attributes set, the style set
+is the empty set, which is represented by the number zero.
+
+The Java programming language uses a similar scheme to specify style
+attributes for fonts, but currently there are only two basic
+attributes, \texttt{Font.BOLD} and \texttt{Font.ITALIC}.  A more
+interesting example in Java is provided by event types.  An event in 
+Java represents some kind of user action, such as pressing a key on the
+keyboard.  Events are associated with ``components'' such as windows,
+push buttons, and scroll bars.  Components can be set to ignore
+a given type of event.  We then say that that event type is disabled
+for that component.  If a component is set to process events of
+a given type, then that event type is said to be enabled.  Each
+component keeps track of the set of event types that are currently
+enabled.  It will ignore any event whose type is not in that set.
+Each event type has an associated constant with a name such
+as \texttt{AWTEvent.MOUSE\_EVENT\_MASK}.  These constants represent
+the possible elements of a set of event types.  A set of event types can be
+specified by or-ing together a number of such constants.  If
+$c$ is a component and $x$ is a number representing a set of event
+types, then the command ``$c$.\textit{enableEvents}($x$)'' enables the
+events in the set $x$ for the component~$c$.  If $y$ represents
+the set of event types that were already enabled for $c$, then the effect
+of this command is to replace $y$ with the union, $y\,|\,x$.  Another
+command, ``$c$.\textit{disableEvents}($x$)'', will disable the
+event types in $x$ for the component~$c$.  It does this by replacing
+the current set, $y$, with $y\,\&\,\texttt{\char`\~}x$.
+
+
+\begin{exercises}
+
+\problem Suppose that the numbers $x$ and $y$ represent the
+sets $A$ and $B$.  Show that the set $A\SETDIFF B$ is 
+represented by $x \,\&\, (\texttt{\char`\~}y)$.
+
+\problem Write each of the following binary numbers in hexadecimal:
+\tparts{
+10110110$_2$& 10$_2$& 111100001111$_2$& 101001$_2$
+}
+
+\problem Write each of the following hexadecimal numbers in binary:
+\tparts{
+0x123 & 0xFADE & 0x137F & 0xFF11
+}
+
+\problem Give the value of each of the following expressions
+as a hexadecimal number:
+\tparts{
+0x73 $|$ 0x56A&               \texttt{\char`\~}0x3FF0A2FF\cr
+(0x44 $|$ 0x95) $\&$ 0xE7&    0x5C35A7 $\& $ 0xFF00\cr
+0x5C35A7 $\&$ \texttt{\char`\~}0xFF00  &\texttt{\char`\~}(0x1234 $\&$ 0x4321) 
+}
+
+\problem Find a calculator (or a calculator program on a computer)
+that can work with hexadecimal numbers.  Write a short report
+explaining how to work with hexadecimal numbers on that calculator.
+You should explain, in particular, how the calculator can be used to
+do the previous problem.
+
+\problem This question assumes that you know how to add binary numbers.
+Suppose $x$ and $y$ are binary numbers.  Under what circumstances
+will the binary numbers $x+y$ and $x\,|\,y$ be the same?
+
+\problem In addition to hexadecimal numbers, the programming languages
+Java, C, and C++ support \nw[octal number]{octal numbers}.  Look up
+and report on octal numbers in Java, C, or C++.  Explain what octal
+numbers are, how they are written, and how they are used.
+
+\problem In the UNIX (or Linux) operating system, every file has an associated
+set of permissions, which determine who can use the file and how
+it can be used.  The set of permissions for a given file is represented
+by a nine-bit binary number.  This number is sometimes written as an
+octal number.  Research and report on the UNIX systems of permissions.
+What set of permissions is represented by the octal number 752?
+by the octal number 622?  Explain what is done by the UNIX commands
+``chmod g+rw filename'' and ``chmod o-w filename'' in terms of sets. 
+(Hint:  Look at the \textit{man} page for
+the \textit{chmod} command.  To see the page, use the UNIX command
+``man chmod''.  If you don't know what this means, you probably don't
+know enough about UNIX to do this exercise.)
+
+\problem Java, C, and C++ each have a boolean data type that has the values
+\textit{true} and \textit{false}.  The usual logical and, or, and not operators
+on boolean values are represented by the operators $\&\&$, $|\,|$, and~!.
+C~and C++ allow integer values to be used in places where boolean values
+are expected.  In this case, the integer zero represents the boolean
+value \textit{false} while any non-zero integer represents the boolean
+value \textit{true}.  This means that if $x$ and $y$ are integers,
+then both $x\,\&\,y$ and $x\,\&\&\,y$ are valid expressions, and both can
+be considered to represent boolean values.  Do the expressions
+$x\,\&\,y$ and $x\,\&\&\,y$ always represent the same boolean value,
+for any integers $x$ and $y$?  Do the expressions $x\,|\,y$ and $x\,|\,|\,y$
+always represent the same boolean values?  Explain your answers.
+
+\problem Suppose that you, as a programmer, want to write a subroutine
+that will open a window on the computer's screen.  The window can have
+any of the following options:  a close box, a zoom box, a resize box, 
+a minimize box, a vertical scroll bar, a horizontal scroll bar.
+Design a scheme whereby the options for the window can be specified
+by a single parameter to the subroutine.  The parameter should represent
+a set of options.  How would you use your subroutine to open
+a window that has a close box and both scroll bars and no other options?
+Inside your subroutine, how would you determine which options have been
+specified for the window?
+
+
+\end{exercises}
+
+
+
+\section{Functions}\label{S-sets-4}
+
+Both the real world and the world of mathematics are full of
+what are called, in mathematics, ``functional relationships.''
+A functional relationship is a relationship between two sets,
+which associates exactly one element from the second set to 
+each element of the first set.  
+
+For example, each item for sale in a store has a price.
+The first set in this relationship is the set of items in the store.  For each
+item in the store, there is an associated price, so the
+second set in the relationship is the set of possible prices.
+The relationship is a functional relationship because 
+each item has a price.  That is, the question ``What is the price
+of this item?'' has a single, definite answer for each item
+in the store.
+
+Similarly, the question ``Who is the (biological) mother of this person?'' has
+a single, definite answer for each person.  So, the
+relationship ``mother of'' defines a functional relationship.
+In this case, the two sets in the relationship are the same set,
+namely the set of people.\footnote{I'm avoiding here the question
+of Adam and Eve or of pre-human ape-like ancestors.  (Take your 
+pick.)}  On the other hand, the relationship ``child of''
+is not a functional relationship.  The question ``Who is the
+child of this person?'' does not have a single, definite answer for
+each person.  A given person might not have any child at all.
+And a given person might have more than one child.  Either of
+these cases---a person with no child or a person with more than
+one child---is enough to show that the relationship
+``child of'' is not a functional relationship.
+
+Or consider an ordinary map, such as a map of New York State or
+a street map of Rome.  The whole point of the map, if it is
+accurate, is that there is a functional relationship between
+points on the map and points on the surface of the Earth.
+Perhaps because of this example, a functional relationship
+is sometimes called a \nw{mapping}.
+
+There are also many natural examples of functional relationships
+in mathematics.  For example, every rectangle has an associated
+area.  This fact expresses a functional relationship between the
+set of rectangles and the set of numbers.  Every natural number $n$
+has a square,~$n^2$.  The relationship ``square of'' is a functional
+relationship from the set of natural numbers to itself.  
+
+In mathematics, of course, we need to work with functional
+relationships in the abstract.  To do this, we introduce
+the idea of \nw{function}.  You should think of a function
+as a mathematical object that expresses a functional relationship
+between two sets.  The notation $f\colon A\to B$ expresses
+the fact that $f$ is a function from the set $A$ to the
+set $B$.  That is, $f$ is a name for a mathematical object
+that expresses a functional relationship from the set $A$ to the set~$B$.
+The notation $f\colon A\to B$ is
+read as ``$f$~is a function from $A$ to~$B$'' or more simply
+as ``$f$~maps $A$ to~$B$.''
+
+If $f\colon A\to B$ and if $a\in A$, the fact that $f$ is
+a functional relationship from $A$ to $B$ means that $f$ associates
+some element of $B$ to~$a$.  That element is denoted~$f(a)$.
+That is, for each $a\in A$, $f(a)\in B$ and $f(a)$ is the single,
+definite answer to the question ``What element of $B$ is
+associated to~$a$ by the function~$f\,$?''  The fact that
+$f$ is a function from $A$ to $B$ means that this question
+has a single, well-defined answer.  Given $a\in A$,
+$f(a)$ is called the \nw[value (of a function)]{value}
+of the function $f$ at~$a$.
+
+For example, if $I$ is the set of items for sale in a
+given store and $M$ is the set of possible prices,
+then there is function $c\colon I\to M$ which
+is defined by the fact that for each $x\in I$, $c(x)$
+is the price of the item~$x$.  Similarly, if
+$P$ is the set of people, then there is a function
+$m\colon P\to P$ such that for each person $p$,
+$m(p)$ is the mother of~$p$.  And if $\N$ is the set
+of natural numbers, then the formula $s(n) = n^2$
+specifies a function $s\colon \N\to\N$.  It is in the
+form of formulas such as $s(n)=n^2$ or $f(x)=x^3-3x+7$ that
+most people first encounter functions.  But you should
+note that a formula by itself is not a function, although it might
+well specify a function between two given sets of numbers.
+Functions are much more general than formulas, and they
+apply to all kinds of sets, not just to sets of numbers.
+
+\medbreak
+
+Suppose that $f\colon A\to B$ and $g\colon B\to C$ are functions.
+Given $a\in A$, there is an associated element $f(a)\in B$.
+Since $g$ is a function from $B$ to $C$, and since $f(a)\in B$,
+$g$ associates some element of $C$ to $f(a)$.  That element
+is $g(f(a))$.  Starting with an element $a$ of $A$, we have
+produced an associated element $g(f(a))$ of $C$.  This means
+that we have defined a new function from the set $A$ to
+the set $C$.  This function is called the \nw{composition}
+of $g$ with $f$, and it is denoted by $g\circ f$.  
+That is, if $f\colon A\to B$ and $g\colon B\to C$ are functions,
+then $g\circ f\colon A\to C$ is the function which is defined
+by \[(g\circ f)(a) = g(f(a))\]
+for each $a\in A$.  For example, suppose that $p$ is the function
+that associates to each item in a store the price of the item,
+and suppose that $t$ is a function that associates the amount of
+tax on a price to each possible price.  The composition,
+$t\circ p$, is the function that associates to each item the
+amount of tax on that item.  Or suppose that 
+$s\colon\N\to\N$ and $r\colon\N\to\N$ are the functions
+defined by the formulas $s(n)=n^2$ and $r(n)=3n+1$, for each
+$n\in\N$.  Then $r\circ s$ is a function from $\N$ to $\N$,
+and for $n\in\N$, $(r\circ s)(n) = r(s(n)) = r(n^2) = 3n^2+1$.
+In this case, we also have the function $s\circ r$, which 
+satisfies $(s\circ r)(n) = s(r(n)) = s(3n+1) = (3n+1)^2 = 9n^2+6n+1$.
+Note in particular that $r\circ s$ and $s\circ r$ are not
+the same function.  The operation $\circ$ is not commutative.
+
+If $A$ is a set and $f\colon A\to A$, then $f\circ f$,
+the composition of $f$ with itself, is defined.  For example,
+using the function $s$ from the preceding example,
+$s\circ s$ is the function from $\N$ to $\N$ given by
+the formula $(s\circ s)(n) = s(s(n))= s(n^2) = (n^2)^2 = n^4$.
+If $m$ is the function from the set of people to itself which
+associates to each person that person's mother, then
+$m\circ m$ is the function that associates to each person
+that person's maternal grandmother.
+
+
+\medbreak
+
+If $a$ and $b$ are entities, then $(a,b)$ denotes the
+\nw{ordered pair} containing $a$ and~$b$.  The ordered pair
+$(a,b)$ differs from the set $\{a,b\}$ because a set is
+not ordered.  That is, $\{a,b\}$ and $\{b,a\}$ denote the
+same set, but if $a\not=b$, then $(a,b)$ and $(b,a)$ are
+different ordered pairs.  More generally, two
+ordered pairs $(a,b)$ and $(c,d)$ are equal if and only if
+both $a=c$ and $b=d$.  If $(a,b)$ is an ordered pair,
+then $a$ and $b$ are referred to as the \nw{coordinates} of the
+ordered pair.  In particular, $a$ is the first coordinate and
+$b$ is the second coordinate.
+
+If $A$ and $B$ are sets, then we can form the set
+$A\times B$ which is defined by \[A\times B=
+\{(a,b)\st a\in A \text{ and } b\in B\}.\]
+This set is called the \nw{cross product} or
+\nw{Cartesian product} of the sets $A$ and~$B$.\index{product (of sets)}
+The set $A\times B$ contains every ordered pair whose first
+coordinate is an element of $A$ and whose second coordinate is
+an element of $B$.  For example, if $X=\{c,d\}$ and
+$Y=\{1,2,3\}$, then $X\times Y=\{(c,1), (c,2), (c,3), (d,1),(d,2), (d,3)\}$.
+It is possible to extend this idea to the cross product
+of more than two sets.  The cross product of the three sets
+$A$, $B$, and~$C$ is denoted $A\times B\times C$.  It consists
+of all \nw[ordered triple]{ordered triples} $(a,b,c)$
+where $a\in A$, $b\in B$, and $c\in C$.  The definition for
+four or more sets is similar.  The general term for a member
+of a cross product is \nw{tuple} or, more specifically,
+\nw{ordered n-tuple}.  For example, $(a,b,c,d,e)$ is
+an ordered 5-tuple.
+
+Given a function $f\colon A\to B$, consider the
+set $\{(a,b)\in A\times B\st a\in A \text{ and } b=f(a)\}$.  
+This set of ordered pairs consists
+of all pairs $(a,b)$ such that $a\in A$ and $b$ is the element of
+$B$ that is associated to $a$ by the function~$f$.  The set
+$\{(a,b)\in A\times B\st a\in A \text{ and } b=f(a)\}$ is called the
+\nw{graph} of the function~$f$.  Since $f$ is a function,
+each element $a\in A$ occurs once and only once as a first coordinate
+among the ordered pairs in the graph of~$f$.  Given $a\in A$, we
+can determine $f(a)$ by finding that ordered pair and looking
+at the second coordinate.  In fact, it is convenient to consider
+the function and its graph to be the same thing, and to use
+this as our official mathematical definition.\footnote{This is
+a convenient definition for the mathematical world, but as is often
+the case in mathematics, it leaves out an awful lot of the real
+world.  Functional relationships in the real world are \emph{meaningful},
+but we model them in mathematics with meaningless sets of ordered
+pairs.  We do this for the usual reason: to have something precise
+and rigorous enough that we can make logical deductions and prove
+things about it.}
+
+\begin{definition}
+Let $A$ and $B$ be sets.  A \nw{function} from $A$ to
+$B$ is a subset of $A\times B$ which has the property that
+for each $a\in A$, the set contains one and only one ordered
+pair whose first coordinate is $a$.  If $(a,b)$ is that
+ordered pair, then $b$ is called the value of the function at~$a$
+and is denoted~$f(a)$.  If $b=f(a)$, then we also say that the
+function $f$ \nw[none]{maps} $a$ to~$b$.
+The fact that $f$ is a function from
+$A$ to $B$ is indicated by the notation $f\colon A\to B$.
+\end{definition}
+
+For example, if $X=\{a,b\}$ and $Y=\{1,2,3\}$, then the
+set $\{(a,2), (b,1)\}$ is a function from $X$ to $Y$,
+and $\{(1,a), (2,a), (3,b)\}$ is a function from $Y$ to~$X$.
+On the other hand, $\{(1,a),(2,b)\}$ is not a function from
+$Y$ to~$X$, since it does not specify any value for~3.
+And $\{(a,1),(a,2),(b,3)\}$ is not a function from $X$ to
+$Y$ because it specifies two different values, 1 and 2, 
+associated with the same element, $a$, of $X$.
+
+Even though the technical definition of a function is a set
+of ordered pairs, it's usually better to think of a function
+from $A$ to $B$ as something that associates some element of
+$B$ to every element of~$A$.  The set of ordered pairs is one
+way of expressing this association.  If the association is
+expressed in some other way, it's easy to write down the
+set of ordered pairs.  For example, the function
+$s\colon\N\to\N$ which is specified by the formula
+$s(n)=n^2$ can be written as the set of ordered
+pairs $\{(n,n^2)\st n\in \N\}$.
+
+\medbreak
+
+Suppose that $f\colon A\to B$ is a function from the set
+$A$ to the set~$B$.  We say that $A$ is the \nw{domain} of
+the function~$f$ and that $B$ is the \nw{range} of the function.
+We define the \nw{image} of the function~$f$ to be the
+set $\{b\in B\st \exists a\in A\,(b=f(a))\}$.  Put
+more simply, the image of $f$ is the set $\{f(a)\st a\in A\}$.
+That is, the image is the set of all values, $f(a)$, of the
+function, for all $a\in A$.  (You should note that in some
+cases---particularly in calculus courses---the term ``range''
+is used to refer to what I am calling the image.)
+For example, for the function $s\colon\N\to\N$ that is specified
+by $s(n)=n^2$, both the domain and the range are $\N$, and
+the image is the set $\{n^2\st n\in\N\}$, or $\{0,1,4,9,16,\dots\}$.
+
+Note that the image of a function is a subset of its range.
+It can be a proper subset, as in the above example, but it is
+also possible for the image of a function to be equal to
+the range.  In that case, the function is said to be
+\nw[onto function]{onto}.  Sometimes, the fancier term
+\nw{surjective} is used instead.  Formally, a function
+$f\colon A\to B$ is said to be onto (or surjective) if
+every element of $B$ is equal to $f(a)$ for some element of
+$A$.  In terms of logic, $f$ is onto if and only if
+\[\forall b\in B\,\big(\exists a\in A\, (b=f(a))\big).\]
+For example, let $X=\{a,b\}$ and $Y=\{1,2,3\}$, and consider
+the function from $Y$ to $X$ specified by the set of ordered
+pairs $\{(1,a),(2,a),(3,b)\}$.  This function is onto because
+its image, $\{a,b\}$, is equal to the range,~$X$. However,
+the function from $X$ to $Y$ given by $\{(a,1),(b,3)\}$ is not
+onto, because its image, $\{1,3\}$, is a proper subset of
+its range,~$Y$.  As a further example, consider the function
+$f$ from $\Z$ to $\Z$ given by $f(n) = n-52$.  To show that $f$
+is onto, we need to pick an arbitrary $b$ in the range $\Z$
+and show that there is some number $a$ in the domain $\Z$
+such that $f(a) = b$.  So let $b$ be an arbitrary integer;
+we want to find an $a$ such that $a-52=b$.  Clearly this equation
+will be true when $a=b+52$.  So every element $b$ is the image
+of the number $a=b+52$, and $f$ is therefore onto.  Note that if
+$f$ had been specified to have domain $\N$, then $f$ would
+\emph{not} be onto, as for some $b \in \Z$ the number $a=b+52$
+is not in the domain $\N$ (for example, the integer $-73$ is
+not in the image of $f$, since $-21$ is not in $\N$.)
+
+If $f\colon A\to B$ and if $a\in A$, then $a$ is associated to
+only one element of $B$.  This is part of the definition of
+a function.  However, no such restriction holds for elements
+of $B$.  If $b\in B$, it is possible for $b$ to be associated
+to zero, one, two, three, \dots, or even to an infinite
+number of elements of~$A$.  In the case where each element of
+the range is associated to at most one element of the domain,
+the function is said to be \nw{one-to-one}.  Sometimes,
+the term \nw{injective} is used instead.  The function $f$
+is one-to-one (or injective) if for any two distinct elements $x$ and $y$ in
+the domain of $f$, $f(x)$ and $f(y)$ are also distinct.  In
+terms of logic, $f\colon A\to B$ is one-to-one if and only if
+\[\forall x\in A\,\,\forall y\in A\,\big(x\not=y\IMP f(x)\not=f(y)\big).\]
+Since a proposition is equivalent to its contrapositive,
+we can write this condition equivalently as
+\[\forall x\in A\,\,\forall y\in A\,\big(f(x)=f(y)\IMP x=y\big).\]
+Sometimes, it is easier to work with the definition of one-to-one
+when it is expressed in this form.
+The function that associates every person to his or her mother is
+not one-to-one because it is possible for two different people
+to have the same mother.  The function $s\colon\N\to\N$ specified
+by $s(n)=n^2$ is one-to-one.  However,
+we can define a function $r\colon\Z\to\Z$ by the same formula:
+$r(n)=n^2$, for $n\in\Z$.  The function $r$ is \emph{not}
+one-to-one since two different integers can have the same square.
+For example, $r(-2)=r(2)$.
+
+A function that is both one-to-one and onto is said to be
+\nw{bijective}.  The function that associates each point in
+a map of New York State to a point in the state itself is
+presumably bijective.  For each point on the map, there is
+a corresponding point in the state, and \textit{vice versa}.
+If we specify the function $f$ from the set $\{1,2,3\}$ to the 
+set $\{a,b,c\}$ as the set of ordered pairs
+$\{(1,b),(2,a),(3,c)\}$, then $f$ is a bijective function.
+Or consider the function from $\Z$ to $\Z$ given by $f(n) =
+n-52$.  We have already shown that $f$ is onto.  We can show
+that it is also one-to-one: pick an arbitrary $x$ and $y$
+in $\Z$ and assume that $f(x) = f(y)$.  This means that
+$x-52 = y-52$, and adding 52 to both sides of the equation
+gives $x=y$.  Since $x$ and $y$ were arbitrary, we have proved
+$\forall x\in \Z\,\,\forall y\in \Z\,(f(x)=f(y)\IMP x=y)$,
+that is, that $f$ is one-to-one.  Altogether, then, $f$ is a bijection.
+
+
+\medbreak
+
+One difficulty that people sometimes have with mathematics
+is its generality.  A set is a collection of entities, but
+an ``entity'' can be anything at all, including other sets.
+Once we have defined ordered pairs, we can use ordered pairs as elements
+of sets.  We could also make ordered pairs of sets.
+Now that we have defined functions, every function is itself
+an entity.  This means that we can have sets that contain
+functions.  We can even have a function whose domain and
+range are sets of functions.  Similarly, the domain or
+range of a function might be a set of sets, or a set of
+ordered pairs.  Computer scientists
+have a good name for this.  They would say that sets, ordered pairs, and
+functions are \nw[first-class object]{first-class objects}.  Once a set, ordered pair, or function
+has been defined, it can be used just like any other entity.
+If they were not first-class objects, there could be restrictions
+on the way they can be used.  For example, it might not be
+possible to use functions as members of sets. (This would make them
+``second class.'')
+
+For example, suppose that $A$, $B$, and $C$ are sets.  Then
+since $A\times B$ is a set, we might have a function
+$f\colon A\times B\to C$.  If $(a,b)\in A\times B$, then
+the value of $f$ at $(a,b)$ would be denoted $f((a,b))$.
+In practice, though, one set of parentheses is usually dropped,
+and the value of $f$ at $(a,b)$ is denoted $f(a,b)$.
+As a particular example, we might define a function
+$p\colon \N\times\N\to\N$ with the formula $p(n,m)=nm+1$.
+Similarly, we might define a function
+$q\colon \N\times\N\times\N\to\N\times\N$ by
+$q(n,m,k)=(nm-k,nk-n)$.
+
+Suppose that $A$ and $B$ are sets.  There are, in general, many
+functions that map $A$ to~$B$.  We can gather all those functions
+into a set.  This set, whose elements are
+all the functions from $A$ to $B$, is denoted~$B^A$.\index{set!of functions from $A$ to $B$}
+(We'll see later why this notation is reasonable.)  Using this notation,
+saying $f\colon A\to B$ is exactly the same as saying
+$f\in B^A$.  Both of these notations assert that $f$ is a function
+from $A$ to~$B$.  Of course, we can also form an unlimited number
+of other sets, such as the power set $\POW\big(B^A\big)$,
+the cross product $B^A\times A$, or the set $A^{A\times A}$,
+which contains all the functions from the set $A\times A$
+to the set~$A$.  And of course, any of these sets can be
+the domain or range of a function.  An example of this
+is the function ${\mathscr E}\colon B^A\times A\to B$ defined
+by the formula ${\mathscr E}(f,a) = f(a)$.  Let's see if
+we can make sense of this notation.  Since the domain of
+${\mathscr E}$ is $B^A\times A$, an element in the domain
+is an ordered pair in which the first coordinate is a function
+from $A$ to $B$ and the second coordinate is an element of~$A$.
+Thus, ${\mathscr E}(f,a)$ is defined for a function $f\colon A\to B$
+and an element $a\in A$.  Given such an $f$ and $a$, the notation
+$f(a)$ specifies an element of~$B$, so the definition of
+${\mathscr E}(f,a)$ as $f(a)$ makes sense.  The function ${\mathscr E}$
+is called the ``evaluation function'' since it captures the idea
+of evaluating a function at an element of its domain.
+
+
+
+\begin{exercises}
+
+\problem Let $A=\{1,2,3,4\}$ and let $B=\{a,b,c\}$.
+Find the sets $A\times B$ and $B\times A$.
+
+\problem Let $A$ be the set $\{a,b,c,d\}$.  Let $f$ be the
+function from $A$ to $A$ given by the set of ordered pairs
+$\{(a,b),(b,b),(c,a),(d,c)\}$, and let $g$ be the function
+given by the set of ordered pairs $\{(a,b),(b,c),(c,d),(d,d)\}$.
+Find the set of ordered pairs for the composition $g\circ f$.
+
+\problem Let $A=\{a,b,c\}$ and let $B=\{0,1\}$.  Find all
+possible functions from $A$ to $B$.  Give each function as
+a set of ordered pairs.  (Hint: Every such function corresponds
+to one of the subsets of $A$.)
+
+\problem Consider the functions from $\Z$ to $\Z$ which are
+defined by the following formulas.  Decide whether each
+function is onto and whether it is one-to-one; prove your answers.  
+\pparts{
+   f(n)=2n&       g(n)=n+1&       h(n)=n^2+n+1\cr\noalign{\smallskip}
+   s(n)=\left\{\begin{tabular}{ll}
+            n/2,&\text{if $n$ is even}\cr
+            (n+1)/2,&\text{if $n$ is odd}
+          \end{tabular}
+        \right.\hidewidth\cr
+}
+
+\problem Prove that composition of functions is an associative
+operation.  That is, prove that for functions
+$f\colon A\to B$, $g\colon B\to C$, and $h\colon C\to D$,
+the compositions $(h\circ g)\circ f$ and $h\circ(g\circ f)$
+are equal.
+
+\problem 
+Suppose that $f\colon A\to B$ and $g\colon B\to C$ are
+functions and that $g\circ f$ is one-to-one.  
+\ppart Prove that $f$ is one-to-one. (Hint: use a proof by contradiction.)
+\ppart Find
+a specific example that shows that $g$ is not necessarily
+one-to-one.
+
+\problem Suppose that $f\colon A\to B$ and $g\colon B\to C$,
+and suppose that the composition $g\circ f$ is an onto
+function.  
+\ppart Prove that $g$ is an onto function.  
+\ppart Find
+a specific example that shows that $f$ is not necessarily
+onto.
+
+
+
+\end{exercises}
+
+
+
+\section{Application: Programming with Functions}\label{S-sets-5}
+
+Functions are fundamental in computer programming,\index{function!in computer programming}
+although not everything in programming that goes by the name of ``function''
+is a function according to the mathematical definition.
+
+In computer programming, a function is a routine that is given 
+some data as input and that will calculate and return an
+answer based on that data.  For example, in the C++ programming
+language, a function that calculates the square of an integer
+could be written
+\begin{verbatim}
+            int square(int n) {
+               return n*n;
+            }
+\end{verbatim}
+In C++, \textit{int} is a data type.  From the mathematical
+point of view, a data type is a set.  The data type \textit{int}
+is the set of all integers that can be represented as 32-bit 
+binary numbers.  Mathematically, then, $\textit{int}\SUB\Z$.
+(You should get used to the fact that sets and functions can
+have names that consist of more than one character, since
+it's done all the time in computer programming.)
+The first line of the above function definition,
+``\verb=int square(int n)='', says that we are defining
+a function named square whose range is \textit{int}
+and whose domain is \textit{int}.  In the usual notation for
+functions, we would express this as $\textit{square}\colon \textit{int}\to\textit{int}$,
+or possibly as $\textit{square}\in{\textit{int}}^{\textit{\small{int}}}$,
+where ${\textit{int}}^{\textit{\small{int}}}$ is the set of all
+functions that map the set \textit{int} to the set \textit{int}.
+
+The first line of the function, \verb=int square(int n)=, is called
+the \nw{prototype} of the function.  The prototype specifies the
+name, the domain, and the range of the function and so carries
+exactly the same information as the notation ``$f\colon A\to B$''.
+The ``$n$'' in ``\verb=int square(int n)='' is a name for
+an arbitrary element of the data type \textit{int}.  In computer
+jargon, $n$ is called a \nw{parameter} of the function.
+The rest of the definition of \textit{square} tells the computer
+to calculate the value of $\textit{square}(n)$ for any $n\in\textit{int}$
+by multiplying $n$ times~$n$.  The statement ``\verb=return n*n=''
+says that $n*n$ is the value that is computed, or ``returned,''
+by the function.  (The $*$ stands for multiplication.)
+
+C++ has many data types in addition to \textit{int}.  There is
+a boolean data type named \textit{bool}.  The values of type
+\textit{bool} are \textit{true} and \textit{false}.  Mathematically,
+\textit{bool} is a name for the set $\{\textit{true},\,\textit{false}\}$.
+The type \textit{float} consists of real numbers, which can
+include a decimal point.  Of course, on a computer, it's not
+possible to represent the entire infinite set of real numbers,
+so \textit{float} represents some subset of the mathematical set
+of real numbers.  There is also a data type whose values are
+strings of characters, such as ``Hello world'' or ``xyz152QQZ''.
+The name for this data type in C++ is \textit{string}.  All these
+types, and many others, can be used in functions.  For example,
+in C++, $m\,\%\,n$ is the remainder when the integer $m$ is
+divided by the integer $n$.  We can define a function to test
+whether an integer is even as follows:
+\begin{verbatim}
+            bool even(int k) {
+               if ( k % 2 == 1 )
+                  return false;
+               else
+                  return true;
+            }
+\end{verbatim}
+You don't need to worry about all the details here, but you should
+understand that the prototype, \verb=bool even(int k)=,
+says that \textit{even} is a function from the set \textit{int}
+to the set \textit{bool}.  That is,
+$\textit{even}\colon\textit{int}\to\textit{bool}$.  Given
+an integer $N$, $\textit{even}(N)$ has the value \textit{true}
+if $N$ is an even integer, and it has the value \textit{false}
+if $N$ is an odd integer.
+
+A function can have more than one parameter.  For example, we might
+define a function with prototype \verb=int index(string str, string sub)=.
+If $s$ and $t$ are strings, then \textit{index}$(s,t)$ would be the
+\textit{int} that is the value of the function at the ordered pair
+$(s,t)$.  We see that the domain of index is the cross product
+$\textit{string}\times\textit{string}$, and we can write
+$\textit{index}\colon \textit{string}\times\textit{string}\to\textit{int}$
+or, equivalently, $\textit{index}\in\textit{int}^{\textit{string}\times\textit{string}}$.
+
+\medbreak
+
+Not every C++ function is actually a function in the mathematical
+sense.  In mathematics, a function must associate a single value in
+its range to each value in its domain.  There are two things
+that can go wrong:  The value of the function might not be defined
+for every element of the domain, and the function might associate
+several different values to the same element of the domain.
+Both of these things can happen with C++ functions.
+
+In computer programming, it is very common for a ``function'' to be
+undefined for some values of its parameter.  In mathematics,
+a \nw{partial function}\index{function!partial} from a set $A$ to
+a set $B$ is defined to be a function from a subset of $A$ to~$B$.
+A partial function from $A$ to $B$ can be undefined for some
+elements of $A$, but when it is defined for some $a\in A$,
+it associates just one element of $B$ to~$a$.  Many functions
+in computer programs are actually partial functions.  (When 
+dealing with partial functions, an ordinary function, which is
+defined for every element of its domain, is sometimes referred to
+as a \nw{total function}.  Note that---with the mind-boggling
+logic that is typical of mathematicians---a total function is
+a type of partial function, because a set is a subset of itself.)
+
+It's also very common for a ``function'' in a computer program
+to produce a variety of values for the same value of its parameter.
+A common example is a function with prototype
+\verb=int random(int N)=, which returns a random integer between
+1 and~$N$.  The value of \textit{random}(5) could be 1, 2, 3, 4, or~5.
+This is not the behavior of a mathematical function!
+
+Even though many functions in computer programs are not really
+mathematical functions, I will continue to refer to them as
+functions in this section.  Mathematicians will just have to stretch
+their definitions a bit to accommodate the realities of computer
+programming.
+
+\medbreak
+
+In most programming languages, functions are not first-class
+objects\index{first-class object}.  That is, a function cannot
+be treated as a data value in the same way as a \textit{string}
+or an \textit{int}.  However, C++ does take a step in this
+direction.  It is possible for a function to be a parameter
+to another function.  For example, consider the function
+prototype
+\begin{verbatim}
+            float sumten( float f(int) )
+\end{verbatim}
+This is a prototype for a function named \textit{sumten} whose
+parameter is a function.  The parameter is specified by the
+prototype ``\verb=float f(int)=''.  This means that the parameter
+must be a function from \textit{int} to \textit{float}.  The parameter
+name, $f$, stands for an arbitrary such function.  Mathematically,
+$f\in \textit{float}^{\textit{int}}$, and so
+$\textit{sumten}\colon \textit{float}^{\textit{int}}\to\textit{float}$.
+
+My idea is that \textit{sumten}($f$) would compute
+$f(1)+f(2)+\cdots+f(10)$.  A more useful function would
+be able to compute $f(a)+f(a+1)+\cdots+f(b)$ for any integers
+$a$ and~$b$.  This just means that $a$ and $b$ should be
+parameters to the function.  The prototype for the improved
+function would look like
+\begin{verbatim}
+            float sum( float f(int), int a, int b )
+\end{verbatim}
+The parameters to \textit{sum} form an ordered triple in which
+the first coordinate is a function and the second and third
+coordinates are integers.  So, we could write
+\[\textit{sum}\colon \textit{float}^{\textit{int}}
+       \times\textit{int}\times\textit{int}\to\textit{float}\]
+It's interesting that computer programmers deal routinely
+with such complex objects.
+
+\medskip
+
+One thing you can't do in C++ is write a function that creates
+new functions from scratch.  The only functions that exist
+are those that are coded into the source code of the program.
+There are programming languages that do allow new functions to
+be created from scratch while a program is running.  In such
+languages, functions are first-class objects.  These languages
+support what is called \nw{functional programming}.  
+
+One of the most accessible languages that supports functional programming
+is JavaScript, a language that is used on Web pages.  (Although
+the names are similar, JavaScript and Java are only distantly
+related.)  In JavaScript, the function that computes the
+square of its parameter could be defined as
+\begin{verbatim}
+            function square(n) {
+               return n*n;
+            }
+\end{verbatim}
+This is similar to the C++ definition of the same function, but
+you'll notice that no type is specified for the parameter $n$ or
+for the value computed by the function.  Given this definition
+of \text{square}, \textit{square}($x$) would be legal for any
+$x$ of any type.  (Of course, the value of \textit{square}($x$)
+would be undefined for most types, so \textit{square} is
+a \emph{very} partial function, like most functions in JavaScript.)
+In effect, all possible data values in JavaScript are bundled
+together into one set, which I will call \textit{data}.
+We then have $\textit{square}\colon \textit{data}\to \textit{data}$.\footnote{Not
+all functional programming languages lump data types together
+in this way.  There is a functional programming language
+named Haskell, for example, that is as strict about types as C++.
+For information about Haskell, see http://www.Haskell.org/.}
+
+In JavaScript, a function really is a first-class object.  We can 
+begin to see this by looking at an alternative definition of the
+function \textit{square}:
+\begin{verbatim}
+            square = function(n) { return n*n; }
+\end{verbatim}
+Here, the notation ``\verb=function(n) { return n*n; }='' creates
+a function that computes the square of its parameter, but it doesn't
+give any name to this function.  This function object is then
+assigned to a variable named \textit{square}.  The value of
+\textit{square} can be changed later, with another assignment
+statement, to a different function or even to a different type
+of value.  This notation for creating function objects can
+be used in other places besides assignment statements.  Suppose,
+for example, that a function with prototype
+\verb=function sum(f,a,b)= has been defined in a JavaScript
+program to compute $f(a)+f(a+1)+\cdots+f(b)$.  Then
+we could compute $1^2+2^2+\cdots+100^2$ by saying
+\begin{verbatim}
+            sum( function(n) { return n*n; }, 1, 100 )
+\end{verbatim}
+Here, the first parameter is the function that computes
+squares.  We have created and used this function
+without ever giving it a name.
+
+It is even possible in JavaScript for a function to return
+another function as its value.  For example,
+\begin{verbatim}
+            function monomial(a, n) {
+               return ( function(x) { a*Math.pow(x,n); } );
+            }
+\end{verbatim}
+Here, \verb=Math.pow(x,n)= computes $x^n$, so for any
+numbers $a$ and $n$, the value of \textit{monomial}($a$,$n$) is 
+a function that computes $ax^n$.  Thus,
+\begin{verbatim}
+            f = monomial(2,3);
+\end{verbatim}
+would define $f$ to be the function that satisfies $f(x)=2x^3$,
+and if \textit{sum} is the function described above, then
+\begin{verbatim}
+            sum( monomial(8,4), 3, 6 )
+\end{verbatim}
+would compute $8*3^4+8*4^4+8*5^4+8*6^4$.  In fact, \textit{monomial}
+can be used to create an unlimited number of new functions
+from scratch.  It is even possible to write \textit{monomial}(2,3)(5)
+to indicate the result of applying the function \textit{monomial}(2,3)
+to the value 5.  The value represented by \textit{monomial}(2,3)(5)
+is $2*5^3$, or 250.  This is real functional programming and
+might give you some idea of its power.
+
+
+
+\begin{exercises}
+
+\problem For each of the following C++ function prototypes, translate the
+prototype into a standard mathematical function specification, such
+as $\textit{func}\colon\textit{float}\to\textit{int}$.
+\tparts {
+   \texttt{int strlen(string s)}\cr
+   \texttt{float pythag(float x, float y)}\cr
+   \texttt{int round(float x)}\cr
+   \texttt{string sub(string s, int n, int m)}\cr
+   \texttt{string unlikely( int f(string) )}\hidewidth\cr
+   \texttt{int h( int f(int), int g(int) )}\hidewidth\cr
+}
+
+\problem Write a C++ function prototype for a function that
+belongs to each of the following sets.
+
+\smallskip
+
+\pparts {
+   \textit{string}^{\textit{string}}\cr\noalign{\smallskip}
+   \textit{bool}^{\textit{float}\times\textit{float}}\cr\noalign{\smallskip}
+   \textit{float}^{ \textit{int}^{\textit{int}} }\cr
+}
+
+\problem It is possible to define new types in C++.  For example, the
+definition
+\begin{verbatim}
+               struct point {
+                  float x;
+                  float y;
+               }
+\end{verbatim}
+defines a new type named \textit{point}.  A value of type \textit{point}
+contains two values of type \textit{float}.  What mathematical operation
+corresponds to the construction of this data type?  Why?
+
+\problem Let \textit{square}, \textit{sum} and \textit{monomial}
+be the JavaScript functions described in this section.  What is the
+value of each of the following?
+\tparts {
+   \textit{sum}(\textit{square}, 2, 4)\cr
+   \textit{sum}(\textit{monomial}(5,2), 1, 3)\cr
+   \textit{monomial}(\textit{square}(2), 7)\cr
+   \textit{sum}(function($n$) $\{$ return $2*n$; $\}$, 1, 5)\cr
+   \textit{square}(\textit{sum}(\textit{monomial}(2,3), 1, 2))
+}
+
+
+\problem Write a JavaScript function named \textit{compose}
+that computes the composition of two functions.  That
+is, \textit{compose}($f$,$g$) is $f\circ g$, where
+$f$ and $g$ are functions of one parameter.  Recall that
+$f\circ g$ is the function defined by $(f\circ g)(x)=f(g(x))$.
+
+\end{exercises}
+
+
+
+
+
+\section{Counting Past Infinity}\label{S-sets-6}
+
+As children, we all learned to answer the question ``How many?''
+by counting with numbers: 1, 2, 3, 4,~\dots.  But the question of
+``How many?'' was asked and answered long before the abstract concept of
+number was invented.  The answer can be given in terms of ``as many as.''
+How many cousins do you have?  As many cousins as I have fingers on both
+hands.  How many sheep do you own?  As many sheep as there are notches
+on this stick.  How many baskets of wheat must I pay in taxes?
+As many baskets as there are stones in this box.  The question
+of how many things are in one collection of objects is answered
+by exhibiting another, more convenient, collection of objects
+that has just as many members.  
+
+In set theory, the idea of one set having just as many members
+as another set is expressed in terms of \nw{one-to-one
+correspondence}.  A one-to-one correspondence between two sets
+$A$ and $B$ pairs each element of $A$ with an element of $B$
+in such a way that every element of $B$ is paired with one and
+only one element of~$A$.  The process of counting, as it is learned
+by children, establishes a one-to-one correspondence between a set of 
+$n$ objects and the set of numbers from 1 to~$n$.  The rules
+of counting are the rules of one-to-one correspondence:
+Make sure you count every object, make sure you don't count
+the same object more than once.  That is, make sure that
+each object corresponds to \emph{one} and \emph{only one} number.
+Earlier in this chapter,
+we used the fancy name ``bijective function''\index{bijective function}
+to refer to this idea, but we can now see it as
+as an old, intuitive way of answering the question ``How many?''
+
+\medbreak
+
+In counting, as it is learned in childhood, the set $\{1,2,3,\dots,n\}$
+is used as a typical set that contains $n$ elements.  In mathematics
+and computer science, it has become more common to start counting with
+zero instead of with one, so we define the following sets to use
+as our basis for counting:
+\begin{center}
+\begin{tabular}{@{\qquad\qquad}ll}
+   $N_0=\emptyset$,& a set with 0 elements\\
+   $N_1=\{0\}$,& a set with 1 element\\
+   $N_2=\{0,1\}$,& a set with 2 elements\\
+   $N_3=\{0,1,2\}$,& a set with 3 elements\\
+   $N_4=\{0,1,2,3\}$,& a set with 4 elements\\
+\end{tabular}
+\end{center}
+\noindent and so on.  In general, $N_n=\{0,1,2,\dots,n-1\}$ for each $n\in\N$.
+For each natural number $n$, $N_n$ is a set with $n$ elements.
+Note that if $n\not= m$, then there is no one-to-one correspondence
+between $N_n$ and $N_m$.  This is obvious, but like many obvious things
+is not all that easy to prove rigorously, and we omit the argument here. 
+
+\begin{theorem}
+For each $n\in\N$, let $N_n$ be the set $N_n=\{0,1,\dots,n-1\}$.
+If $n\not=m$, then there is no bijective function from $N_m$ to $N_n$.
+\end{theorem}
+
+
+We can now make the following definitions:
+
+\begin{definition}
+A set $A$ is said to be \nw[finite set]{finite} if there is a one-to-one
+correspondence between $A$ and $N_n$ for some natural number~$n$.  We then
+say that $n$ is the \nw{cardinality} of~$A$.  The notation $|A|$ is
+used to indicate the cardinality of~$A$.  That is, if $A$ is a finite set,
+then $|A|$ is the natural number $n$ such that there is a one-to-one
+correspondence between $A$ and $N_n$.  A set that is not finite is
+said to be \nw[infinite set]{infinite}.  That is, a set $B$ is infinite
+if for every $n\in \N$, there is \emph{no} one-to-one correspondence between
+$B$ and~$N_n$.
+\end{definition}
+
+Fortunately, we don't always have to count every element in a set individually
+to determine its cardinality.  Consider, for example, the set $A\times B$,
+where $A$ and $B$ are finite sets.  If we already know $|A|$ and~$|B|$,
+then we can determine $|A\times B|$ by computation, without explicit counting of elements.
+In fact, $|A\times B|=|A|\cdot |B|$.  The cardinality of the cross product
+$A\times B$ can be computed by multiplying the cardinality of $A$ by
+the cardinality of $B$.  To see why this is true, think of how you might
+count the elements of $A\times B$.  You could put the elements into piles,
+where all the ordered pairs in a pile have the same first coordinate.  There
+are as many piles as there are elements of $A$, and each pile contains
+as many ordered pairs as there are elements of~$B$.  That is, there
+are $|A|$ piles, with $|B|$ items in each.  By the definition of multiplication,
+the total number of items in all the piles is $|A|\cdot|B|$.
+A similar result holds for the cross product of more that two finite sets.
+For example, $|A\times B\times C|=|A|\cdot |B|\cdot |C|$.
+
+It's also easy to compute $|A\cup B|$ in the case where $A$ and $B$ are
+disjoint finite sets.  (Recall that two sets $A$ and $B$ are said to be
+disjoint if they have no members in common, that is, if $A\cap B=\emptyset$.)
+Suppose $|A|=n$ and $|B|=m$.  If we wanted to count the elements of $A\cup B$,
+we could use the $n$ numbers from 0 to $n-1$ to count the elements of $A$
+and then use the $m$ numbers from $n$ to $n+m-1$ to count the elements of
+$B$.  This amounts to a one-to-one correspondence between $A\cup B$
+and the set $N_{n+m}$.  We see that $|A\cup B|=n+m$.  That is,
+for disjoint finite sets $A$ and $B$, $|A\cup B|=|A|+|B|$.
+
+What about $A\cup B$, where $A$ and $B$ are not disjoint?  We have to be
+careful not to count the elements of $A\cap B$ twice.  After counting
+the elements of $A$, there are only $|B|-|A\cap B|$ new elements in $B$ that
+still need to be counted.  So we see that for any two finite sets $A$ and $B$,
+$|A\cup B|=|A|+|B|-|A\cap B|$.
+
+What about the number of subsets of a finite set $A$?  What is the relationship
+between $|A|$ and $|\POW(A)|$?  The answer is provided by the following theorem.
+
+\begin{theorem}\label{T-subsetct}
+A finite set with cardinality $n$  has $2^n$ subsets.
+\end{theorem}
+\begin{proof}
+Let $P(n)$ be the statement ``Any set with cardinality $n$ has $2^n$
+subsets.''  We will use induction to show that $P(n)$ is true
+for all $n\in N$.
+
+Base case:  For $n=0$, $P(n)$ is the statement that a set with
+cardinality 0 has $2^0$ subsets.  The only set with 0 elements is
+the empty set.  The empty set has exactly 1 subset, namely itself.
+Since $2^0=1$, $P(0)$ is true.
+
+Inductive case:  Let $k$ be an arbitrary element of $\N$, and
+assume that $P(k)$ is true.  That is, assume that any set with
+cardinality $k$ has $2^k$ elements.  (This is the induction
+hypothesis.)  We must show that $P(k+1)$
+follows from this assumption.  That is, using the assumption
+that any set with cardinality $k$ has $2^k$ subsets, we must show that any
+set with cardinality $k+1$ has $2^{k+1}$ subsets.
+
+Let $A$ be an arbitrary set with cardinality $k+1$. 
+We must show that $|\POW(A)|=2^{k+1}$.   Since $|A|>0$,
+$A$ contains at least one element.  Let $x$ be
+some element of $A$, and let $B=A\SETDIFF\{x\}$.  The cardinality of
+$B$ is $k$, so we have by the induction hypothesis that $|\POW(B)|=2^k$.
+Now, we can divide the subsets of $A$ into two classes: subsets of
+$A$ that do not contain $x$ and subsets of $A$ that do contain $x$.
+Let $Y$ be the collection of subsets of $A$ that do not contain $x$,
+and let $X$ be the collection of subsets of $A$ that do contain $x$.
+$X$ and $Y$ are disjoint, since it is impossible for a given subset
+of $A$ both to contain and to not contain~$x$. It follows that
+$|\POW(A)|=|X\cup Y|=|X|+|Y|$.
+
+Now, a member of $Y$ is a subset of $A$ that does not contain $x$.
+But that is exactly the same as saying that a member of $Y$ is
+a subset of $B$. So $Y=\POW(B)$, which we know contains $2^k$ members.
+As for $X$, there is a one-to-one correspondence between $\POW(B)$
+and $X$.  Namely, the function $f\colon\POW(B)\to X$ defined by
+$f(C)=C\cup \{x\}$ is a bijective function.  (The proof of this
+is left as an exercise.)  From this, it follows that
+$|X|=|\POW(B)|=2^k$.  Putting these facts together, we see that
+$|\POW(A)|=|X|+|Y|=2^k+2^k=2\cdot2^k=2^{k+1}$.  This completes the
+proof that $P(k)\IMP P(k+1)$.
+\end{proof}
+
+We have seen that
+the notation $A^B$ represents the set of all functions from $B$ to~$A$.
+Suppose $A$ and $B$ are finite, and that $|A|=n$ and $|B|=m$.
+Then $\left|A^B\right|=n^m=|A|^{|B|}$.  (This fact is one of the
+reasons why the notation $A^B$ is reasonable.)
+One way to see this is to note that there is a one-to-one correspondence
+between $A^B$ and a cross product $A\times A\times\cdots A$, where the
+number of terms in the cross product is $m$.  (This will be shown in
+one of the exercises at the end of this section.)  It follows that
+$\left|A^B\right|=|A|\cdot|A|\cdots|A|=n\cdot n\cdots n$, where the 
+factor $n$ occurs $m$ times in the product.  This product is,
+by definition,~$n^m$.   
+  
+
+This discussion about computing cardinalities is summarized in the following
+theorem:
+\begin{theorem}
+Let $A$ and $B$ be finite sets.  Then
+\begin{itemize}
+   \item $|A\times B|=|A|\cdot |B|$.
+   
+   \item $|A\cup B|= |A|+|B|-|A\cap B|$.
+   
+   \item If $A$ and $B$ are disjoint then $|A\cup B|= |A|+|B|$.
+   
+   \item $\left|A^B\right|=|A|^{|B|}$.
+   
+   \item $|\POW(A)|=2^{|A|}$.
+\end{itemize}
+\end{theorem}
+When it comes to counting and computing cardinalities, this theorem is
+only the beginning of the story.  There is an entire large and deep branch of
+mathematics known as \nw{combinatorics} that is devoted mostly to the problem
+of counting.  But the theorem is already enough to answer many questions
+about cardinalities.
+
+For example, suppose that $|A|=n$ and $|B|=m$.  We can form the set
+$\POW(A\times B)$, which consists of all subsets of $A\times B$.  Using
+the theorem, we can compute that $|\POW(A\times B)|=2^{|A\times B|}=2^{|A|\cdot|B|}=2^{nm}$.
+If we assume that $A$ and $B$ are disjoint, then we can compute that
+$\left|A^{A\cup B}\right|=|A|^{|A\cup B|}=n^{n+m}$.
+
+To be more concrete, let $X=\{a,b,c,d,e\}$ and let
+$Y=\{c,d,e,f\}$ where $a$, $b$, $c$, $d$, $e$, and $f$ are distinct.
+Then $|X\times Y|=5\cdot 4=20$ while $|X\cup Y|=5 + 4 - |\{c,d,e\}| = 6$
+and $\left|X^Y\right|=5^4=625$.
+
+We can also answer some simple practical questions.  Suppose that in
+a restaurant you can choose one appetizer and one main course.  What is the
+number of possible meals?  If $A$ is the set of possible appetizers and $C$ is the
+set of possible main courses, then your meal is an ordered pair belonging
+to  the set $A\times C$.  The number of possible meals is $|A\times C|$,
+which is the product of the number of appetizers and the number of main courses.
+
+Or suppose that four different prizes are to be awarded, and that the set of people
+who are eligible for the prizes is~$A$.  Suppose that $|A|=n$.
+How many different ways are there
+to award the prizes?  One way to answer this question is to view a way of
+awarding the prizes as a function from the set of prizes to the set of people.
+Then, if $P$ is the set of prizes, the number of different ways of awarding
+the prizes is $\left|A^P\right|$.  Since $|P|=4$ and $|A|=n$, this is $n^4$.  Another
+way to look at it is to note that the people who win the prizes form
+an ordered tuple $(a,b,c,d)$, which is an element of $A\times A\times A\times A$.
+So the number of different ways of awarding the prizes is
+$|A\times A\times A\times A|$, which is $|A|\cdot |A|\cdot |A|\cdot |A|$.  This
+is $|A|^4$, or $n^4$, the same answer we got before.\footnote{This discussion assumes that one person can 
+receive any number of prizes.
+What if the prizes have to go to four different people?   This question
+takes us a little farther into combinatorics than I would like to go,
+but the answer is not hard.  The first award can be given to any of $n$
+people.  The second prize goes to one of the remaining $n-1$ people.  There
+are $n-2$ choices for the third prize and $n-3$ for the fourth.  The
+number of different ways of awarding the prizes to four different people
+is the product $n(n-1)(n-2)(n-3)$.}
+
+\medbreak
+
+So far, we have only discussed finite sets.  $\N$, the set of natural
+numbers $\{0,1,2,3,\dots\}$, is an example of an infinite set.  There
+is no one-to-one correspondence between $\N$ and any of the finite sets~$N_n$.  
+Another example of an infinite set is the set of even natural numbers,
+$E=\{0,2,4,6,8,\dots\}$.  There is a natural sense in which the sets $\N$
+and $E$ have the same number of elements.  That is, there is a one-to-one
+correspondence between them.  The function $f\colon \N\to E$ defined
+by $f(n)=2n$ is bijective.  We will say that $\N$ and $E$ have the same
+cardinality,\index{cardinality} even though that cardinality is not
+a finite number.  Note that $E$ is a proper subset of $\N$.  That is,
+$\N$ has a proper subset that has the same cardinality as~$\N$.
+
+We will see that not all infinite sets have the same cardinality.  When it
+comes to infinite sets, intuition is not always a good guide.  Most people
+seem to be torn between two conflicting ideas.  On the one hand, they think, it seems
+that a proper subset of a set should have fewer elements than the set itself.
+On the other hand, it seems that any two infinite sets should have the same
+number of elements.  Neither of these is true, at least if we define
+having the same number of elements in terms of one-to-one correspondence.
+
+A set $A$ is said to be \nw{countably infinite} if there is a one-to-one
+correspondence between $\N$ and $A$.  A set is said to be
+\nw[countable set]{countable} if it is either finite or countably infinite.
+An infinite set that is not countably infinite is said to be
+\nw[uncountable set]{uncountable}.  If $X$ is an uncountable set, then there
+is no one-to-one correspondence between $\N$ and $X$.  
+
+The idea of ``countable infinity''
+is that even though a countably infinite set cannot be counted
+in a finite time, we can imagine counting all the elements of $A$,
+one-by-one, in an infinite process.  A bijective function
+$f\colon\N\to A$ provides such an infinite listing:
+$(f(0),f(1),f(2),f(3),\dots)$.  Since $f$ is onto, this infinite list
+includes all the elements of $A$.  In fact, making such a list effectively
+shows that $A$ is countably infinite, since the list amounts to a bijective
+function from $\N$ to $A$.  For an uncountable set, it is
+impossible to make a list, even an infinite list, that contains all the
+elements of the set.
+
+Before you start believing in uncountable sets, you should ask for
+an example.  In Chapter~\ref{C-proof}, we worked with the infinite
+sets $\Z$ (the integers), $\Q$ (the rationals), $\R$ (the reals), and
+$\R\SETDIFF\Q$ (the irrationals).  Intuitively, these are all ``bigger''
+than $\N$, but as we have already mentioned, intuition is a poor guide
+when it comes to infinite sets.  Are any of $\Z$, $\Q$, $\R$, and $\R\SETDIFF\Q$
+in fact uncountable?
+
+It turns out that both $\Z$ and $\Q$ are only countably infinite.
+The proof that $\Z$ is countable is left as an exercise; we 
+will show here that the set of non-negative
+rational numbers is countable.  (The fact that $\Q$ itself is countable 
+follows easily from this.)  The reason is that it's possible to make
+an infinite list containing all the non-negative rational numbers.  Start the
+list with all the non-negative rational numbers $n/m$ such that $n+m=1$.  There
+is only one such number, namely $0/1$.  Next come numbers with
+$n+m=2$.  They are $0/2$ and $1/1$, but we leave out $0/2$ since
+it's just another way of writing $0/1$, which is already in the
+list.  Now, we add the numbers with $n+m=3$, namely
+$0/3$, $1/2$, and $2/1$.  Again, we leave out $0/3$, since it's
+equal to a number already in the list.  Next come numbers
+with $n+m=4$.  Leaving out $0/4$ and $2/2$ since they are already
+in the list, we add $1/3$ and $3/1$ to the list.  We continue
+in this way, adding numbers with $n+m=5$, then numbers with
+$n+m=6$, and so on.  The list looks like
+\[
+    \left( {\,0\,\over 1}, {\,1\,\over 1}, {\,1\,\over 2}, {\,2\,\over 1},
+            {\,1\,\over 3}, {\,3\,\over 1}, {\,1\,\over 4}, {\,2\,\over 3},
+              {\,3\,\over 2}, {\,4\,\over 1}, {\,1\,\over 5},
+               {\,5\,\over 1}, {\,1\,\over 6}, {\,2\,\over 5},\dots
+    \right)
+\]
+This process can be continued indefinitely, and every non-negative rational
+number will eventually show up in the list.  So we get a
+complete, infinite list of non-negative rational numbers.  This shows that
+the set of non-negative rational numbers is in fact countable.
+
+On the other hand, $\R$ is uncountable.  It is not possible to
+make an infinite list that contains every real number.  It is
+not even possible to make a list that contains every real
+number between zero and one.  Another way of saying this is that
+every infinite list of real numbers between zero and one, no 
+matter how it is constructed, leaves something out.  To see why
+this is true, imagine such a list, displayed in an infinitely long
+column.  Each row contains one number, which has an infinite
+number of digits after the decimal point.  Since it is a number
+between zero and one, the only digit before the decimal point is
+zero.  For example, the list might look like this:
+\begin{center}
+\begin{tabular}{l}
+    0.\textbf{9}0398937249879561297927654857945\dots\\
+    0.1\textbf{2}349342094059875980239230834549\dots\\
+    0.22\textbf{4}00043298436234709323279989579\dots\\
+    0.500\textbf{0}0000000000000000000000000000\dots\\
+    0.7774\textbf{3}449234234876990120909480009\dots\\
+    0.77755\textbf{5}55588888889498888980000111\dots\\
+    0.123456\textbf{7}8888888888888888800000000\dots\\
+    0.3483544\textbf{0}009848712712123940320577\dots\\
+    0.93473244\textbf{4}47900498340999990948900\dots\\
+    \qquad $\vdots$
+\end{tabular}
+\end{center}
+This is only (a small part of) one possible list.  How can we be certain
+that \emph{every} such list leaves out some real number between
+zero and one?  The trick is to look at the digits shown in bold face.
+We can use these digits to build a number that is not in the
+list.  Since the first number in the list has a 9 in the first
+position after the decimal point, we know that this number
+cannot equal any number of, for example, the form 0.4\dots.  Since the second
+number has a 2 in the second position after the decimal point,
+\emph{neither} of the first two numbers in the list is
+equal to any number that begins with 0.44\dots.  Since the third
+number has a 4 in the third position after the decimal point,
+\emph{none} of the first three numbers in the list is equal to any
+number that begins 0.445\dots.  We can continue to construct
+a number in this way, and we end up with a number that is different
+from every number in the list.  The $n^{th}$ digit of the number
+we are building must differ from the $n^{th}$ digit of the $n^{th}$ number 
+in the list.  These are the digits shown in bold face in the 
+above list.  To be definite, I use a 5 when the corresponding
+boldface number is 4, and otherwise I use a~4.  For the list
+shown above, this gives a number that begins 0.44544445\dots.
+The number constructed in this way is not in the given list,
+so the list is incomplete.
+The same construction clearly works for any list of real numbers
+between zero and one.  No such list can be a complete listing
+of the real numbers between zero and one, and so there can be
+no complete listing of all real numbers.  We conclude that
+the set $\R$ is uncountable.
+
+The technique used in this argument is called \nw{diagonalization}.
+It is named after the fact that the bold face digits in the above
+list lie along a diagonal line.   This proof was discovered by
+a mathematician named Georg Cantor, who caused quite a fuss in the
+nineteenth century when he came up with the idea that there are
+different kinds of infinity.  Since then, his notion of using
+one-to-one correspondence to define the cardinalities of infinite sets
+has been accepted.  Mathematicians now consider it almost intuitive
+that $\N$, $\Z$, and $\Q$ have the same cardinality while $\R$
+has a strictly larger cardinality.
+
+\medbreak
+\begin{theorem}
+Suppose that $X$ is an uncountable set, and that $K$ is a countable
+subset of $X$.  Then the set $X\SETDIFF K$ is uncountable.
+\end{theorem}
+\begin{proof}
+Let $X$ be an uncountable set.  Let $K\SUB X$, and suppose that
+$K$ is countable.  Let $L=X\SETDIFF K$.  We want to show that
+$L$ is uncountable.  Suppose that $L$ is
+countable.  We will show that this assumption leads to a contradiction.
+
+Note that $X=K\cup(X\SETDIFF K)=K\cup L$.  You will show in Exercise~11
+of this section that the union of two countable
+sets is countable.  Since $X$ is the union of the countable
+sets $K$ and $L$, it follows that $X$ is countable.  But this
+contradicts the fact that $X$ is uncountable.  This contradiction
+proves the theorem. 
+\end{proof}
+
+In the proof, both $q$ and $\NOT q$ are shown to follow from the
+assumptions, where $q$ is the statement ``$X$ is countable.''  The 
+statement $q$ is shown to follow from the assumption that $X\SETDIFF K$ 
+is countable.  The statement $\NOT q$ is true by assumption.
+Since $q$ and $\NOT q$ cannot both be true, at least one of the
+assumptions must be false.  The only assumption that can be false
+is the assumption that $X\SETDIFF K$ is countable.
+
+This theorem, by the way, has the following easy corollary.
+(A \nw{corollary} is a theorem that follows easily from another,
+previously proved theorem.)
+
+\begin{corrolary}
+The set of irrational real numbers is uncountable.
+\end{corrolary}
+\begin{proof}
+Let $I$ be the set of irrational real numbers.  By
+definition, $I=\R\SETDIFF\Q$.  We have already shown that
+$\R$ is uncountable and that $\Q$ is countable, so the result
+follows immediately from the previous theorem.
+\end{proof}
+
+\medbreak
+
+You might still think that $\R$ is as big as things get, that is,
+that any infinite set is in one-to-one correspondence with $\R$ or
+with some subset of~$\R$.  In fact, though, if $X$ is any set
+then it's possible to find a set that has strictly larger
+cardinality than $X$.  In fact, $\POW(X)$ is such a set.
+A variation of the diagonalization technique can be used to
+show that there is no one-to-one correspondence between 
+$X$ and $\POW(X)$.  Note that this is obvious for finite
+sets, since for a finite set $X$, $|\POW(X)| = 2^{|X|}$,
+which is larger than $|X|$.  The point of the theorem is that
+it is true even for infinite sets.
+
+\begin{theorem}\label{T-cardinality}
+Let $X$ be any set.  Then there is no one-to-one correspondence
+between $X$ and $\POW(X)$.
+\end{theorem}
+\begin{proof}
+Given an arbitrary function $f\colon X\to \POW(X)$, we can show that
+$f$ is not onto.  Since a one-to-one correspondence is both
+one-to-one and onto, this shows that $f$ is not a one-to-one
+correspondence.
+
+Recall that $\POW(X)$ is the set of subsets of $X$.  So, for
+each $x\in X$, $f(x)$ is a subset of $X$.  We have to show that
+no matter how $f$ is defined, there is some subset of $X$ that
+is not in the image of $f$.
+
+Given $f$, we define $A$ to be the set $A=\{x\in X\st x\not\in f(x)\}$.
+The test ``$x\not\in f(x)$'' makes sense because $f(x)$ is a set.
+Since $A\SUB X$, we have that $A\in\POW(X)$.  However, $A$ is not in the image
+of $f$.  That is, for every $y\in X$, $A\not=f(y)$.\footnote{In fact, we have
+constructed $A$ so that the sets $A$ and $f(y)$ differ in at least
+one element, namely $y$ itself.  
+This is where the ``diagonalization'' comes in.}
+To see why this
+is true, let $y$ be any element of $X$.  There are two cases
+to consider.  Either $y\in f(y)$ or $y\not\in f(y)$.  We show that
+whichever case holds, $A\not=f(y)$.  If it is true that $y\in f(y)$,
+then by the definition of $A$, $y\not\in A$.  Since $y\in f(y)$ but
+$y\not\in A$, $f(y)$ and $A$ do not have the same elements and 
+therefore are not equal.  On the other hand, suppose that
+$y\not\in f(y)$.  Again, by the definition of $A$, this implies that
+$y\in A$.  Since $y\not\in f(y)$ but $y\in A$, $f(y)$ and $A$ do not 
+have the same elements and therefore are not equal.  In either
+case, $A\not=f(y)$.  Since this is true for any $y\in X$,
+we conclude that $A$ is not in the image of $f$ and therefore
+$f$ is not a one-to-one correspondence.
+\end{proof}
+
+
+From this theorem, it follows that there is no one-to-one
+correspondence between $\R$ and $\POW(\R)$.  The cardinality of $\POW(\R)$
+is strictly bigger than the cardinality of~$\R$. But it doesn't 
+stop there.  $\POW(\POW(\R))$ has an even bigger cardinality,
+and the cardinality of $\POW(\POW(\POW(\R)))$ is bigger still.
+We could go on like this forever, and we still won't have exhausted
+all the possible cardinalities.  If we let ${\mathbb X}$ be the infinite
+union $\R\cup\POW(\R)\cup\POW(\POW(\R))\cup\cdots$, then ${\mathbb X}$
+has larger cardinality than any of the sets in the union.
+And then there's $\POW({\mathbb X})$, $\POW(\POW({\mathbb X}))$, ${\mathbb X}\cup\POW({\mathbb X})\cup
+\POW(\POW({\mathbb X}))\cup\cdots$.  There is no end to this.
+There is no upper limit on possible cardinalities, not even an infinite
+one!  We have counted past infinity.
+
+We have seen that $|\R|$ is strictly larger than $|\N|$.
+We end this section with what might look like
+a simple question:  Is there a subset of $\R$ that is neither in
+one-to-one correspondence with $\N$ nor with $\R$?  That is, is
+the cardinality of $\R$ the \emph{next} largest cardinality after
+the cardinality of $\N$, or are there other cardinalities intermediate
+between them?  This problem was unsolved for quite a while, and
+the solution, when it was found, proved to be completely unexpected.  
+It was shown that both ``yes'' and
+``no'' are consistent answers to this question!  That is, the
+logical structure built on the system of axioms that had been
+accepted as the basis of set theory was not extensive enough to
+answer the question.  It is possible to extend the system in
+various ways.  In some extensions, the answer is yes.  In others,
+the answer is no.  You might object, ``Yes, but which answer is
+true for the \emph{real} real numbers?''  Unfortunately, it's 
+not even clear whether this question makes sense, since
+in the world of mathematics, the real numbers are just part of
+a structure built from a system of axioms.  And it's not at
+all clear whether the ``real numbers'' exist in some sense in the real world.
+If all this sounds like it's a bit of a philosophical muddle,
+it is.  That's the state of things today at the foundation of
+mathematics.
+
+\begin{exercises}
+
+\problem Suppose that $A$, $B$, and $C$ are finite sets which are
+pairwise disjoint.  (That is, $A\cap B=A\cap C=B\cap C=\emptyset$.)
+Express the cardinality of each of the following sets in terms
+of $|A|$, $|B|$, and $|C|$.  Which of your answers depend on
+the fact that the sets are pairwise disjoint?
+\pparts{
+   \POW(A\cup B)&      A\times (B^C)&     \POW(A)\times\POW(C)\cr
+   A^{B\times C}&      (A\times B)^C&     \POW(A^B)\cr
+   (A\cup B)^C&        (A\cup B)\times A& A\times A\times B\times B\cr
+}
+
+\problem Suppose that $A$ and $B$ are finite sets which are not necessarily
+disjoint.  What are all the possible values for $|A\cup B|\,$?
+
+\problem Let's say that an ``identifier'' consists of one or two
+characters.  The fist character is one of the twenty-six letters
+(A, B, \dots, C). The second character, if there is one, is either a letter or
+one of the ten digits (0, 1, \dots, 9).  How many different identifiers
+are there?   Explain your answer in terms of unions and cross products.
+
+\problem Suppose that there are five books that you might bring along to
+read on your vacation.  In how many different ways can you decide which
+books to bring, assuming that you want to bring at least one?  Why?
+
+\problem Show that the cardinality of a finite set is well-defined.
+That is, show that if $f$ is a bijective function from a set $A$ to
+$N_n$, and if $g$ is a bijective function from $A$ to $N_m$, then
+$n=m$.
+
+\problem Finish the proof of Theorem~\ref{T-subsetct} by proving the
+following statement:  Let $A$ be a non-empty set, and let $x\in A$.  
+Let $B=A\SETDIFF\{x\}$.
+Let $X=\{C\SUB A\st x\in C\}$.  Define $f\colon\POW(B)\to X$
+by the formula $f(C)=C\cup\{x\}$.  Show that $f$ is a bijective
+function.
+
+\problem Use induction on the cardinality of $B$ to show that for
+any finite sets $A$ and $B$, $\left|A^B\right|=|A|^{|B|}$.
+(Hint:  For the case where $B\not=\emptyset$, choose $x\in B$,
+and divide $A^B$ into classes according to the value of $f(x)$.)
+
+\problem Let $A$ and $B$ be finite sets with $|A|=n$ and $|B|=m$.
+List the elements of $B$ as $B=\{b_0,b_1,\dots,b_{m-1}\}$.
+Define the function ${\mathscr F}\colon A^B\to A\times A\times\cdots\times A$,
+where $A$ occurs $m$ times in the cross product, by
+${\mathscr F}(f)=\big(f(b_0), f(b_1), \dots,~f(b_{m-1})\big)$.
+Show that ${\mathscr F}$ is a one-to-one correspondence.
+
+\problem Show that $\Z$, the set of integers, is countable by finding
+a one-to-one correspondence between $\N$ and $\Z$.
+
+\problem Show that the set $\N\times\N$ is countable.
+
+\problem Complete the proof of Theorem 2.9 as follows:
+\ppart Suppose that $A$ and $B$ are countably infinite sets.
+Show that $A\cup B$ is countably infinite.
+\ppart Suppose that $A$ and $B$ are countable sets.
+Show that $A\cup B$ is countable.
+
+\problem Prove that each of the following statements is true.
+In each case, use a proof by contradiction.
+\ppart Let $X$ be a countably infinite set, and let $N$ be a finite
+subset of $X$.  Then $X\SETDIFF N$ is countably infinite.
+\ppart Let $A$ be an infinite set, and let $X$ be a subset of $A$.
+Then at least one of the sets $X$ and $A\SETDIFF X$ is infinite.
+\ppart Every subset of a finite set is finite.
+
+\problem Let $A$ and $B$ be sets and let $\perp$ be an entity that is \emph{not}
+a member of $B$.  Show that there is a one-to-one correspondence between
+the set of functions from $A$ to $B\cup\{\perp\}$ and the set of
+partial functions from $A$ to~$B$.  (Partial functions were defined
+in Section~\ref{S-sets-5}.  The symbol ``$\perp$'' is sometimes used in
+theoretical computer science to represent the value ``undefined.'')
+
+\end{exercises}
+
+\section{Relations}\label{S-sets-7}
+
+In Section \ref{S-sets-4}, we saw that ``mother of'' is a functional
+relationship because every person has one and only one mother,
+but that ``child of'' is not a functional relationship,
+because a person can have no children or more than one child.
+However, the relationship expressed by ``child of'' is certainly 
+one that we have a right to be interested in and one
+that we should be able to deal with mathematically.
+
+There are many examples of relationships that are not functional
+relationships.  The relationship that holds between two 
+natural numbers $n$ and $m$ when $n\le m$ is an example in mathematics.
+The relationship between a person and a book that that person has
+on loan from the library is another.  Some relationships
+involve more than two entities, such as the relationship
+that associates a name, an address, and a phone number in
+an address book or the relationship that holds among three
+real numbers $x$, $y$, and $z$ if $x^2+y^2+z^2=1$.  Each of
+these relationships can be represented mathematically by
+what is called a ``relation.''
+
+A \nw{relation} on two sets, $A$ and $B$, is defined to be a subset
+of $A\times B$.  Since a function from $A$ to $B$ is defined, formally, as
+a subset of $A\times B$ that satisfies certain properties, a function
+is a relation.  However, relations are more general than functions,
+since \emph{any} subset of $A\times B$ is a relation.  We also
+define a relation among three or more sets to be a subset of the
+cross product of those sets.  In particular, a relation on
+$A$, $B$, and $C$ is a subset of $A\times B\times C$.
+
+For example, if $P$ is the set of people and $B$ is the set of books owned
+by a library, then we can define a relation ${\mathscr R}$ on the sets
+$P$ and $B$ to be the set ${\mathscr R}=\{(p,b)\in P\times B\,\st\, p$
+has $b$ out on loan$\}$.  The fact that a particular 
+$(p,b)\in{\mathscr R}$ is a fact about the world that the library
+will certainly want to keep track of.  When a collection of
+facts about the world is stored on a computer, it is called
+a database\index{database}.  We'll see in the next section that
+relations are the most common means of representing data in
+databases.
+
+If $A$ is a set and ${\mathscr R}$ is a relation on the sets $A$ and
+$A$ (that is, on two copies of $A$), then $\mathscr R$ is said to be a \nw{binary relation} on
+$A$.  That is, a binary relation on the set $A$ is a subset of
+$A\times A$.  The relation consisting of all ordered pairs
+$(c,p)$ of people such that $c$ is a child of $p$ is a binary
+relation on the set of people.  The set $\{(n,m)\in\N\times\N\st n\le m\}$
+is a binary relation on~$\N$.  Similarly, we define
+a \nw{ternary relation} on a set $A$ to be a subset of $A\times A\times A$.
+The set $\{(x,y,z)\in\R\times\R\times\R\st x^2+y^2+z^2=1\}$ is
+a ternary relation on~$\R$.  For complete generality, we can
+define an \nw{$n$-ary relation} on $A$, for any positive integer $n$,
+to be a subset of $A\times A\times\dots\times A$, where
+$A$ occurs $n$ times in the cross product.
+
+For the rest of this section, we will be working exclusively with binary
+relations.  Suppose that ${\mathscr R}\SUB A\times A$. That is, suppose
+that ${\mathscr R}$ is a binary relation on a set~$A$.
+If $(a,b)\in{\mathscr R}$, then we say that $a$ is related to
+$b$ by ${\mathscr R}$.  Instead of writing ``$(a,b)\in {\mathscr R}$'',
+we will often write ``$a\,{\mathscr R}\,b$''.  This notation is
+used in analogy to the notation $n\le m$ to express the relation
+that $n$ is less than or equal to~$m$.  Remember that
+$a\,{\mathscr R}\,b$ is just an alternative way of writing $(a,b)\in{\mathscr R}$.
+In fact, we could consider the relation $\le$ to be a set of
+ordered pairs and write $(n,m)\in\,\le$ in place of the notation $n\le m$.
+
+\medbreak
+
+In many applications, attention is restricted to relations that
+satisfy some property or set of properties.  (This is, of course,
+just what we do when we study functions.)  We begin our discussion
+of binary relations by considering several important properties.
+In this discussion, let $A$ be a set and let ${\mathscr R}$
+be a binary relation on $A$, that is, a subset of $A\times A$.
+
+$\mathscr R$ is said to be \nw[reflexive relation]{reflexive} if
+$\forall a\in A\,(a \,{\mathscr R}\, a)$.  That is, a binary relation
+on a set is reflexive if every element of the set is related
+to itself.  This is true, for example, for the relation $\le$ 
+on the set $\N$, since $n\le n$ for every $n\in\N$.  On the other
+hand, it is not true for the relation $<$ on $\N$, since, for
+example, the statement $17<17$ is false.\footnote{Note that to show
+that the relation ${\mathscr R}$ is \emph{not} reflexive, you only need to
+find one $a$ such that $a\,{\mathscr R}\,a$ is false.  This
+follows from the fact that $\NOT\big(\forall a\in A\,(a \,{\mathscr R}\, a)\big)
+\equiv \exists a\in A\,\big(\NOT(a \,{\mathscr R}\, a)\big)$.
+A similar remark holds for each of the properties of relations
+that are discussed here.}
+
+$\mathscr R$ is called \nw[transitive relation]{transitive} if
+$\forall a\in A,\,\forall b\in A,\,\forall c\in A\,
+\big((a\,{\mathscr R}\,b \AND b\,{\mathscr R}\,c)\IMP (a\,{\mathscr R}\,c)\big)$.
+Transitivity allows us to ``chain together'' two true
+statements $a\,{\mathscr R}\,b$ and $b\,{\mathscr R}\,c$,
+which are ``linked'' by the $b$ that occurs in each statement, to
+deduce that $a\,{\mathscr R}\,c$.  For example, suppose
+$P$ is the set of people, and define the relation ${\mathscr C}$
+on $P$ such that $x\,{\mathscr P}\,y$ if and only if $x$ is a
+child of $y$.  The relation ${\mathscr P}$ is not transitive
+because the child of a child of a person is not a child of
+that person.  Suppose, on the other hand, that we define
+a relation ${\mathscr D}$ on $P$ such that $x\,{\mathscr D}\,y$
+if and only if $x$ is a descendent of $y$.  Then $D$ is a
+transitive relation on the set of people, since a descendent of
+a descendent of a person is a descendent of that person.
+That is, from the facts that Elizabeth is a descendent of Victoria
+and Victoria is a descendent of James, we can deduce that
+Elizabeth is a descendent of James.  In the mathematical world,
+the relations $\le$ and $<$ on the set $\N$ are both transitive.
+
+${\mathscr R}$ is said to be \nw[symmetric relation]{symmetric} if 
+$\forall a\in A,\,\forall b\in B\, (a\,{\mathscr R}\,b\IMP b\,{\mathscr R}\,a)$.
+That is, whenever $a$ is related to $b$, it follows that $b$ is related to $a$.
+The relation ``is a first cousin of'' on the set of people is
+symmetric, since whenever $x$ is a first cousin of $y$, we have
+automatically that $y$ is a first cousin of $x$.  On the other hand,
+the ``child of'' relation is certainly not symmetric.  The relation
+$\le$ on $\N$ is not symmetric.  From the fact that $n\le m$,
+we cannot conclude that $m\le n$.  It is true for \emph{some}
+$n$ and $m$ in $\N$ that $n\le m\IMP m\le n$, but it is not true
+for \emph{all} $n$ and $m$ in~$\N$.
+
+Finally, $\mathscr R$ is \nw[antisymmetric relation]{antisymmetric}
+if $\forall a\in A,\,\forall b\in B\, \big((a\,{\mathscr R}\,b\AND b\,{\mathscr R}\,a)\IMP a=b\big)$.
+The relation $\mathscr R$ is antisymmetric if for any two
+\emph{distinct} elements $x$ and $y$ of $A$, we can't have both
+$x\,{\mathscr R}\,y$ and $y\,{\mathscr R}\,x$.  The relation
+$\le$ on $\N$ is antisymmetric because from the facts that
+$n\le m$ and $m\le n$, we can deduce that $n=m$.  The relation
+``child of'' on the set of people is antisymmetric since 
+it's impossible to have both that $x$ is a child of $y$ and
+$y$ is a child of~$x$.
+
+\medbreak
+
+There are a few combinations of properties that define particularly
+useful types of binary relations.
+The relation $\le$ on the set $\N$ is reflexive, antisymmetric, and
+transitive.  These properties define what is called a partial order:
+A \nw{partial order} on a set $A$ is a binary relation on $A$ that
+is reflexive, antisymmetric, and transitive.  
+
+Another example of a partial order is the subset relation,~$\SUB$,
+on the power set of any set.  If $X$ is a set, then of course
+$\POW(X)$ is a set in its own right, and $\SUB$ can be considered to
+be a binary relation on this set.  Two elements $A$ and $B$ of
+$\POW(X)$ are related by $\SUB$ if and only if $A\SUB B$.  This
+relation is reflexive since every set is a subset of itself.
+The fact that it is antisymmetric follows from Theorem~\ref{T-setequality}.
+The fact that it is transitive was Exercise 11 in Section~\ref{S-sets-1}.
+
+The ordering imposed on $\N$ by $\le$ has one important property
+that the ordering of subsets by $\SUB$ does not share.  If $n$ and
+$m$ are natural numbers, then at least one of the statements
+$n\le m$ and $m\le n$ must be true.  However, if $A$ and $B$ are
+subsets of a set $X$, it is certainly possible that both
+$A\SUB B$ and $B\SUB A$ are false.  A binary relation $\mathscr R$ on a set $A$ is said to
+be a \nw{total order} if it is a partial order and furthermore
+for any two elements $a$ and $b$ of $A$, either $a\,{\mathscr R}\,b$
+or $b\,{\mathscr R}\,a$.  The relation $\le$ on the set $\N$ is
+a total order.  The relation $\SUB$ on $\POW(X)$ is not.
+(Note once again the slightly odd mathematical language:
+A total order is a kind of partial order---not, as you might
+expect, the opposite of a partial order.)
+
+For another example of ordering, let $L$ be the set of strings
+that can be made from lowercase letters.  $L$ contains both
+English words and nonsense strings such as ``sxjja''.  There is
+a commonly used total order on the set $L$, namely alphabetical
+order.
+
+\medskip
+
+We'll approach another important kind of binary relation indirectly,
+through what might at first appear to be an unrelated idea.
+Let $A$ be a set.  A \nw{partition} of $A$ is defined to
+be a collection of non-empty subsets of $A$ such that each pair of distinct
+subsets in the collection is disjoint and the union of all the subsets
+in the collection is~$A$.  A partition of $A$ is just a division
+of all the elements of $A$ into non-overlapping subsets.
+For example, the sets $\{1,2,6\}$, $\{3,7\}$, $\{4,5,8,10\}$,
+and $\{9\}$ form a partition of the set $\{1,2,\dots,10\}$.  
+Each element of $\{1,2,\dots,10\}$ occurs in exactly one
+of the sets that make up the partition.  As another example,
+we can partition the set of all people into two sets,
+the set of males and the set of females.  Biologists try to
+partition the set of all organisms into different species.
+Librarians try to partition books into various categories such
+as fiction, biography, and poetry.  
+In the real world, classifying things into categories is an essential
+activity, although the boundaries between categories are not
+always well-defined.  The abstract mathematical notion of
+a partition of a set models the real-world notion of classification.
+In the mathematical world, though, the categories are sets
+and the boundary between two categories is sharp.
+
+In the real world, items are classified in the same category
+because they are related in some way.  This leads us from
+partitions back to relations.  Suppose that we have a partition of
+a set $A$.  We can define a relation $\mathscr R$ on $A$ by
+declaring that for any $a$ and $b$ in $A$, $a\,{\mathscr R}\,b$
+if and only if $a$ and $b$ are members of the same subset in the
+partition.  That is, two elements of $A$ are related if they
+are in the same category.  It is clear that the relation defined
+in this way is reflexive, symmetric, and transitive.
+
+An \nw{equivalence relation} is defined to be a binary relation
+that is reflexive, symmetric, and transitive.  Any relation defined,
+as above, from a partition is an equivalence relation.  Conversely,
+we can show that any equivalence relation defines a partition.
+Suppose that $\mathscr R$ is an equivalence relation on a set~$A$.
+Let $a\in A$.  We define the \nw{equivalence class} of $a$
+under the equivalence relation $\mathscr R$ to be the subset
+$[a]_{\mathscr R}$ defined as $[a]_{\mathscr R}=\{b\in A\st b\,{\mathscr R}\,a\}$.
+That is, the equivalence class of $a$ is the set of all elements of
+$A$ that are related to~$a$.  In most cases, we'll assume that the
+relation in question is understood, and we'll write $[a]$
+instead of $[a]_{\mathscr R}$.  Note that each equivalence
+class is a subset of $A$.  The following theorem shows that the
+collection of equivalence classes form a partition of~$A$.
+
+\begin{theorem}\label{T-partition}
+Let $A$ be a set and let $\mathscr R$ be an equivalence relation
+on $A$.  Then the collection of all equivalence classes under
+$\mathscr R$ is a partition of~$A$.
+\end{theorem}
+\begin{proof}
+To show that a collection of subsets of $A$ is a partition, we
+must show that each subset is non-empty, that the intersection
+of two distinct subsets is empty, and that the union of all the
+subsets is~$A$.
+
+If $[a]$ is one of the equivalence classes, it is certainly
+non-empty, since $a\in[a]$.  (This follows from the fact that
+$\mathscr R$ is reflexive, and hence $a\,{\mathscr R}\,a$.)
+To show that $A$ is the union of
+all the equivalence classes, we just have to show that each
+element of $A$ is a member of one of the equivalence classes.
+Again, the fact that $a\in[a]$ for each $a\in A$ shows that this
+is true.
+
+Finally, we have to show that the intersection of two distinct
+equivalence classes is empty.  Suppose that $a$ and $b$ are elements
+of $A$ and consider the equivalence classes $[a]$ and $[b]$.
+We have to show that if $[a]\not=[b]$, then $[a]\cap[b]=\emptyset$.
+Equivalently, we can show the converse:  If $[a]\cap[b]\not=\emptyset$
+then $[a]=[b]$.  So, assume that $[a]\cap[b]\not=\emptyset$.
+Saying that a set is not empty just means that the set contains some
+element, so there must be an $x\in A$ such that $x\in[a]\cap[b]$.
+Since $x\in[a]$, $x\,{\mathscr R}\,a$.  Since $\mathscr R$ is symmetric,
+we also have $a\,{\mathscr R}\,x$.  Since $x\in[b]$, $x\,{\mathscr R}\,b$.
+Since $\mathscr R$ is transitive and since $(a\,{\mathscr R}\,x)\AND (x\,{\mathscr R}\,b)$,
+it follows that $a\,{\mathscr R}\,b$.
+
+Our object is to deduce that $[a]=[b]$.  Since $[a]$ and $[b]$
+are sets, they are equal if and only if $[a]\SUB[b]$ and
+$[b]\SUB[a]$.  To show that $[a]\SUB[b]$, let $c$ be an arbitrary
+element of $[a]$.  We must show that $c\in[b]$.  Since
+$c\in[a]$, we have that $c\,{\mathscr R}\,a$.  And we have already shown
+that $a\,{\mathscr R}\,b$.  From these two facts and the transitivity
+of $\mathscr R$, it follows that $c\,{\mathscr R}\,b$.  By
+definition, this means that $c\in[b]$.  We have shown that
+any member of $[a]$ is a member of $[b]$ and therefore that
+$[a]\SUB[b]$.  The fact that $[b]\SUB[a]$ can be shown in the
+same way.  We deduce that $[a]=[b]$, which proves the theorem.
+\end{proof}
+
+
+The point of this theorem is that if we can find a binary relation
+that satisfies certain properties, namely the properties of
+an equivalence relation, then we can classify things
+into categories, where the categories are the equivalence classes.
+
+For example, suppose that $U$ is a possibly infinite set.  Define a binary relation
+$\sim$ on $\POW(U)$ as follows: For $X$ and $Y$ in $\POW(U)$,
+$X\sim Y$ if and only if there is a bijective function
+from the set $X$ to the set $Y$.  In other words, $X\sim Y$
+means that $X$ and $Y$ have the same cardinality.\index{cardinality}  Then
+$\sim$ is an equivalence relation on $\POW(U)$.  (The symbol
+$\sim$ is often used to denote equivalence relations.  It is
+usually read ``is equivalent to.'')  If $X\in\POW(U)$, then
+the equivalence class $[X]_{\sim}$ consists of all the subsets
+of $U$ that have the same cardinality as $X$.  We have classified
+all the subsets of $U$ according to their cardinality---even though
+we have never said what an infinite cardinality \emph{is}.  (We
+have only said what it means to have the same cardinality.)
+
+You might remember a popular puzzle called Rubic's Cube,\index{Rubic's Cube}
+a cube made of smaller cubes with colored sides that could
+be manipulated by twisting layers of little cubes.  The object
+was to manipulate the cube so that the colors of the little cubes
+formed a certain configuration.  Define two configurations
+of the cube to be equivalent if it's possible to manipulate one
+configuration into the other by a sequence of twists.  This is,
+in fact, an equivalence relation on the set of possible configurations.
+(Symmetry follows from the fact that each move is reversible.)
+It has been shown that this equivalence relation has exactly twelve
+equivalence classes.  The interesting fact is that it has more
+than one equivalence class:  If the configuration that the cube
+is in and the configuration that you want to achieve are not
+in the same equivalence class, then you are doomed to failure.
+
+\medbreak
+
+Suppose that $\mathscr R$ is a binary relation on a set $A$.
+Even though $\mathscr R$ might not be transitive, it is always
+possible to construct a transitive relation from $\mathscr R$ in
+a natural way.  If we think of $a\,{\mathscr R}\,b$ as meaning
+that $a$ is related by $\mathscr R$ to $b$ ``in one step,'' then
+we consider the relationship that holds between two elements 
+$x$ and $y$ when $x$ is related by $\mathscr R$ to $y$ ``in one 
+or more steps.''  This relationship defines a binary relation
+on $A$ that is called the \nw{transitive closure} of $\mathscr R$.
+The transitive closure of $\mathscr R$ is denoted ${\mathscr R}^*$.
+Formally, ${\mathscr R}^*$ is defined as follows:  For $a$ and $b$ in $A$, 
+$a\,{\mathscr R}^*\,b$ if there is a sequence $x_0,x_1,\dots x_n$
+of elements of $A$, where $n>0$ and $x_0=a$ and $x_n=b$,
+such that $x_0\,{\mathscr R}\,x_1$, 
+$x_1\,{\mathscr R}\,x_2$, \dots, and $x_{n-1}\,{\mathscr R}\,x_n$.
+
+For example, if $a\,{\mathscr R}\,c$, $c\,{\mathscr R}\,d$, and
+$d\,{\mathscr R}\,b$, then we would have that $a\,{\mathscr R}^*\,b$.
+Of course, we would also have that $a\,{\mathscr R}^*\,c$, and
+$a\,{\mathscr R}^*\,d$.
+
+For a practical example, suppose that $C$ is the set of all cities
+and let $\mathscr A$ be the binary relation on $C$ such that
+for $x$ and $y$ in $C$, $x\,{\mathscr A}\,y$ if there is a
+regularly scheduled airline flight from $x$ to $y$.
+Then the transitive closure ${\mathscr A}^*$ has a natural
+interpretation: $x\,{\mathscr A}^*\,y$ if it's possible
+to get from $x$ to $y$ by a sequence of one or more regularly
+scheduled airline flights.  You'll find a few more examples
+of transitive closures in the exercises.
+
+
+
+\begin{exercises}
+
+\problem For a finite set, it is possible to define a binary relation on
+the set by listing the elements of the relation, considered as a set
+of ordered pairs.  Let $A$ be the set $\{a,b,c,d\}$, where $a$,
+$b$, $c$, and $d$ are distinct.  Consider
+each of the following binary relations on $A$.  Is the relation
+reflexive?  Symmetric?  Antisymmetric?  Transitive?  Is it a 
+partial order?  An equivalence relation?
+\ppart ${\mathscr R}=\{ (a,b),\, (a,c),\, (a,d) \}$.
+\ppart ${\mathscr S}=\{ (a,a),\, (b,b),\, (c,c),\, (d,d),\, (a,b),\, (b,a) \}$.
+\ppart ${\mathscr T}=\{ (b,b),\,  (c,c),\, (d,d)\}$.
+\ppart ${\mathscr C}=\{ (a,b),\, (b,c),\, (a,c),\, (d,d)\}$.
+\ppart ${\mathscr D}=\{ (a,b),\, (b,a),\, (c,d),\, (d,c)\}$.
+
+\problem Let $A$ be the set $\{1,2,3,4,5,6\}$.  Consider the
+partition of $A$ into the subsets $\{1,4,5\}$, $\{3\}$, and $\{2,6\}$.
+Write out the associated equivalence relation on $A$ as a set
+of ordered pairs.
+
+\problem Consider each of the following relations on the set of people.
+Is the relation reflexive? Symmetric? Transitive?
+Is it an equivalence relation?
+\ppart $x$ is related to $y$ if $x$ and $y$ have the same biological parents.
+\ppart $x$ is related to $y$ if $x$ and $y$ have at least one biological parent
+in common.
+\ppart $x$ is related to $y$ if $x$ and $y$ were born in the same year.
+\ppart $x$ is related to $y$ if $x$ is taller than $y$.
+\ppart $x$ is related to $y$ if $x$ and $y$ have both visited Honolulu.
+
+\problem It is possible for a relation to be both symmetric and
+antisymmetric.  For example, the equality relation, $=$, is
+a relation on any set which is both symmetric and antisymmetric.
+Suppose that $A$ is a set and $\mathscr R$ is a relation on $A$ that
+is both symmetric and antisymmetric.  Show that $\mathscr R$ is
+a subset of $=$ (when both relations are considered as sets of
+ordered pairs).  That is, show that for any $a$ and $b$ in $A$,
+$(a\,{\mathscr R}\,b)\IMP (a=b)$.
+
+\problem Let $\sim$ be the relation on $\R$, the set of real numbers,
+such that for $x$ and $y$ in $\R$, $x\sim y$ if and only if
+$x-y\in\Z$.  For example, $\sqrt{2\,}-1\sim\sqrt{2\,}+17$
+because the difference, $(\sqrt{2\,}-1)-(\sqrt{2\,}+17)$,
+is $-${}$18$, which is an integer.  Show that $\sim$ is an equivalence
+relation.  Show that each equivalence class $[x]_{\sim}$ contains
+exactly one number $a$ which satisfies $0\le a<1$.  (Thus,
+the set of equivalence classes under $\sim$ is in one-to-one
+correspondence with the half-open interval $[0,1)$.)
+
+\problem Let $A$ and $B$ be any sets, and suppose $f\colon A\to B$.
+Define a relation $\sim$ on $B$ such that for any $x$ and $y$ in $A$,
+$x\sim y$ if and only if $f(x)=f(y)$.  Show that $\sim$ is an
+equivalence relation on $A$.
+
+\problem Let $\Zpos$ be the set of positive integers $\{1,2,3,\dots\}$.
+Define a binary relation $\mathscr D$ on $\Zpos$ such
+that for $n$ and $m$ in $\Zpos$, $n\,{\mathscr D}\,m$ if
+$n$ divides evenly into $m$, with no remainder.  Equivalently,
+$n\,{\mathscr D}\,m$ if $n$ is a factor of $m$, that is, if
+there is a $k$ in $\Zpos$ such that $m=nk$.  Show that $\mathscr D$
+is a partial order.
+
+\problem Consider the set $\N\times\N$, which consists of all
+ordered pairs of natural numbers.  Since $\N\times\N$ is
+a set, it is possible to have binary relations on $\N\times\N$.
+Such a relation would be a subset of $(\N\times\N)\times(\N\times\N)$.
+Define a binary relation $\preceq$ on $\N\times\N$ such that
+for $(m,n)$ and $(k,\ell)$ in $\N\times\N$, $(m,n)\preceq(k,\ell)$
+if and only if either $m<k$ or $((m=k)\AND (n\le\ell))$.  Which of the following
+are true?
+\pparts{
+   (2,7)\preceq(5,1)&   (8,5)\preceq(8,0)\cr
+   (0,1)\preceq(0,2)&   (17,17)\preceq(17,17)
+}
+Show that $\preceq$ is a total order on $\N\times\N$.
+
+\problem Let $\sim$ be the relation defined on $\N\times\N$
+such that $(n,m)\sim(k,\ell)$ if and only if $n+\ell=m+k$.
+Show that $\sim$ is an equivalence relation.
+
+\problem Let $P$ be the set of people and let $\mathscr C$ be the
+``child of'' relation.  That is $x\,{\mathscr C}\,y$ means that
+$x$ is a child of $y$.  What is the meaning of the transitive
+closure ${\mathscr C}^*$?  Explain your answer.
+
+\problem Let $\mathscr R$ be the binary relation on $\N$ such that
+$x\,{\mathscr R}\,y$ if and only if $y=x+1$.  Identify the
+transitive closure ${\mathscr R}^*$.  (It is a well-known relation.)
+Explain your answer.
+
+\problem Suppose that $\mathscr R$ is a reflexive, symmetric
+binary relation on a set $A$.  Show that the transitive closure
+${\mathscr R}^*$ is an equivalence relation.
+
+\end{exercises}
+
+
+\section{Application: Relational Databases}\label{S-sets-8}
+
+One of the major uses of computer systems is to store and manipulate
+collections of data.  A \nw{database} is a collection of data
+that has been organized so that it is possible to add and delete
+information, to update the data that it contains, and to
+retrieve specified parts of the data.  A \nw{Database Management
+System}, or DBMS\index{DBMS}, is a computer program that makes it possible
+to create and manipulate databases.  A DBMS must be able to
+accept and process commands that manipulate the data in the databases
+that it manages.  These commands are called \nw[query, database]{queries},
+and the languages in which they are written are called 
+\nw[query language]{query languages}.  A query language is
+a kind of specialized programming language.
+
+
+\fig
+  {F-DBMS}
+  {Tables that could be part of a relational database.
+   Each table has a name, shown above the table.
+   Each column in the table also has a name, shown in the top row
+   of the table.  The remaining rows hold the data.}
+  {\textbf{Members}  
+ 
+   \smallskip
+   \begin{tabular}{|l|l|l|l|}
+        \hline
+        \strut \textbf{MemberID}& \textbf{Name}& \textbf{Address} &\textbf{City}\\
+        \hline
+        \strut 1782& Smith, John& 107 Main St& New York, NY \\
+        2889&  Jones, Mary& 1515 Center Ave& New York, NY\\
+        378& Lee, Joseph& 90 Park Ave& New York, NY\\
+        4277& Smith, John& 2390 River St& Newark, NJ\\
+        5704& O'Neil, Sally& 89 Main St& New York, NY\\
+        \hline
+     \end{tabular}
+     
+   \bigskip
+   \textbf{Books}
+   
+   \smallskip
+   \begin{tabular}{|l|l|l|}
+        \hline
+        \strut \textbf{BookID}& \textbf{Title}& \textbf{Author}\\
+        \hline
+        \strut 182& I, Robot& Isaac Asimov\\
+        221& The Sound and the Fury& William Faulkner\\
+        38&  Summer Lightning& P.G. Wodehouse\\
+        437& Pride and Prejudice& Jane Austen\\
+        598& Left Hand of Darkness& Ursula LeGuin\\
+        629& Foundation Trilogy& Isaac Asimov\\
+        720& Mirror Dance& Lois McMaster Bujold\\
+        \hline
+     \end{tabular}
+     
+   \bigskip
+   \textbf{Loans}
+   
+   \smallskip
+   \begin{tabular}{|l|l|l|}
+        \hline
+        \strut \textbf{MemberID}& \textbf{BookID}& \textbf{DueDate}\\
+        \hline
+        \strut 378&  221& October 8, 2010\\
+        2889& 182& November 1, 2010\\
+        4277& 221& November 1, 2010\\
+        1782& 38&  October 30, 2010\\
+        \hline
+     \end{tabular}
+   }
+
+There are many different ways that the data in a database could
+be represented.  Different DBMS's use various data representations
+and various query languages.  However, data is most commonly stored
+in relations.  A relation\index{relation} in a database is a relation
+in the mathematical sense.
+That is, it is a subset of a cross product of sets.  A database
+that stores its data in relations is called a \nw{relational
+database}.  The query language for most relational database management
+systems is some form of the language known as \nw{Structured Query
+Language}, or SQL.\index{SQL}  In this section, we'll take a very brief look
+at SQL, relational databases, and how they use relations.
+
+\medbreak
+
+A relation is just a subset of a cross product of sets.  Since we
+are discussing computer representation of data, the sets are
+data types.  As in Section~\ref{S-sets-5}, we'll use data
+type names such as \textit{int} and \textit{string} to refer to
+these sets.  A relation that is a subset of the
+cross product $\textit{int}\times\textit{int}\times\textit{string}$
+would consist of ordered 3-tuples such as 
+(17, 42, ``hike'').  In a relational database, the data is stored in
+the form of one or more such relations.  The relations are called
+tables, and the tuples that they contain are called rows or records.
+
+As an example, consider a lending library that wants to
+store data about its members, the books that it owns, and
+which books the members have out on loan.
+This data could be represented in three tables, as illustrated in
+Figure~\ref{F-DBMS}.  The relations are shown as tables rather than
+as sets of ordered tuples, but each table is, in fact, a relation.
+The rows of the table are the tuples.  The \texttt{Members} table,
+for example, is a subset of $\textit{int}\times\textit{string}\times\textit{string}\times\textit{string}$,
+and one of the tuples is (1782, ``Smith, John'', ``107 Main St'', ``New York, NY'').
+A table does have one thing that ordinary relations in mathematics
+do not have.  Each column in the table has a name.  These names
+are used in the query language to manipulate the data in the tables.
+
+The data in the \texttt{Members} table is the basic information that
+the library needs in order to keep track of its members, namely the name and
+address of each member.  A member also has a \texttt{MemberID} number,
+which is presumably assigned by the library.  Two different members
+can't have the same \texttt{MemberID}, even though they might
+have the same name or the same address.  The \texttt{MemberID}
+acts as a \nw{primary key} for the \texttt{Members} table.
+A given value of the primary key uniquely identifies one of
+the rows of the table.  Similarly, the \texttt{BookID} in
+the \texttt{Books} table is a primary key for that table.
+In the \texttt{Loans} table, which holds information about which
+books are out on loan to which members, a \texttt{MemberID} 
+unambiguously identifies the member who has a given book on loan,
+and the \texttt{BookID} says unambiguously which book that is.
+Every table has a primary key, but the key can consist of more
+than one column.  The DBMS enforces the uniqueness
+of primary keys.  That is, it won't let users make a modification
+to the table if it would result in two rows having the same
+primary key.
+
+The fact that a relation is a set---a set of tuples---means that
+it can't contain the same tuple more than once.  In terms of tables, 
+this means that a table shouldn't contain two identical rows.  But
+since no two rows can contain the same primary key, it's
+impossible for two rows to be identical.  So tables are in fact
+relations in the mathematical sense.
+
+\medbreak
+
+The library must have a way to add and delete members and books
+and to make a record when a book is borrowed or returned.
+It should also have a way to change the address of a member
+or the due date of a borrowed book.  Operations such as
+these are performed using the DBMS's query language.
+SQL has commands named \texttt{INSERT}, \texttt{DELETE},
+and \texttt{UPDATE} for performing these operations.
+The command for adding Barack Obama as a member of the
+library with \texttt{MemberID} 999 would be
+\begin{verbatim}
+       INSERT INTO Members
+       VALUES (999, "Barack Obama",
+                 "1600 Pennsylvania Ave", "Washington, DC")
+\end{verbatim}
+When it comes to deleting and modifying rows, things become
+more interesting because it's necessary to specify which
+row or rows will be affected.  This is done by specifying
+a condition that the rows must fulfill.  For example,
+this command will delete the member with ID 4277:
+\begin{verbatim}
+       DELETE FROM Members
+       WHERE MemberID = 4277
+\end{verbatim}
+It's possible for a command to affect multiple rows.  For
+example,
+\begin{verbatim}
+       DELETE FROM Members
+       WHERE Name = "Smith, John"
+\end{verbatim}
+would delete every row in which the name is ``Smith, John.''
+The update command also specifies what changes are to be
+made to the row:
+\begin{verbatim}
+       UPDATE Members
+       SET Address="19 South St", City="Hartford, CT"
+       WHERE MemberID = 4277
+\end{verbatim}
+
+Of course, the library also needs a way of retrieving
+information from the database.  SQL provides the
+\texttt{SELECT} command for this purpose.  For example,
+the query
+\begin{verbatim}
+       SELECT Name, Address
+       FROM Members
+       WHERE City = "New York, NY"
+\end{verbatim}
+asks for the name and address of every member who lives in 
+New York City.  The last line of the query is a condition
+that picks out certain rows of the ``Members'' relation,
+namely all the rows in which the \texttt{City} is
+``New York, NY''.  The first line specifies which data
+from those rows should be retrieved.  The data is actually
+returned in the form of a table.  For example, given the
+data in Figure~\ref{F-DBMS}, the query would return this
+table:
+\begin{center}
+\begin{tabular}{|l|l|}
+        \hline
+        \strut Smith, John& 107 Main St\\
+        Jones, Mary& 1515 Center Ave\\
+        Lee, Joseph& 90 Park Ave\\
+        O'Neil, Sally& 89 Main St\\
+        \hline
+\end{tabular}
+\end{center}
+The table returned by a \texttt{SELECT} query can even be used
+to construct more complex queries.  For example, if the table returned 
+by \texttt{SELECT} has only one column, then it can be
+used with the \texttt{IN} operator to specify any value
+listed in that column.  The following query will find the
+\texttt{BookID} of every book that is out on loan to a
+member who lives in New York City:
+\begin{verbatim}
+       SELECT BookID
+       FROM Loans
+       WHERE MemberID IN (SELECT MemberID
+                          FROM Members
+                          WHERE City = "New York, NY")
+\end{verbatim}
+
+More than one table can be listed in the \texttt{FROM}
+part of a query.  The tables that are listed are joined
+into one large table, which is then used for the query.
+The large table is essentially the cross product of
+the joined tables, when the tables are understood as
+sets of tuples.  For example, suppose that we want the
+titles of all the books that are out on loan to members who
+live in New York City.  The titles are in the \texttt{Books}
+table, while information about loans is in the \texttt{Loans}
+table.  To get the desired data, we can join the tables
+and extract the answer from the joined table:
+\begin{verbatim}
+       SELECT Title
+       FROM Books, Loans
+       WHERE MemberID IN (SELECT MemberID
+                          FROM Members
+                          WHERE City = "New York, NY")
+\end{verbatim}
+In fact, we can do the same query without using the nested
+\texttt{SELECT}.  We need one more bit of notation:  If two
+tables have columns that have the same name, the columns can
+be named unambiguously by combining the table name with the
+column name.  For example, if the \texttt{Members} table
+and \texttt{Loans} table are both under discussion, then
+the \texttt{MemberID} columns in the two tables can be referred
+to as \texttt{Members}.\texttt{MemberID} and 
+\texttt{Loans}.\texttt{MemberID}.  So, we can say:
+\begin{verbatim}
+       SELECT Title
+       FROM Books, Loans
+       WHERE City ="New York, NY"
+             AND Members.MemberID = Loans.MemberID
+\end{verbatim}
+
+This is just a sample of what can be done with SQL and
+relational databases.  The conditions in \texttt{WHERE}
+clauses can get very complicated, and there are other
+operations besides the cross product for combining tables.
+The database operations that are needed to complete a
+given query can be complex and time-consuming.  Before
+carrying out a query, the DBMS tries to optimize it.
+That is, it manipulates the query into a form that
+can be carried out most efficiently.  The rules for
+manipulating and simplifying queries form an \emph{algebra}\index{algebra}
+of relations, and the theoretical study of relational
+databases is in large part the study of the algebra
+of relations.
+
+\begin{exercises}
+
+\problem Using the library database from Figure~\ref{F-DBMS},
+what is the result of each of the following SQL commands?
+\begin{verbatim}
+   a)   SELECT Name, Address
+        FROM Members
+        WHERE Name = "Smith, John"
+        
+   b)   DELETE FROM Books
+        WHERE Author = "Isaac Asimov"
+
+   c)   UPDATE Loans
+        SET DueDate = "November 20"
+        WHERE BookID = 221
+
+   d)   SELECT Title
+        FROM Books, Loans
+        WHERE Books.BookID = Loans.BookID
+        
+   e)   DELETE FROM Loans
+        WHERE MemberID IN (SELECT MemberID
+                           FROM Members
+                           WHERE Name = "Lee, Joseph")
+\end{verbatim}
+
+\problem Using the library database from Figure~\ref{F-DBMS},
+write an SQL command to do each of the following database
+manipulations:
+\ppart Find the \texttt{BookID} of every book that is due on
+November 1, 2010.
+\ppart Change the \texttt{DueDate} of the book with \texttt{BookID} 221
+to November 15, 2010.
+\ppart Change the \texttt{DueDate} of the book with title
+``Summer Lightning'' to November 14, 2010.  Use a nested
+\texttt{SELECT}.
+\ppart Find the name of every member who has a book out on loan.
+Use joined tables in the \texttt{FROM} clause of a \texttt{SELECT}
+command.
+
+\problem Suppose that a college wants to use a database to store
+information about its students, the courses that are offered in
+a given term, and which students are taking which courses.
+Design tables that could be used in a relational
+database for representing this data.  Then
+write SQL commands to do each of the following database
+manipulations.  (You should design your tables so that they
+can support all these commands.)
+\ppart Enroll the student with ID number 1928882900 in ``English 260''.
+\ppart Remove ``John Smith'' from ``Biology 110''.
+\ppart Remove the student with ID number 2099299001 from every course
+in which that student is enrolled.
+\ppart Find the names and addresses of the students who are taking ``Computer Science 229''.
+\ppart Cancel the course ``History 101''.
+
+
+\end{exercises}
+
+
+\endinput
+

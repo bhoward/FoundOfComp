@@ -1,0 +1,1865 @@
+% !TEX root = main.tex
+
+\newcommand{\ab}{\mbox{$\{a,b\}$}}
+\newcommand{\aetc}[2]{\mbox{{${#1}_1{#1}_2\ldots {#1}_{#2}$}}}
+\newcommand{\varep}{\varepsilon}
+\newcommand{\fsafig}[1]{\medskip\centerline{\eps{fsa#1}}\medskip}
+
+\newcommand{\REOR}{\hbox{$\,|\,$}}
+
+\chapter[Regular Expressions and FSA's]{Regular Expressions and Finite-State Automata}
+
+\startchapter{With the set of mathematical tools } 
+from the first two chapters, we
+are now ready to study \nw{languages} and \nw{formal language theory}.
+Our intent is to examine the question of how, and which, languages
+can be mechanically generated and recognized; and, ultimately, to see
+what this tells us about what computers can and can't do.
+
+\bigskip
+\section{Languages}
+In formal language theory, an \nw{alphabet} is a finite, non-empty 
+set.  The elements of the set are called \nw{symbols}.  A finite 
+sequence of symbols $a_1a_2\ldots a_n$
+from an alphabet is called a \nw{string} over that alphabet.  
+
+\smallskip
+
+\begin{example}
+$\Sigma = \{0,1\}$ is an alphabet, and {\em 011}, 
+{\em 1010}, and {\em 1} are all strings over $\Sigma$.
+\end{example}
+
+\smallskip
+
+Note that strings really are \emph{sequences} of symbols, which 
+implies that 
+order matters.  Thus {\em 011}, {\em 101}, and {\em 110} are all 
+different strings, though they are made up of the same symbols.
+The strings $x=\aetc{a}{n}$ and $y=\aetc{b}{m}$ are \nw{equal} only
+if $m=n$ (i.e.\ the strings contain the same number of symbols) and 
+$a_i=b_i$ for all
+$1 \leq i \leq n$.
+
+Just as there are operations defined on numbers, truth values, sets,
+and other mathematical entities, there are operations defined on
+strings.  Some important operations are:
+\begin{enumerate}
+\item {\em length}: the \nw{length} of a string $x$ is the number of symbols
+in it.  The notation for the length of $x$ is $|x|$.  Note that
+this is consistent with other uses of $|\ |$, all of which 
+involve some notion of size: $|number|$ measures how big a number
+is (in terms of its distance from 0);  $|set|$ measures the size
+of a set (in terms of the number of elements).
+
+We will occasionally refer to a {\em length-n string}.  This is a
+slightly awkward, but concise, shorthand for ``a string whose length
+is $n$".
+
+\item {\em concatenation}: the \nw{concatenation} of two strings $x=a_1
+a_2\ldots a_m$ and $y=b_1b_2\ldots b_n$ is the sequence of symbols
+$a_1\ldots a_mb_1\ldots b_n$.  Sometimes $\cdot$ is used to denote
+concatenation, but it is far more usual to see the concatenation of 
+$x$ and $y$ denoted by $xy$ than by $x\cdot y$.  You can easily
+convince yourself that concatenation is associative (i.e.\ $(xy)z =
+x(yz)$ for all strings $x,y$ and $z$.)  Concatenation is not
+commutative (i.e.\ it is not always true that $xy = yx$:
+for example, if $x=a$ and $y=b$ then $xy=ab$ while $yx=ba$ and, as
+discussed above, these strings are not equal.)
+
+\item {\em reversal}: the \nw{reverse} of a string $x=a_1a_2\ldots a_n$ is
+the string $x^R = a_na_{n-1}\ldots a_2a_1$.
+\end{enumerate}
+
+\begin{example}Let $\Sigma = \ab$, $x=a$, $y=abaa$, and $z=bab$.
+Then $|x| = 1$, $|y| = 4$, and $|z|=3$.  Also, $xx = aa$, $xy =
+aabaa$, $xz = abab$, and $zx = baba$.  Finally, $x^R = a$,
+$y^R = aaba$, and $z^R=bab$.
+\end{example}
+
+\smallskip
+
+By the way, the previous example illustrates a naming convention standard
+throughout language theory texts: if a letter is
+intended to represent a single symbol in an alphabet, the convention
+is to use a letter from the beginning of the English alphabet ({\em a,
+b, c, d }); if a letter is intended to represent a string, the 
+convention is to use a letter from the end of the English alphabet
+({\em u, v, } etc).
+
+\bigskip
+
+In set theory, we have a special symbol to designate the set that 
+contains no elements.  Similarly, language theory has a special 
+symbol $\varepsilon$ which is used to represent the \nw{empty string}, the
+string with no 
+symbols in it.  (Some texts use the symbol $\lambda$ instead.)
+It is worth noting that $|\varep| = 0$, that $\varep^R = \varep$,
+and that $\varep \cdot x = x \cdot \varep = x$ for all strings $x$.
+(This last fact may appear a bit confusing.  Remember that $\varep$
+is not a symbol in a string with length 1, but rather the name given
+to the string made up of 0 symbols.  Pasting those 0 symbols onto the
+front or back of a string $x$ still produces $x$.) 
+
+\bigskip
+
+The set of all strings over an alphabet $\Sigma$ is denoted $\Sigma^*$.
+(In language theory, the symbol $^*$ is typically used to denote ``zero
+or more'', so $\Sigma^*$ is the set of strings made up of zero or 
+more symbols from $\Sigma$.)  Note that while an alphabet 
+$\Sigma$ is by 
+definition a \emph{finite} set of symbols, and strings are by
+definition \emph{finite} sequences of those symbols, the set $\Sigma^*$
+is \emph{always infinite}.  Why is this?  Suppose $\Sigma$ contains $n$
+elements.  Then there is one string over $\Sigma$ with 0 symbols,
+$n$ strings with 1 symbol, $n^2$ strings with 2 symbols (since there
+are $n$ choices for the first symbol and $n$ choices for the second),
+$n^3$ strings with 3 symbols, etc.
+
+\smallskip
+
+\begin{example} If $\Sigma = \{1\}$, then $\Sigma^* = \{\varep,
+1, 11, 111, \ldots\}$.  If $\Sigma = \ab$, then $\Sigma^* = \{
+\varep, a, b, aa, ab, ba, bb, aaa, aab, \ldots\}$.
+\end{example}
+
+\smallskip
+
+Note that $\Sigma^*$ is \emph{countably} infinite: if we list the strings as in
+the preceding example (length-0 strings, length-1 strings in ``alphabetical"
+order, length-2 strings similarly ordered, etc) then any string over $\Sigma$
+will eventually appear.  (In fact, if $|\Sigma| = n \geq 2$ and $x \in \Sigma^*$ has
+length $k$, then $x$ will appear on the list within the first $\frac{n^{k+1} -
+1}{n-1}$ entries.)
+
+\bigskip
+
+We now come to the definition of a \nw{language} in the formal language
+theoretical sense.
+
+
+\begin{definition} A language over an alphabet $\Sigma$ is a subset
+of $\Sigma^*$.  Thus, a language over $\Sigma$ is an element of
+${\cal P}(\Sigma^*)$, the power set of $\Sigma^*$.
+\end{definition}
+
+\smallskip
+In other words, any set of strings (over alphabet $\Sigma$) constitutes a
+language (over alphabet $\Sigma$).
+
+\smallskip
+
+\begin{example} Let $\Sigma = \{0,1\}$.  Then the following are all
+languages over $\Sigma$:
+
+$L_1 = \{011, 1010, 111\}$
+
+$L_2 = \{0, 10, 110, 1110, 11110, \ldots\}$
+
+$L_3 = \{x \in \Sigma^* \ | \ n_0(x) = n_1(x) \}$, where the notation 
+\nw{$n_0(x)$}
+stands for the 
+
+\ \ \ number of 0's in the string $x$, and similarly for $n_1(x)$.
+
+$L_4 = \{x \ | \ \mbox{\ $x$ represents a multiple of 5 in binary}\}$
+\end{example}
+
+\smallskip
+
+Note that languages can be either finite or infinite.
+Because $\Sigma^*$ is infinite, it clearly has an
+infinite number of subsets, and so there are an infinite number of languages
+over $\Sigma$.  But are there countably or uncountably many such languages?
+
+\smallskip
+
+\begin{theorem}
+For any alphabet $\Sigma$, the number of languages over $\Sigma$ is
+uncountable.
+\end{theorem}
+
+\smallskip
+This fact is an immediate consequence of the result, proved in a previous
+chapter, that the power set of a countably infinite set is uncountable.  Since
+the elements of ${\cal P}(\Sigma)$ are exactly the languages over $\Sigma$,
+there are uncountably many such languages.
+
+\medskip
+
+Languages are sets and therefore, as for any sets, it makes sense to talk about
+the union, intersection, and complement of languages.  (When taking the complement
+of a language over an alphabet $\Sigma$, we always consider the univeral set
+to be $\Sigma^*$, the set of all strings over~$\Sigma$.)
+Because languages are
+sets of strings, there are additional operations that can be defined on
+languages, operations that would be meaningless on more general sets.  For
+example, the idea of concatenation can be extended from strings to languages.
+
+For two sets of strings $S$ and $T$, we define the \nw{concatenation} of $S$ and
+$T$ (denoted $S\cdot T$ 
+or just $ST$) to
+be the set $ST = \{ st \ | \ s \in S \AND t \in T \}$.  For example, if $S =
+\{ab, aab\}$ and $T=\{\varep, 110, 1010\}$, then 
+$ST = \{ab,  ab110,  ab1010,  aab,  aab110,  aab1010\}$.  
+Note in particular that $ab \in ST$, because $ab \in S$, $\varep \in T$, and
+$ab \cdot \varep = ab$.
+Because 
+concatenation of sets is defined in terms of the
+concatenation of the
+strings that the sets contain, concatenation of sets is associative
+and not commutative.  (This can easily be verified.)  
+
+When a set $S$
+is concatenated with itself, the notation $SS$ is usually scrapped
+in favour of $S^2$; if $S^2$ is concatenated with $S$, we write
+$S^3$ for the resulting set, etc.  So $S^2$ is the set of all strings formed by
+concatenating two (possibly different, possibly identical) strings from $S$,
+$S^3$ is the set of strings formed by concatenating three strings from $S$,
+etc.  Extending this notation, we take $S^1$ to be the set of strings formed
+from one string in $S$ (i.e.\ $S^1$ is $S$ itself), and $S^0$ to be the set of
+strings formed from zero strings in $S$ (i.e.\ $S^0 = \{\varep\}$).  If we take
+the union $S^0 \cup S^1 \cup S^2 \cup \ldots$, then the resulting set is the set of
+all strings formed by concatenating zero or more strings from $S$, and is
+denoted $S^*$.  The set $S^*$ is called the \nw{Kleene closure} of $S$, and
+the $^*$ operator is called the \nw{Kleene star} operator.
+
+\smallskip
+
+\begin{example}
+Let $S = \{01, ba\}$.  Then
+
+$S^0 = \{\varep\}$
+
+$S^1 = \{01, ba\}$
+
+$S^2 = \{0101, 01ba, ba01, baba\}$
+
+$S^3 = \{010101, 0101ba, 01ba01, 01baba, ba0101, ba01ba, baba01, bababa\}$
+
+etc, so
+
+$S^* =\{\varep,01,ba,0101,01ba,ba01,baba,010101,0101ba,\ldots\}.$
+\end{example}
+ 
+\smallskip
+
+Note that this is the second time we have seen the notation $something^*$.  We
+have previously seen that for an alphabet $\Sigma$, $\Sigma^*$ is defined to be 
+the set of all
+strings over $\Sigma$.  If you think of $\Sigma$ as being a set of length-1
+strings, and take its Kleene closure, the result is once again the set of all
+strings over $\Sigma$, and so the two notions of $^*$ coincide.
+
+\smallskip
+
+\begin{example}
+Let $\Sigma = \ab$.  Then
+
+$\Sigma^0 = \{\varep\}$
+
+$\Sigma^1 = \ab$
+
+$\Sigma^2 = \{aa, ab, ba, bb\}$
+
+$\Sigma^3 = \{aaa, aab, aba, abb, baa, bab, bba, bbb\}$
+
+etc, so
+
+$\Sigma^* =\{\varep,a,b,aa,ab,ba,bb,aaa,aab,aba,abb,baa,bab,\ldots\}.$
+\end{example}
+
+\begin{exercises}
+\problem Let $S = \{\varep, ab, abab\}$ and $T = \{aa, aba, abba, abbba,
+\ldots\}$.  Find the following:
+\pparts{ S^2 & S^3 & S^* & ST & TS }
+\problem The \nw{reverse} of a language $L$ is defined to be 
+$L^R = \{ x^R \ | \ x \in L\}$.  Find $S^R$ and $T^R$ for the $S$ and $T$ in the
+preceding problem.
+\problem Give an example of a language $L$ such that $L=L^*$.
+
+\end{exercises}
+
+\section{Regular Expressions}
+
+Though we have used the term {\em string} throughout to refer to a sequence of
+symbols from an alphabet, an alternative term that is frequently used is {\em
+word}.  The analogy seems fairly obvious: strings are made up of ``letters"
+from an alphabet, just as words are in human languages like English.
+In English, however, there are no particular rules specifying which sequences 
+of letters can be used to form legal English words---even unlikely
+combinations like {\em ghth} and {\em ckstr} have their place.  
+While some formal languages may simply
+be random collections of arbitrary strings, more interesting languages
+are those where the strings in the language all share some 
+common structure:  $L_1 = \{ x\in \ab^* \ | n_a(x) =
+n_b(x)\}$; $L_2 = \{\mbox{legal Java identifiers}\}$; $L_3 = \{\mbox{legal C++
+programs}\}$.  In all of these languages, there are structural 
+rules which determine which sequences of symbols are in the language and which
+aren't.
+So
+despite the terminology of ``alphabet" and ``word" in formal
+language theory, the concepts don't necessarily match ``alphabet"
+and ``word" for human languages.  A better parallel is to think of
+the {\em alphabet} in a formal language as corresponding to the {\em words} in a
+human language; the {\em words} in a formal language correspond to
+the {\em sentences} in a human language, as there are rules ({\em grammar 
+rules}) which determine how they can legally be constructed.
+
+One way of describing the grammatical structure of the strings in a language is
+to use a mathematical formalism called a \nw{regular expression}.  A regular
+expression is a pattern that ``matches" strings that have a particular form.  For
+example, consider the language (over alphabet $\Sigma = \ab$) $L= \{x \ | \ x
+\mbox{\ starts and ends with\ } a\}$.  What is the symbol-by-symbol 
+structure of
+strings in this language?  Well, they start with an $a$, followed by zero or more
+$a$'s or $b$'s or both, followed by an $a$.  The regular expression 
+$a \cdot (a \REOR b)^* \cdot a$ is a pattern that captures this structure and matches any string in
+$L$ ($\cdot$ and $^*$ have their usual meanings, and $\REOR $ designates {\em or}.\footnote{Various
+symbols have been used to represent the ``or'' operation in regular expressions.  Both
+$+$ and $\cup$ have been used for this purpose.  In this book, we use the symbol $|$ because
+it is commonly used in computer implementations of regular expressions.}) 
+Conversely, consider the regular expression ($a\cdot(a\REOR b)^*) \REOR  ((a\REOR b)^*\cdot a)$.
+This is a pattern that matches any string that either has the form ``$a$ followed
+by zero or more $a$'s or $b$'s or both" (i.e.\ any string that starts with an $a$)
+{\em or} has the form ``zero or more $a$'s or $b$'s or both followed by an $a$"
+(i.e.\ any string that ends with an $a$).  Thus the regular expression 
+{\em generates} the language of all strings that start or end (or both) in an
+$a$: this is the set of strings that match the regular expression. 
+
+Here are the formal definitions of a regular expression and the language
+generated by a regular expression:
+
+\begin{definition}
+Let $\Sigma$ be an alphabet.  Then the 
+following patterns are \nw{regular expressions} over $\Sigma$:
+\begin{enumerate}
+\item $\Phi$ and $\varep$ are regular expressions;
+\item $a$ is a regular expression, for each $a \in \Sigma$;
+\item if $r_1$ and $r_2$ are regular expressions, then so are
+$r_1\REOR r_2$, $r_1\cdot r_2$, $r_1^*$ and $(r_1)$ (and of course, $r_2^*$
+and $(r_2)$).
+As in concatenation of strings, the $\cdot$ is often left out of
+the second expression.  (Note: the order of precedence of operators, from lowest to highest,
+is $\REOR $, $\cdot$, $*$.)
+\end{enumerate}
+No other patterns are regular expressions.
+\end{definition}
+
+\begin{definition}\label{lgbre}
+The \nw{language generated by a regular expression $r$}, 
+denoted $L(r)$,
+is defined as follows:
+\begin{enumerate}
+\item $L(\Phi) = \emptyset$, i.e.\ no strings match $\Phi$;
+\item $L(\varep) = \{\varep\}$, i.e.\ $\varep$ matches only the 
+empty string;
+\item $L(a) = \{a\}$, i.e.\ $a$ matches only the string $a$;
+\item $L(r_1\REOR r_2) = L(r_1) \cup L(r_2)$, i.e.\ $r_1\REOR r_2$ matches
+strings that match $r_1$ or $r_2$ or both;
+\item $L(r_1r_2) = L(r_1)L(r_2)$, i.e.\ $r_1r_2$ matches strings of the form 
+``something that matches $r_1$ followed by something that 
+matches $r_2$";
+\item $L(r_1^*) = (L(r_1))^*$, i.e.\ $r_1^*$ matches sequences of 0
+or more strings each of which matches $r_1$.
+\item $L((r_1)) = L(r_1)$, i.e.\ $(r_1)$ matches exactly those strings
+matched by $r_1$.
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+Let $\Sigma = \ab$, and consider the regular expression $r=a^*b^*$.  What is
+$L(r)$?  Well, $L(a) = \{a\}$ so $L(a^*) = (L(a))^* = \{a\}^*$, and $\{a\}^*$ is
+the set of all strings of zero or more $a$'s, so $L(a^*) = \{\varep, a, aa, aaa,
+\ldots\}$.  Similarly, $L(b^*) = \{\varep, b, bb, bbb, \ldots\}$.  
+Since  $L(a^*b^*) = L(a^*)L(b^*) = \{xy \ | \ x\in L(a^*)\AND y\in L(b^*)\}$, we
+have $L(a^*b^*) = \{\varep, a, b, aa, ab, bb, aaa, aab, abb, bbb, \ldots\}$,
+which is the set of all strings of the form ``zero or more $a$'s followed by zero
+or more $b$'s".
+\end{example}
+
+\begin{example}
+Let $\Sigma = \ab$, and consider the regular expression $r=(a\REOR aa\REOR aaa)(bb)^*$.
+Since $L(a) = \{a\}$, $L(aa) = L(a)L(a) = \{aa\}$.  Similarly, $L(aaa) = \{aaa\}$
+and $L(bb) = \{bb\}$.  Now $L(a\REOR aa\REOR aaa) = L(a) \cup L(aa) \cup L(aaa) = \{a, aa,
+aaa\}$, and $L((bb)^*) = (L((bb)))^* = (L(bb))^*$  (the last equality is from
+clause 7 of Definition~\ref{lgbre}), and $(L(bb))^* = \{bb\}^* = \{\varep, bb,
+bbbb, \ldots\}$.  So $L(r)$ is the set of strings formed by
+concatenating $a$ or $aa$ or $aaa$ with zero or more pairs of $b$'s.
+\end{example}
+
+\begin{definition}
+A language is {\em regular} if it is generated by
+a regular expression.
+\end{definition}
+
+Clearly the union of two regular languages is regular; likewise, 
+the concatenation of regular languages is regular; and the Kleene
+closure of a regular language is regular. It is less clear whether the
+intersection of regular languages is always regular; nor is it clear whether the
+complement of a regular language is guaranteed to be regular.  These are
+questions that will be taken up in Section~\ref{S-fsa-3}.
+
+Regular languages, then, are languages whose strings' structure can be described
+in a very formal, mathematical way.  The fact that a language can be
+``mechanically" described or generated means that we are likely to be
+able to get a computer to recognize strings in that language.
+We will pursue the question of mechanical language recognition in
+Section~\ref{S-fsa-1}, and subsequently will see that our first attempt to model mechanical
+language recognition does in fact produce a family of ``machines" that recognize
+exactly the regular languages.  But first, in the next section, we will look at some
+practical applications of regular expressions.
+
+\begin{exercises}
+\problem Give English-language descriptions of the languages generated by the
+following regular expressions.
+\pparts{ (a\REOR b)^* & a^*\REOR b^* & b^*(ab^*ab^*)^* & b^*(abb^*)}
+\problem Give regular expressions over $\Sigma=\ab$ that generate the 
+following languages.
+\ppart $L_1 = \{ x \ | \ x \mbox{ contains 3 consecutive $a$'s}\}$
+\ppart $L_2 = \{ x \ | \ x \mbox{ has even length}\}$
+\ppart $L_3 = \{ x \ | \ n_b(x) = 2 \bmod{3}\}$
+\ppart $L_4 = \{ x \ | \ x \mbox{ contains the substring } aaba\}$
+\ppart $L_5 = \{ x \ | \ n_b(x) < 2 \}$
+\ppart $L_6 = \{ x \ | \ x \mbox{ doesn't end in } aa\}$
+\problem Prove that all finite languages are regular.
+
+\end{exercises}
+
+
+\section{Application: Using Regular Expressions}
+
+\newcommand{\bk}{\char`\\}
+\newcommand{\vb}{\char`\|}
+\newcommand{\sol}{\char`\^}
+
+A common operation when editing text is to search for a
+given string of characters, sometimes with the purpose of
+replacing it with another string.  Many ``search and replace''\index{search
+and replace} facilities have the option of using regular expressions
+instead of simple strings of characters.  A regular expression describes
+a language, that is, a \textit{set} of strings.  We can think of a regular
+expression as a \nw{pattern} that matches certain strings, namely all
+the strings in the language described by the regular expression.
+When a regular expression is used in a search operation, the
+goal is to find a string that matches the expression.  This type
+of \nw{pattern matching} is very useful.\index{regular expressions!and
+pattern matching}
+
+The ability to do pattern matching with regular expressions is provided
+in many text editors, including \textit{jedit} and \textit{kwrite}.
+Programming languages often come with libraries for working with
+regular expressions.  Java (as of version 1.4) provides regular
+expression handling though a package named \textit{java.util.regexp}.
+C++ typically provides a header file named \textit{regexp.h} for
+the same purpose.  In all these applications, many new notations are added to the syntax to make it
+more convenient to use.  The syntax can vary from one implementation
+to another, but most implementations include the capabilities
+discussed in this section.
+
+\medskip
+
+In applications of regular expressions, the alphabet usually includes
+all the characters on the keyboard.  This leads to a problem, because
+regular expressions actually use two types of symbols:  symbols that
+are members of the alphabet and special symbols such a ``\texttt{*}'' and ``\texttt{)}'' that
+are used to construct expressions.  These special symbols, which
+are not part of the language being described but are used in the
+description, are called \nw{meta-characters}.  The problem is,
+when the alphabet includes all the available characters, what do we
+do about meta-characters?  If the language that we are describing 
+uses the ``\texttt{*}'' character, for example, how can we represent the
+Kleene star operation?
+
+The solution is to use a so-called ``escape character,'' which is
+usually the backslash,~\texttt{\bk}.  We agree, for example, that the notation
+\texttt{\bk*} refers to the symbol \texttt{*} that is a member of
+the alphabet, while \texttt{*} by itself is the meta-character
+that represents the Kleene star operation.  Similarly,
+\texttt{(} and \texttt{)} are the meta-characters that are used
+for grouping, while the corresponding characters in the language
+are written as \texttt{\bk(} and \texttt{\bk)}.  For example,
+a regular expression that matches the string \texttt{a*b} repeated
+any number of times would be written: \texttt{(a\bk*b)*}.
+The backslash is also used to represent certain non-printing
+characters.  For example, a tab is represented as \texttt{\bk t}
+and a new line character is \texttt{\bk n}.
+
+%Outside this section of this book, *****
+%we use the symbol + as a meta-character to represent
+%a choice between alternatives in a regular expression.  In applications,
+%however, the same operation is almost universally expressed using
+%the vertical bar symbol~\texttt{\vb}, which computer scientists tend to
+%associate with the word ``or.''  In this section, we follow the
+%same convention and use \texttt{a\vb b} rather than \texttt{a+b} for 
+%the regular expression that matches either \texttt{a} or
+%\texttt{b}.  (This means, of course, that if we want to use
+%\texttt{\vb} as a normal character rather than a meta-character, we must
+%write it as~\texttt{\bk\vb}.  The same remark applies to all the new 
+%meta-characters that are introduced below.)
+
+We introduce two new common operations on regular expressions and two
+new meta-characters to represent them.
+The first operation is represented by the meta-character~\texttt{+}:
+If \texttt{r} is a regular expression, then \texttt{r+} represents the
+occurrence of \texttt{r} one or more times.  The second operation
+is represented by~\texttt{?}: The notation \texttt{r?} represents an occurrence of \texttt{r} 
+zero or one times.  That is to say, \texttt{r?} represents an optional 
+occurrence of \texttt{r}.  Note that these operations are introduced
+for convenience only and do not represent any real increase
+in the power.  In fact, \texttt{r+} is exactly equivalent to
+\texttt{rr*}, and \texttt{r?} is equivalent to \texttt{(r|$\varep$)} 
+(except that in applications there is generally no equivalent to $\varep$).
+
+To make it easier to deal with the large number of characters in the
+alphabet, \nw{character classes} are introduced.  A character class
+consists of a list of characters enclosed between brackets, \texttt{[} and
+\texttt{]}.  (The brackets are meta-characters.)  A character class
+matches a single character, which can be any of the characters in
+the list.  For example, \texttt{[0123456789]} matches any one of
+the digits 0 through 9.  The same thing could be expressed
+as \texttt{(0\vb1\vb2\vb3\vb4\vb5\vb6\vb7\vb8\vb9)}, so once again
+we have added only convenience, not new representational power.
+For even more convenience, a hyphen can be included in a character
+class to indicate a range of characters.  This means that
+\texttt{[0123456789]} could also be written as \texttt{[0-9]}
+and that the regular expression \texttt{[a-z]} will match any
+single lowercase letter.  A character class can include multiple
+ranges, so that \texttt{[a-zA-Z]} will match any letter, lower- or
+uppercase.  The period~(\texttt{.}) is a meta-character that will
+match any single character, except (in most implementations)
+for an end-of-line.
+These notations can, of course, be used in more complex
+regular expressions.  For example, \texttt{[A-Z][a-zA-Z]*}
+will match any capitalized word, and \texttt{\bk(.*\bk)} matches
+any string of characters enclosed in parentheses.
+
+In most implementations, the meta-character \texttt{\sol} can be used in
+a regular expression to match the beginning of a line of text, so that
+the expression \texttt{\sol [a-zA-Z]+} will only match a word that
+occurs at the start of a line.  Similarly, \texttt{\$} is used
+as a meta-character to match the end of a line.  Some implementations
+also have a way of matching beginnings and ends of words.
+Typically, \texttt{\bk b} will match such ``word boundaries.''
+Using this notation, 
+the pattern \texttt{\bk band\bk b} will match the string ``and''
+when it occurs as a word, but will not match the \hbox{a-n-d}
+in the word ``random.''  We are going a bit beyond
+basic regular expressions here: Previously, we only thought of
+a regular expression as something that either will match
+or will not match a given string in its entirety.   When
+we use a regular expression for a search operation, however,
+we want to find a \textit{substring} of a given string that
+matches the expression.  The notations \texttt{\sol},
+\texttt{\$} and \texttt{\bk b} put a restrictions
+on \textit{where} the matching substring can be located in the string.
+
+\medskip
+
+When regular expressions are used in search-and-replace operations,
+a regular expression is used for the search pattern.  A search is
+made in a (typically long) string for a substring that matches the pattern,
+and then the substring is replaced by a specified replacement
+pattern.  The replacement pattern is not used for matching
+and is not a regular expression.  However, it can be more than
+just a simple string.  It's possible to include parts of the
+substring that is being replaced in the replacement string.
+The notations \texttt{\bk0}, \texttt{\bk1}, \dots, \texttt{\bk9}
+are used for this purpose.  The first of these, \texttt{\bk0},
+stands for the entire substring that is being replaced.
+The others are only available when parentheses are used in
+the search pattern.  The notation \texttt{\bk1} stands for
+``the part of the substring that matched the part of the
+search pattern beginning with the first \texttt{(} in the
+pattern and ending with the matching \texttt{)}.''  Similarly,
+\texttt{\bk2} represents whatever matched the part of the
+search pattern between the second pair of parentheses, and so on.
+
+Suppose, for example, that you would like to search for
+a name in the form \textit{last-name,~first-name} and
+replace it with the same name in the form \textit{first-name last-name}.
+For example, ``Reeves, Keanu'' should be converted to ``Keanu Reeves''.
+Assuming that names contain only letters,
+this could be done using the search pattern \texttt{([A-Za-z]+),~([A-Za-z]+)}
+and the replacement pattern \texttt{\bk2 \bk1}.  When the match is
+made, the first \texttt{([A-Za-z]+)} will match ``Reeves,'' 
+so that in the replacement pattern, \texttt{\bk1} represents the
+substring ``Reeves''. Similarly, \texttt{\bk2} will represent
+``Keanu''.  Note that the parentheses
+are included in the search pattern \textit{only} to specify what parts
+of the string are represented by \texttt{\bk1} and \texttt{\bk2}.
+In practice, you might use \texttt{\sol([A-Za-z]+),~([A-Za-z])\$}
+as the search pattern to constrain it so that it will only 
+match a complete line of text.  By using a ``global'' search-and-replace,
+you could convert an entire file of names from one format to the other
+in a single operation.
+
+\medskip
+
+Regular expressions are a powerful and useful technique that
+should be part of any computer scientist's toolbox.  This section
+has given you a taste of what they can do, but you should check
+out the specific capabilities of the regular expression implementation
+in the tools and programming languages that you use.
+
+
+
+
+\begin{exercises}
+
+\problem The backslash is itself a meta-character.  Suppose that
+you want to match a string that contains a backslash
+character.  How do you suppose you would represent the backslash in
+the regular expression?
+
+\problem Using the notation introduced in this section,
+write a regular expression that could be used to match
+each of the following:
+\ppart Any sequence of letters (upper- or lowercase) that
+includes the letter Z (in uppercase).
+\ppart Any eleven-digit telephone number written in the form
+\texttt{(xxx)xxx-xxxx}.
+\ppart Any eleven-digit telephone number \textit{either}
+in the form \texttt{(xxx)xxx-xxxx} or \texttt{xxx-xxx-xxxx}.
+\ppart A non-negative real number with an optional decimal
+part.  The expression should match numbers such as
+17, 183.9999, 182., 0, 0.001, and 21333.2.
+\ppart A complete line of  text that contains only letters.
+\ppart A C++ style one-line comment consisting of \texttt{//} and all the
+following characters up to the end-of-line.
+
+\problem Give a search pattern and a replace pattern that could
+be used to perform the following conversions:
+\ppart Convert a string that is enclosed in a pair of double quotes to
+the same string with the double quotes replaced by single quotes.
+\ppart Convert seven-digit telephone numbers in the format
+\texttt{xxx-xxx-xxxx} to the format \texttt{(xxx)xxx-xxxx}.
+\ppart Convert C++ one-line comments, consisting of characters
+between \texttt{//} and end-of-line, to C style comments enclosed
+between \texttt{/*} and \texttt{*/}$\,$.
+\ppart Convert any number of consecutive spaces and tabs to
+a single space.
+
+\problem In some implementations of ``regular expressions,'' the
+notations \texttt{\bk 1}, \texttt{\bk 2}, and so on can occur
+in a search pattern.  For example, consider the search pattern
+\texttt{\sol([a-zA-Z]).*\bk1\$}.  Here, \texttt{\bk1} represents
+a recurrence of the same substring that matched \texttt{[a-zA-Z]},
+the part of the pattern between the first pair of parentheses.
+The entire pattern, therefore, will match a line of text that
+begins and ends with the same letter.  Using this notation,
+write a pattern that matches all strings in the language
+$L=\{a^nba^n\,\st\,n\ge0\}$.  (Later in this chapter, we will
+see that $L$ is \textit{not} a regular language, so allowing the
+use of \texttt{\bk1} in a ``regular expression'' means that it's
+not really a regular expression at all!  This notation can add
+a real increase in expressive power to the patterns that contain it.)
+
+\end{exercises}
+
+
+%\newcommand{\gap}{\vspace{2.5ex}}
+\newcommand{\dstar}{\delta^*}
+\newcommand{\pstar}{\partial^*}
+\newcommand{\winss}{w \in \Sigma^*}
+
+\section{Finite-State Automata}\label{S-fsa-1}
+
+We have seen how regular expressions can be used to generate languages
+mechanically. How might languages be recognized mechanically? 
+The question is of interest because if we can mechanically recognize languages
+like $L= \{$all legal C++ programs that will not go into infinite loops on any
+input$\}$, then it would be possible to write \"uber-compilers that can do
+semantic error-checking like testing for infinite loops, in addition to the
+syntactic error-checking they currently do.
+
+What formalism might we use to model what it means to recognize a language
+``mechanically''?  We look for inspiration to a language-recognizer with which
+we are all familiar, and which we've already in fact mentioned: a compiler.
+Consider how a C++ compiler might handle recognizing a legal {\em if}
+statement.  Having seen the word {\em if}, the compiler will be in a {\em state}
+or {\em phase of its execution} where it expects to see a `('; in this state,
+any other character will put the compiler in a ``failure" state.  If the compiler
+does in fact see a `(' next, it will then be in an ``expecting a boolean
+condition" state; if it sees a sequence of symbols that make up a legal boolean
+condition, it will then be in an ``expecting a `)'" state; and then ``expecting
+a `$\{$' or a legal statement"; and so on.  Thus one can think of the compiler as
+being in a series of states; on seeing a new input symbol, it moves on to a new
+state; and this sequence of transitions eventually leads to either a ``failure"
+state (if the {\em if} statement is not syntactically correct) or a ``success"
+state (if the {\em if} statement is legal).  We isolate these three
+concepts---states, input-inspired transitions from state to state, and
+``accepting" vs ``non-accepting" states---as the key features of a mechanical
+language-recognizer, and capture them in a model called a {\em finite-state
+automaton}.  (Whether this is a successful distillation of the essence of
+mechanical language recognition remains to be seen; the question will be taken
+up later in this chapter.)
+
+A \nw{finite-state automaton (FSA)}, then, is a machine which takes, as input, 
+a finite
+string of symbols from some alphabet $\Sigma$.
+There is a finite set of \nw{states} in which the machine can find itself.  The
+state it is in before consuming any input is called the \nw{start state}.
+Some of the states are \nw{accepting}
+or \nw{final}.  If the machine ends in such a state after completely consuming
+an input string, the string is said to be \nw{accepted} by the machine.
+The actual functioning of the machine is described by something called a 
+\nw{transition function}, which specifies 
+what happens if the machine is in a particular state and looking at a
+particular input symbol.  (``What happens" means ``in which state does the
+machine end up".)    
+
+\begin{example} Below is a table that describes the transition function of a 
+finite-state automaton with states $p$, $q$, and $r$, on inputs $0$ and $1$.
+
+
+\begin{center}
+\begin{tabular}{|c||c|c|c|}
+        \hline
+        $\ $& $p$& $q$& $r$\\
+        \hline
+        \strut 0& $p$& $q$& $r$\\
+        1& $q$& $r$& $r$\\
+        \hline
+     \end{tabular}
+\end{center}
+
+The table indicates, for example, 
+that if the FSA were in state $p$ and consumed a $1$, it would
+move to state $q$.
+\end{example}
+    
+FSAs actually come in two flavours depending on what
+properties you require of the transition function.  We will look first at a class
+of FSAs called deterministic finite-state automata (DFAs).  In these
+machines, the current state of the machine and the current input symbol together
+determine exactly which state the machine ends up in: for every $<$current state,
+current input symbol$>$ pair, there is exactly one possible next state for the
+machine.
+
+\smallskip
+
+\begin{definition}
+Formally,
+a \nw{deterministic finite-state automaton} $M$ is specified by 5 components:
+$M=(Q, \Sigma, q_0, \delta, F)$ where
+\begin{itemize} 
+\item $Q$ is a finite set of states; 
+\item $\Sigma$ is an alphabet called the {\em input alphabet}; 
+\item $q_0 \in Q$ is a state which is designated as the {\em start state}; 
+\item $F$ is a subset of $Q$; the states in $F$ are states designated as 
+{\em final} or {\em accepting}  states; 
+\item $\delta$ is a transition function that takes 
+$<$state, input symbol$>$ pairs and maps each one to a state: $\delta : Q \times
+\Sigma \rightarrow Q$.  To say
+$\delta(q,a) = q'$ means that
+if the machine is in state $q$ and the input symbol $a$ is consumed, then the
+machine will move into state $q'$.  The function $\delta$ must be a total
+function, meaning that $\delta(q,a)$ must be defined for every state $q$ and
+every input symbol $a$.  (Recall also that, according to the definition of a
+function, there can be only one output for any particular input.  This means
+that for any given $q$ and $a$, $\delta(q,a)$ can have only one value.  This is
+what makes the finite-state automaton deterministic: given the current state and
+input symbol, there is only one possible move the machine can make.)
+\end{itemize}
+\end{definition}
+
+\begin{example}
+The transition function described by the table in the preceding example is that of
+a DFA.  
+If we take $p$ to be the start state and $r$ to be a final state, then the
+formal description  of the resulting machine 
+is $M= (\{p,q,r\}, \{0,1\}, p, \delta, \{r\})$, where $\delta$
+is given by
+
+\medskip
+
+$\hspace{0.5in}\delta(p,0)=p$ \hspace{1.5in} $\delta(p,1)=q$
+
+$\hspace{0.5in}\delta(q,0)=q$ \hspace{1.5in} $\delta(q,1)=r$
+
+$\hspace{0.5in}\delta(r,0)=r$ \hspace{1.5in} $\delta(r,1)=r$
+\end{example}
+\smallskip
+
+The transition function $\delta$ describes only individual steps of the machine
+as individual input symbols are consumed.  However, we will often want to refer
+to
+``the
+state the automaton will be in if it starts in state $q$ and consumes input
+string $w$", where $w$ is a string of input symbols rather than a single symbol.
+Following the usual practice of using $^*$ to designate
+``0 or more", we define \nw{$\dstar(q,w)$} as a convenient shorthand for 
+``the state that the automaton will be in
+if it starts in state $q$ and consumes the input string $w$". For any string,
+it is easy to see, based on $\delta$, what steps the machine will
+make as those symbols are consumed, and what $\dstar(q,w)$ will be for any $q$
+and $w$. Note that if no input is consumed, a DFA makes no move, and so
+$\dstar(q, \varepsilon) = q$ for any state $q$.\footnote{$\delta^*$ can be defined
+formally by saying that $\delta^*(q,\varepsilon)=q$ for every state $q$,
+and $\delta^*(q,ax)=\delta^*(\delta(q,a),x)$ for any state $q$, $a\in\Sigma$
+and $x\in\Sigma^*$.  Note that this is a recursive definition.}
+
+\smallskip
+
+\begin{example}
+Let $M$ be the automaton in the preceding example.  Then, for example:
+
+$\dstar(p, 001)=q$, since $\delta(p,0)=p$, $\delta(p,0)=p$, and $\delta(p,1)=q$; 
+
+$\dstar(p, 01000)= q$;
+
+$\dstar(p, 1111) = r$;
+
+$\dstar(q, 0010) = r$.
+\end{example}
+
+\smallskip
+
+We have divided the states of a DFA into accepting and non-accepting states, with
+the idea that some strings will be recognized as ``legal" by the automaton, and
+some not.  Formally:
+
+\begin{definition}
+Let $M=(Q, \Sigma, q_0, \delta, F)$.  A string $w \in \Sigma^*$ is \nw{accepted}
+by $M$ iff $\dstar(q_0, w) \in F$. \ \ (Don't get confused by the notation.  
+Remember, it's just a shorter and neater way of saying
+``$w \in \Sigma^*$ is accepted by $M$ if and only if the state that $M$ will end
+up in
+if it starts in $q_0$ and consumes $w$ is one of the states in $F$.")
+
+The \nw{language accepted by $M$}, denoted $L(M)$, is the set of all strings 
+$w \in \Sigma^*$ that are accepted by $M$: 
+$L(M) = \{ w \in\Sigma^* \ | \ \delta^*(q_0, w) \in F\}$.
+
+\end{definition}
+
+\smallskip
+Note that we sometimes use a slightly different phrasing and say that a language
+$L$ is accepted by some machine $M$.  We don't mean by this that $L$ {\em and
+maybe some other strings} are accepted by $M$; we mean $L = L(M)$, i.e.\ $L$ is
+{\em exactly} the set of strings accepted by $M$.
+
+It may not be easy, looking at a formal specification of a DFA, to determine what
+language that automaton accepts.  Fortunately, the mathematical description of
+the automaton $M=(Q, \Sigma, q_0, \delta, F)$ can be neatly and helpfully
+captured in a picture called a \nw{transition diagram}.  
+Consider again the DFA of the two preceding examples.  It
+can be represented pictorially as:
+
+\fsafig{1}
+
+\noindent The arrow on the left indicates that $p$ is the start state; double
+circles indicate that a state is accepting.  Looking at this picture, it should
+be fairly easy to see that the language accepted by the DFA $M$ is 
+$L(M) = \{ x \in \{0,1\}^* \ | \ n_1(x) \geq 2\}$.
+
+\begin{example}
+Find the language accepted by the DFA shown below (and describe it using a
+regular expression!)
+
+\fsafig{2}
+
+The start state of $M$ is accepting, which means $\varep \in L(M)$.  If $M$ is
+in state $q_0$, a
+sequence of two $a$'s or three $b$'s will move $M$ back to $q_0$ and hence
+be accepted.  So $L(M) = L((aa\REOR bbb)^*)$.
+\end{example}
+
+The state $q_4$ in the preceding example is often called a {\em garbage} or {\em
+trap} state: it is a non-accepting state which, once reached by the machine,
+cannot be escaped.  It is fairly common to omit such states from transition
+diagrams.  For example, one is likely to see the diagram:
+
+\fsafig{3}
+
+Note that this cannot be a complete DFA, because a DFA is required to have a
+transition defined for every state-input pair.  The diagram is ``short for" the
+full diagram:
+
+\fsafig{4}
+
+
+As well as recognizing what language is accepted by a given DFA, we often want to
+do the reverse and come up with a DFA that accepts a given language.
+Building DFAs for specified languages is an art, not a science.
+There is no algorithm that you can apply to produce a DFA from an English-language
+description of the set of strings the DFA should accept.  On the other hand, it
+is not generally successful, either, to simply write down a half-dozen strings
+that are in the language and design a DFA to accept those strings---invariably
+there are strings that are in the language that aren't accepted, and other
+strings that aren't in the language that are accepted.  So how do you go about
+building DFAs that accept all and only the strings they're supposed to accept?
+The best advice I can give is to
+think about relevant characteristics that determine whether a string is in the
+language or not, and to think about what the possible values or ``states" of 
+those characteristics
+are; then build a machine that has a state corresponding to each possible
+combination of values of relevant characteristics, and determine how the
+consumption of inputs affects those values.  I'll illustrate what I mean with a
+couple of examples.
+\begin{example}
+Find a DFA with input alphabet $\Sigma = \ab$ that accepts the language
+$L= \{\winss \ | \ n_a(w) \mbox{ and } n_b(w) \mbox{ are both even } \}$.
+
+The characteristics that determine whether or not a string $w$ is in $L$ are the
+parity of $n_a(w)$ and $n_b(w)$.  There are four possible combinations of
+``values" for these characteristics: both numbers could be even, both could be
+odd, the first could be odd and the second even, or the first could be even and
+the second odd.  So we build a machine with four states $q_1, q_2, q_3, q_4$
+corresponding to the four cases.  We want to set up $\delta$ so that the machine
+will be in state $q_1$ exactly when it has consumed a string with an even number
+of $a$'s and an even number of $b$'s, in state $q_2$ exactly when it has 
+consumed a string with an
+odd number of $a$'s and an odd number of $b$'s, and so on.  
+
+To do this, we first make 
+the state $q_1$ into our start state,
+because the DFA will be in the start state after consuming the empty string
+$\varep$, and $\varep$ has an even number (zero) of both $a$'s and $b$'s.  Now we
+add transitions by reasoning about how the parity of $a$'s and $b$'s is changed
+by additional input.  For instance, if the machine is in $q_1$ (meaning an even
+number of $a$'s and an even number of $b$'s have been seen) and a further $a$ is
+consumed, then we want the machine to move to state $q_3$, since the machine has
+now consumed an odd number of $a$'s and still an even number of $b$'s.  So we add
+the transition $\delta(q_1, a) = q_3$ to the machine.  Similarly, if the machine
+is in $q_2$ (meaning an odd
+number of $a$'s and an odd number of $b$'s have been seen) and a further $b$ is
+consumed, then we want the machine to move to state $q_3$ again, since the 
+machine has
+still consumed an odd number of $a$'s, and now an even number of $b$'s.
+So we add
+the transition $\delta(q_2, b) = q_3$ to the machine.  Similar reasoning produces
+a total of eight transitions, one for each state-input pair.  Finally, we have to
+decide which states should be final states.  The only state that corresponds to
+the desired criteria for the language $L$ is $q_1$, so we make $q_1$ a final
+state.  The complete machine is shown below.
+
+
+\fsafig{5}
+
+
+\end{example}
+
+\begin{example}
+Find a DFA with input alphabet $\Sigma = \ab$ that accepts the language
+$L$ = $\{\winss \ | \  n_a(w)  \mbox{ is divisible by 3 } \}$.
+
+The relevant characteristic here is of course whether or not the number of $a$'s
+in a string is divisible by 3, perhaps suggesting a two-state machine.  But in
+fact, there is more than one way for a number to not be divisible by 3: dividing
+the number by 3 could produce a remainder of either 1 or 2 (a remainder of 0
+corresponds to the number in fact being divisible by 3).  So we build a machine
+with three states $q_0$, $q_1$, $q_2$, and add transitions so that the machine
+will be in state $q_0$ exactly when the number of $a$'s it has consumed is evenly
+divisible by 3, in state $q_1$ exactly when the number of $a$'s it has consumed
+is equivalent to $ 1 \bmod{3}$, and similarly for $q_2$.  State $q_0$ will be the
+start state, as $\varep$ has 0 $a$'s and 0 is divisible by 3.  The completed
+machine is shown below.  Notice that because the consumption of a $b$ does not
+affect the only relevant characteristic, $b$'s do not cause changes of 
+state.
+
+\fsafig{6}
+
+\end{example}
+
+
+\begin{example}
+Find a DFA with input alphabet $\Sigma = \ab$ that accepts the language
+$L$ = $\{\winss \ | w \mbox{ contains three consecutive a's } \}$.
+
+Again, it is not quite so simple as making a two-state machine where the states
+correspond to ``have seen $aaa$" and ``have not seen $aaa$".
+Think dynamically: as you move through the
+input string, how do you arrive at the goal of having seen three consecutive
+$a$'s?  You might have seen two consecutive $a$'s and still need a third, or
+you might just have seen one $a$ and be looking for two more to come
+immediately, or you might just have seen a $b$ and be right back at the
+beginning as far as seeing 3 consecutive $a$'s goes.  So once again there will be
+three states, with the ``last symbol was not an $a$'' state being the start
+state.  The complete automaton is shown below.
+
+\medskip
+\fsafig{7}
+\end{example}
+
+\begin{exercises}
+\problem Give DFAs that accept the following languages over $\Sigma =\ab$.
+\ppart $L_1= \{ x \ | \ x \mbox{ contains the substring } aba\}$
+\ppart $L_2= L(a^*b^*)$
+\ppart $L_3= \{ x \ | \ n_a(x)+n_b(x) \mbox{ is even }\}$
+\ppart $L_4= \{ x \ | \ n_a(x) \mbox{ is a multiple of 5 }\}$
+\ppart $L_5= \{ x \ | \ x \mbox{ does not contain the substring } abb\}$
+\ppart $L_6= \{ x \ | \ x \mbox{ has no $a$'s in the even positions} \}$
+\ppart $L_7 = L(aa^* \REOR  aba^*b^*)$
+\problem What languages do the following DFAs accept?
+
+\fsafig{1ex}
+
+\fsafig{2ex}
+
+
+\problem Let $\Sigma=\{0,1\}$. Give a DFA that accepts the language 
+$$ L = \{ x \in \Sigma^* \ | \ x \mbox{ is the binary representation of an integer
+divisible by 3}\}.$$ 
+
+\end{exercises}
+
+
+
+\section{Nondeterministic Finite-State Automata}\label{S-fsa-2}
+
+As mentioned briefly above, there is an alternative school of though as to what
+properties should be required of a finite-state automaton's transition function.
+Recall our motivating example of a C++ compiler and a legal {\em if} statement. 
+In our description, we had the compiler in an ``expecting a `)'$\,$" state; on
+seeing a `)', the compiler moved into an ``expecting a `$\{$' or a legal
+statement" state.  An alternative way to view this would be to say that the
+compiler, on seeing a `)', could move into one of two different states: it could
+move to an ``expecting a `$\{$'" state {\bf or} move to an ``expecting a legal
+statement" state. Thus, from a single state, on input `)', the compiler has
+multiple moves.  This alternative interpretation is not
+allowed by the DFA model.  A second point on which one 
+might question the DFA model is the fact that input must be consumed for the
+machine to change state.
+Think of the syntax for C++ function declarations.  The return type of a
+function need not be specified (the default is taken to be {\em int}).  The
+start state of the compiler when parsing a function declaration might be 
+``expecting a return type"; then with no
+input consumed, the compiler can move to the state ``expecting a legal function 
+name".  To model this, it might seem reasonable to allow transitions that do 
+not require
+the consumption of input (such transitions are called \nw{$\varep$-transitions}).  
+Again, this is not supported by the DFA abstraction.
+There is, therefore, a second class of finite-state automata that people
+study, the class of nondeterministic finite-state automata.  
+
+\smallskip
+
+A \nw{nondeterministic finite-state automaton (NFA)} is the same as a 
+deterministic
+finite-state automaton except that the transition function is no longer a
+function that maps a state-input pair to a state; rather, it maps a state-input
+pair or a state-$\varep$ pair to a {\bf set} of states.  No longer do we have 
+$\delta(q,a) = q'$, meaning that the machine
+must change to state $q'$ if it is in state $q$ and consumes an $a$.  Rather,
+we have $\partial(q,a) = \{q_1, q_2, \ldots, q_n\}$, meaning that if the
+machine is in state $q$ and consumes an $a$, it might move directly to any one
+of the states $q_1, \ldots, q_n$.  Note that the set of next states
+$\partial(q,a)$ is defined for every state $q$ and every input symbol $a$,
+but for some $q$'s and $a$'s it could be empty, or contain just one state (there
+don't {\bf have} to be multiple next states).  The function $\partial$ must
+also specify whether it is possible for the machine to make any moves 
+without input being consumed, i.e.\ $\partial(q, \varepsilon)$ must be
+specified for every state $q$.  Again, it is quite possible that 
+$\partial(q, \varepsilon)$ may be empty for some states $q$: there need not be
+$\varep$-transitions out of $q$.
+
+\smallskip
+
+\begin{definition}
+Formally,
+a nondeterministic finite-state automaton $M$ is specified by 5 components:
+$M=(Q, \Sigma, q_0, \partial, F)$ where
+\begin{itemize} 
+\item  $Q$, $\Sigma$, $q_0 $ and $F$ are as in the definition of DFAs;
+\item $\partial$ is a transition function that takes 
+$<$state, input symbol$>$ pairs and maps each one to a set of states.  To say
+$\partial(q,a) = \{q_1, q_2, \ldots , q_n\}$ means that
+if the machine is in state $q$ and the input symbol $a$ is consumed, then the
+machine may move directly into any one of states $q_1, q_2, \ldots , q_n$.  
+The function $\partial$ must also be defined for every $<$state,$\varep$$>$ pair.
+To say
+$\partial(q,\varep) = \{q_1, q_2, \ldots , q_n\}$ means that there are direct
+$\varep$-transitions from state $q$ to each of  $q_1, q_2, \ldots , q_n$.
+
+
+The formal description of the function $\partial$ is $\partial : Q \times
+(\Sigma \cup \{\varep\}) \rightarrow \POW(Q)$.
+\end{itemize}
+\end{definition}
+
+
+The function $\partial$ describes how the machine functions on zero or one 
+input symbol. 
+As with DFAs, we will often want to refer to the behavior of the machine on a
+string of inputs, and so we use the notation $\pstar(q,w)$ as shorthand
+for ``the set of states in which
+the machine might be if it starts in state $q$ and consumes input string $w$".  
+As with DFAs, $\pstar(q,w)$ is
+determined by the specification of $\partial$.  Note that for every state $q$,
+$\pstar(q, \varep)$ contains at least $q$, and may contain additional states if
+there are (sequences of) $\varep$-transitions out of $q$. 
+
+We do have to think a bit carefully about what it means for an NFA to accept a
+string $w$.  Suppose $\pstar(q_0,w)$ contains both accepting and non-accepting
+states, i.e.\ the machine could end in an accepting state after consuming $w$,
+but it might also end in a non-accepting state.  Should we consider the machine
+to accept $w$, or should we require every state in $\pstar(q_0,w)$ to be
+accepting before we admit $w$ to the ranks of the accepted?  Think of the C++
+compiler again: provided that an {\em if} statement fits one of the legal
+syntax specifications, the compiler will accept it.  So we take as the
+definition of acceptance by an NFA: A string $w$ is accepted by an NFA provided
+that at least one of the states in $\pstar(q_0, w)$ is an accepting state. 
+That is, if there is some sequence of steps of the machine that consumes $w$
+and leaves the machine in an accepting state, then the machine accepts $w$.
+Formally:
+
+\smallskip
+
+\begin{definition}
+Let $M= (Q, \Sigma, q_0, \partial, F)$ be a nondeterministic finite-state
+automaton.  The string $\winss$ is \nw{accepted} 
+by $M$ iff $\pstar(q_0,w)$ contains at least one state $q_F \in F$.
+
+The \nw{language accepted by $M$}, denoted $L(M)$, is the set of all strings 
+$\winss$ that are
+accepted by $M$: $L(M) = \{ w \in \Sigma^* \ | \ \pstar(q_0, w) \cap F \not= 
+\emptyset\}$.
+\end{definition}
+
+\smallskip
+
+
+\begin{example}\label{asome} The NFA shown below accepts all strings of $a$'s 
+and $b$'s in which the second-to-last symbol is $a$.
+
+\fsafig{8}
+
+\end{example} 
+
+It should be fairly clear that every language that is accepted by a DFA is also
+accepted by an NFA.  Pictorially, a DFA looks exactly like an NFA (an NFA that
+doesn't happen to have any $\varep$-transitions or multiple same-label
+transitions from any state), though there is slightly more going on behind
+the scenes.  Formally, given the DFA $M=(Q, \Sigma, q_0, \delta, F)$, you can
+build an NFA $M'=(Q, \Sigma, q_0, \partial, F)$ where 4 of the 5 components
+are the same and where every transition $\delta(q,a) = q'$ has been replaced by
+$\partial(q,a) = \{q'\}$. 
+
+But is the reverse true?  Can any NFA-recognized language be recognized by a DFA?
+Look, for example, at the language in Example~\ref{asome}.  Can you come up with
+a DFA that accepts this language?  Try it.  It's pretty difficult to do.  But
+does that mean that there really is {\bf no} DFA that accepts the language, or
+only that we haven't been clever enough to find one?
+
+It turns out that the limitation is in fact in our cleverness, and not in the
+power of DFAs.
+
+\begin{theorem}
+Every language that is accepted by an NFA is accepted by a DFA.
+\end{theorem}
+\begin{proof} Suppose we are given an NFA $N = (P, \Sigma, p_0, \partial, F_p)$, and we want to
+build a DFA $D=(Q, \Sigma, q_0, \delta, F_q)$ that accepts the same language.
+The idea is to make the states in $D$ correspond to {\em subsets}
+of $N$'s states, and
+then to set up $D$'s transition function $\delta$ so that for any string $w$, 
+$\dstar(q_0, w)$ corresponds to $\pstar(p_0,w)$; i.e.\ the {\bf single} state that
+$w$ gets you to in $D$ corresponds to the {\bf set} of states that $w$ could get
+you to in $N$.  
+If any of those states is accepting in $N$, $w$ would
+be accepted by $N$, and so the corresponding state in $D$ would be made accepting
+as well.
+
+So how do we make this work?  The first thing to do is to deal with a start state
+$q_0$ for $D$.  If we're going to make this state correspond to a subset of $N$'s
+states, what subset should it be?  Well, remember (1) that in any DFA,
+$\dstar(q_0, \varep) = q_0$; and (2) we want to make $\dstar(q_0, w)$ correspond
+to $\pstar(p_0,w)$ for every $w$.  Putting these two limitations together tells
+us that we should make $q_0$ correspond to $\pstar(p_0, \varep)$.  So $q_0$
+corresponds to the subset of all of $N$'s states that can be reached with no
+input.
+
+Now we progressively set up $D$'s transition function $\delta$ by repeatedly
+doing the following:
+
+-- find a state $q$ that has been added to $D$ but whose out-transitions have not
+yet been added.  (Note that $q_0$ initially fits this description.)  Remember
+that the state $q$ corresponds to some subset $\{p_1, \ldots , p_n\}$ of $N$'s
+states.
+
+-- for each input symbol $a$, look at all $N$'s states that can be reached from
+any one of $p_1, \ldots , p_n$ by consuming $a$ (perhaps making some
+$\varep$-transitions as well).  That is, look at $\pstar(p_1,a) \cup \ldots \cup
+\pstar(p_n,a)$.  If there is not already a DFA state $q'$ that corresponds to
+this subset of $N$'s states, then add one, and add the transition 
+$\delta(q, a)= q'$ to $D$'s transitions.
+
+The above process must halt eventually, as there are only a finite
+number of states $n$ in the NFA, and therefore there can be at most $2^n$ states in the
+DFA, as that is the number of subsets of the NFA's states.  The final states of
+the new DFA are those where at least one of the associated NFA states is an
+accepting state of the NFA.  
+
+Can we now argue that $L(D) = L(N)$?  We can, if we can argue that
+$\dstar(q_0,w)$ corresponds to $\pstar(p_0,w)$ for all $\winss$: if this
+latter property holds, then $w \in L(D)$ iff $\dstar(q_0,w)$ is accepting, which
+we made be so iff $\pstar(p_0,w)$ contains an accepting state of $N$, which
+happens iff $N$ accepts $w$ i.e.\ iff $w \in L(N)$.
+
+So can we argue that $\dstar(q_0,w)$ does in fact correspond to $\pstar(p_0,w)$
+for all $w$?  We can, using induction on the length of $w$.
+
+First, a preliminary observation.  Suppose $w=xa$, i.e.\ $w$ is the string $x$
+followed by the single symbol $a$.  How are $\pstar(p_0,x)$ and $\pstar(p_0,w)$
+related?  Well, recall that $\pstar(p_0,x)$ is the set of all states that $N$ can
+reach when it starts in $p_0$ and  consumes $x$: 
+$\pstar(p_0,x) = \{p_1, \ldots, p_n\}$ for some states
+$p_1, \ldots, p_n$.  Now, $w$ is just $x$ with an additional $a$, so where might
+$N$ end up if it starts in $p_0$ and  consumes $w$?  We know that $x$ gets $N$ to
+$p_1$ or $\ldots$ or $p_n$, so $xa$ gets $N$ to any state that can be reached
+from $p_1$ with an $a$ (and maybe some $\varep$-transitions), and to any state
+that can be reached from $p_2$ with an $a$ (and maybe some $\varep$-transitions),
+etc.  Thus, our relationship between $\pstar(p_0,x)$ and $\pstar(p_0,w)$ is that
+if $\pstar(p_0,x) = \{p_1, \ldots, p_n\}$, then $\pstar(p_0,w) = \pstar(p_1,a)
+\cup \ldots \cup \pstar(p_n,a)$.  With this observation in hand, let's proceed to
+our proof by induction.
+
+We want to prove that $\dstar(q_0,w)$ corresponds to $\pstar(p_0,w)$ for all
+$\winss$.  We use induction on the length of $w$.
+\begin{enumerate}
+\item Base case: Suppose $w$ has length 0.  The only string $w$ with length 0 is
+$\varep$, so we want to show that 
+$\dstar(q_0,\varep)$ corresponds to $\pstar(p_0,\varep)$.  Well, 
+$\dstar(q_0, \varep) = q_0$, since in a DFA, $\dstar(q, \varep) = q$ for any
+state~$q$.  We explicitly made $q_0$ correspond to 
+$\pstar(p_0,\varep)$, and so the property holds for $w$ with length 0.
+\item Inductive case: Assume that the desired property holds for some number $n$,
+i.e.\ that  $\dstar(q_0,x)$ corresponds to $\pstar(p_0,x)$ for all $x$ with
+length $n$.  Look at an arbitrary string $w$ with length $n+1$.  
+We want to show that $\dstar(q_0,w)$ corresponds to $\pstar(p_0,w)$.
+Well, the string $w$
+must look like $xa$ for some string $x$ (whose length is $n$) and some symbol
+$a$.  By our inductive hypothesis, we know
+$\dstar(q_0,x)$ corresponds to $\pstar(p_0,x)$.  We know $\pstar(p_0,x)$ is a
+set of $N$'s states, say 
+$\pstar(p_0,x) = \{p_1, \ldots, p_n\}$.
+
+At this point, our subsequent reasoning might be a bit clearer if we give
+explicit names
+to $\dstar(q_0,w)$ (the state $D$
+reaches on input $w$) and $\dstar(q_0,x)$ (the state $D$
+reaches on input $x$).  Call $\dstar(q_0, w)$  \ $q_w$, and call
+$\dstar(q_0,x)$ \ $q_x$.  We know, because $w=xa$, there must be an 
+$a$-transition from $q_x$ to $q_w$.  Look at how we added transitions to
+$\delta$: the fact that there is an $a$-transition from $q_x$ to $q_w$ means that
+$q_w$ corresponds to the set $\pstar(p_1,a)
+\cup \ldots \cup \pstar(p_n,a)$ of $N$'s states.  By our preliminary observation,
+$\pstar(p_1,a)
+\cup \ldots \cup \pstar(p_n,a)$ is just $\pstar(p_0,w)$.  So $q_w$ (or
+$\dstar(q_0,w)$) corresponds to $\pstar(p_0,w)$, which is what we wanted to
+prove.  Since $w$ was an arbitrary string of length $n+1$, we have shown that 
+the property holds for $n+1$.
+\end{enumerate}
+
+Altogether, we have shown by induction that $\dstar(q_0,w)$ corresponds to
+$\pstar(p_0,w)$ for all
+$\winss$.  As indicated at the very beginning of this proof, that is enough to
+prove that $L(D)= L(N)$.  So for any NFA $N$, we can find a DFA $D$ that accepts
+the same language.
+\end{proof}
+
+\bigskip
+
+\begin{example}\label{nfatodfaex}
+Consider the NFA shown below.
+
+\fsafig{9}
+
+We start by looking at $\pstar(p_0, \varep)$, and then add transitions and
+states as described above.
+\begin{itemize}
+\item
+$\pstar(p_0, \varep) = \{p_0\}$ so $q_0 = \{p_0\}$.
+
+\item
+$\delta(q_0,a)$ will be $\pstar(p_0,a)$, which is $\{p_0\}$, 
+so $\delta(q_0,a) = q_0$.
+
+\item
+$\delta(q_0,b)$ will be $\pstar(p_0,b)$, which is $\{p_0, p_1\}$,
+so we need to add a new state
+$q_1 = \{p_0, p_1\}$ to the DFA; and add $\delta(q_0,b) = q_1$ to the DFA's
+transition function.
+
+\item
+$\delta(q_1,a)$ will be $\pstar(p_0,a)$ unioned with $\pstar(p_1,a)$ since
+$q_1 = \{p_0, p_1\}$.  Since $\pstar(p_0,a) \cup \pstar(p_1,a) = \{p_0\} \cup
+\{p_2\} = \{p_0,p_2\}$, we need to add a new state $q_2 = \{p_0, p_2\}$ to the
+DFA, and a transition $\delta(q_1,a) = q_2$.
+
+\item 
+$\delta(q_1,b)$ will be $\pstar(p_0,b)$ unioned with $\pstar(p_1,b)$, which
+gives $\{p_0, p_1\} \cup \{p_2\}$, which again gives us a new state $q_3$ to add to
+the DFA, together with the transition $\delta(q_1,b) = q_3$.
+\end{itemize}
+
+At this point, our partially-constructed DFA looks as shown below:
+
+\fsafig{10}
+
+The construction continues as long as there are new states being added, and new
+transitions from those states that have to be computed.
+The final DFA is shown below.
+
+\fsafig{11}
+
+\end{example}
+
+
+\begin{exercises}
+\problem What language does the NFA in Example~\ref{nfatodfaex} accept?
+\problem Give a DFA that accepts the language accepted by the 
+following NFA.
+
+\fsafig{3ex}
+
+\problem Give a DFA that accepts the language accepted by the following NFA.
+(Be sure to note that, for example, it is possible to reach both $q_1$ and
+$q_3$ from $q_0$ on consumption of an $a$, because of the 
+$\varep$-transition.)
+
+\fsafig{4ex}
+
+
+\end{exercises}
+
+
+
+\section{Finite-State Automata and Regular Languages}\label{S-fsa-3}
+
+We know now that our two models for mechanical language recognition actually
+recognize the same class of languages.  The question still remains: do they
+recognize the same class of languages as the class generated mechanically by regular
+expressions?  The answer turns out to be ``yes".  There are two parts to proving
+this: first that every language generated can be recognized, and second that
+every language recognized can be generated.
+
+\begin{theorem}\label{retonfa}
+Every language generated by a regular expression can be recognized by an NFA.
+\end{theorem}
+
+\begin{proof} The proof of this theorem is a nice example of a proof by induction on
+the structure of regular expressions.  The definition of regular expression is
+inductive: $\Phi$, $\varep$, and $a$ are the simplest regular expressions,
+and then more complicated regular expressions can be built from these.  We will
+show that there are NFAs that accept the languages generated by the simplest
+regular expressions, and then show how those machines can be put together to
+form machines that accept languages generated by more complicated regular
+expressions.
+
+Consider the regular expression $\Phi$.  $L(\Phi) = \{\}$.  Here is a machine
+that accepts $\{\}$: 
+
+\fsafig{12}
+
+Consider the regular expression $\varep$.  $L(\varep) = \{\varepsilon\}$.  
+Here is a machine that accepts $\{\varepsilon\}$:
+
+\fsafig{13}
+
+Consider the regular expression $a$.  $L(a) = \{a\}$.  Here is a
+machine that accepts $\{a\}$:
+
+\fsafig{14}
+
+Now suppose that you have NFAs that accept the languages generated by the
+regular expressions $r_1$ and $r_2$.  Building a machine that accepts $L(r_1 \REOR 
+r_2)$ is fairly straightforward: take an NFA $M_1$ that accepts $L(r_1)$ and an
+NFA $M_2$ that accepts $L(r_2)$.  Introduce a new state $q_{new}$, connect
+it to the start states of $M_1$ and $M_2$ via $\varepsilon$-transitions, and
+designate it as the start state of the new machine.  No other transitions are
+added.  The final states of $M_1$ together with the final states of $M_2$ are
+designated as the final states of the new machine.  It should be fairly clear
+that this new machine accepts exactly those strings accepted by $M_1$ together
+with those strings accepted by $M_2$: any string $w$ that was accepted by $M_1$
+will be accepted by the new NFA by starting with an $\varep$-transition to the
+old start state of $M_1$ and then following the accepting path through $M_1$;
+similarly, any string accepted by $M_2$ will be accepted by the new machine;
+these are the only strings that will be accepted by the new machine, as on any
+input $w$ all the new machine can do is make an $\varep$-move to $M_1$'s (or
+$M_2$'s) start state, and from there $w$ will only be accepted by the new
+machine if it is accepted by $M_1$ (or $M_2$).  Thus, the new machine accepts
+$L(M_1) \cup L(M_2)$, which is $L(r_1) \cup L(r_2)$, which is exactly the
+definition of $L(r_1 \REOR  r_2)$.
+
+\fsafig{15}
+
+(A pause before we continue: note that for the simplest regular expressions,
+the machines that we created to accept the languages generated by the regular
+expressions were in fact DFAs.  In our last case above, however, we needed
+$\varep$-transitions to build the new machine, and so if we were trying to
+prove that every regular language could be accepted by a DFA, our proof would
+be in trouble.  THIS DOES NOT MEAN that the statement ``every regular language
+can be accepted by a DFA" is false, just that we can't prove it using this kind
+of argument, and would have to find an alternative proof.)
+
+Suppose you have machines $M_1$ and $M_2$ that accept $L(r_1)$ and $L(r_2)$
+respectively.  To build a machine that accepts $L(r_1)L(r_2)$ proceed as
+follows.  Make the start state $q_{01}$ of $M_1$ be the start state of the new
+machine.  Make the final states of $M_2$ be the final states of the new machine.
+Add $\varep$-transitions from the final states of $M_1$ to the start state
+$q_{02}$ of
+$M_2$.
+
+\fsafig{16}
+
+It should be fairly clear that this new machine accepts exactly those strings of
+the form $xy$ where $x\in L(r_1)$ and $y \in L(r_2)$: first of all, any string
+of this form will be accepted because $x\in L(r_1)$ implies there is a path that
+consumes $x$ from
+$q_{01}$ to a final state of $M_1$; a $\varep$-transition moves to $q_{02}$; 
+then $y \in L(r_2)$ implies there is a path that consumes $y$ from $q_{02}$ to a
+final state of $M_2$; and the final states of $M_2$ are the final states of the
+new machine, so $xy$ will be accepted.  Conversely, suppose $z$ is accepted by
+the new machine.  Since the only final states of the new machine are in the old
+$M_2$, and the only way to get into $M_2$ is to take a $\varep$-transition from
+a final state of $M_1$, this means that $z=xy$ where $x$ takes the machine from
+its start state to a final state of $M_1$, a $\varep$-transition occurs, and
+then $y$ takes the machine from $q_{02}$ to a final state of $M_2$.  Clearly,
+$x\in L(r_1)$ and $y \in L(r_2)$. 
+
+We leave the construction of an NFA that accepts $L(r^*)$ from an NFA that 
+accepts $L(r)$ as an exercise.
+
+\end{proof}
+
+\smallskip
+
+\begin{theorem}\label{T-DFAeqReg}
+Every language that is accepted by a DFA or an NFA is generated by a regular 
+expression.
+\end{theorem}
+
+Proving this result is actually fairly involved and not very illuminating. 
+Before presenting a proof, we will give an illustrative example of how one
+might actually go about extracting a regular expression from an NFA or a DFA.
+You can go on to read the proof if you are interested.
+
+\begin{example}
+Consider
+the DFA shown below:
+
+\fsafig{17}
+
+Note that there is a loop from state $q_2$ back to state $q_2$: any number of
+$a$'s will keep the machine in state $q_2$, and so we label the transition with
+the regular expression $a^*$.  We do the same thing to the transition labeled
+$b$ from $q_0$.  (Note that the result is no longer a DFA, but that doesn't
+concern us, we're just interested in developing a regular expression.)
+
+\fsafig{18}
+
+Next we note that there is in fact a loop from $q_1$ to $q_1$ via $q_0$.  A
+regular expression that matches the strings that would move around the loop is
+$ab^*a$.  So we add a transition labeled $ab^*a$ from $q_1$ to
+$q_1$, and remove the now-irrelevant $a$-transition from $q_1$ to $q_0$.  (It is
+irrelevant because it is not part of any other loop from $q_1$ to 
+$q_1$.)
+
+\fsafig{19}
+  
+Next we note that there is also a loop from $q_1$ to $q_1$ via $q_2$.  A
+regular expression that matches the strings that would move around the loop is
+$ba^*b$.  Since the transitions in the loop are the only transitions to or from
+$q_2$, we simply remove $q_2$ and replace it with a transition from $q_1$ to
+$q_1$.
+
+\fsafig{20}
+
+It is now clear from the diagram that strings of the form $b^*a$ get you to
+state $q_1$, and any number of repetitions of strings that match $ab^*a$ or
+$ba^*b$ will keep you there.  So the machine accepts $L(b^*a(ab^*a\REOR ba^*b)^*)$. 
+\end{example}
+
+%It is a fact that every DFA or NFA is equivalent to an NFA whose start state is
+%not accepting, and whose final states number exactly one.  Any such machine can
+%be massaged, pictorially speaking, into a "machine" that has exactly two
+%states---a non-accepting start state and an accepting second state---and whose
+%transition arcs are labeled by regular expressions.  The idea is perhaps best
+%illustrated by means of an example:   ***** check these claims
+
+
+
+\begin{proof}[Proof of Theorem~\ref{T-DFAeqReg}]
+We prove that the language accepted by a DFA is regular.  The proof for NFAs
+follows from the equivalence between DFAs and NFAs.
+
+Suppose that $M$ is a DFA, where $M=(Q,\Sigma,q_0,\delta,F)$.  Let $n$ be the
+number of states in $M$, and write $Q=\{q_0,q_1,\dots,q_{n-1}\}$.  We want
+to consider computations in which $M$ starts in some state $q_i$, reads a string
+$w$, and ends in state $q_k$.  In such a computation, $M$ might go through a
+series of intermediates states between $q_i$ and $q_k$:
+$$q_i\longrightarrow p_1\longrightarrow p_2 \cdots\longrightarrow p_r\longrightarrow q_k$$
+We are interested in computations in which all of the intermediate states---$p_1,p_2,\dots,p_r$---are
+in the set $\{q_0,q_1,\dots,q_{j-1}\}$, for some number~$j$.
+We define $R_{i,j,k}$ to be the set of all strings $w$ in $\Sigma^*$ that are consumed
+by such a computation.  That is, $w\in R_{i,j,k}$ if and only if when $M$ starts in state
+$q_i$ and reads $w$, it ends in state $q_k$, and all the intermediate states between
+$q_i$ and $q_k$ are in the set $\{q_0,q_1,\dots,q_{j-1}\}$.
+$R_{i,j,k}$ is a language over $\Sigma$.  We show that $R_{i,j,k}$ for
+$0\le i < n$, $0\le j \le n$, $0\le k < n$.
+
+Consider the language $R_{i,0,k}$.  For $w\in R_{i,0,k}$, the set of allowable intermediate
+states is empty.  Since there can be no intermediate states,
+it follows that there can be at most one step in the computation that
+starts in state $q_i$, reads $w$, and ends in state $q_k$.  So, $|w|$ can be at most one.
+This means that $R_{i,0,k}$ is finite, and hence is regular.  (In fact,
+$R_{i,0,k}=\{a\in\Sigma\st \delta(q_i,a)=q_k\}$, for $i\ne k$, and
+$R_{i,0,i}=\{\varep\}\cup\{a\in\Sigma\st \delta(q_i,a)=q_i\}$.  Note that in many
+cases, $R_{i,0,k}$ will be the empty set.)
+
+We now proceed by induction on $j$ to show that $R_{i,j,k}$ is regular for all $i$ and $k$.
+We have proved the base case, $j=0$.  Suppose that $0\le j< n$ we already know that $R_{i,j,k}$
+is regular for all $i$ and all $k$.  We need to show that $R_{i,j+1,k}$ is regular for all $i$ and $k$.
+In fact, 
+$$R_{i,j+1,k}=R_{i,j,k}\cup \left( R_{i,j,j}R_{j,j,j}^*R_{j,j,k}\right)$$
+which is regular because $R_{i,j,k}$ is regular for all $i$ and $k$, and because the union, concatenation,
+and Kleene star of regular languages are regular.
+
+To see that the above equation holds, consider a string $w\in\Sigma^*$.
+Now, $w\in R_{i,j+1,k}$ if and only if when $M$ starts in state $q_i$ and reads $w$,
+it ends in state $q_k$, with all intermediate states in the computation in the set
+$\{q_0,q_1,\dots,q_j\}$.  Consider such a computation.  There are two
+cases: Either $q_j$ occurs as an intermediate state in the computation, or it does not.
+If it does \textbf{not} occur, then all the intermediate states are in the set
+$\{q_0,q_1,\dots,q_{j-1}\}$, which means that in fact $w\in R_{i,j,k}$.
+If $q_j$ \textbf{does} occur as an intermediate state in the computation, then we can break the
+computation into phases, by dividing it at each point where $q_j$ occurs
+as an intermediate state.  This breaks $w$ into a concatenation $w=xy_1y_2\cdots y_rz$.
+The string $x$ is consumed in the first phase of the computation, during which $M$
+goes from state $q_i$ to the first occurrence of $q_j$; since the intermediate states
+in this computation are in the set $\{q_0,q_1,\dots,q_{j-1}\}$, $x\in R_{i,j,j}$.
+The string $z$ is consumed by the last phase of the computation, in which $M$
+goes from the final occurrence of $q_j$ to $q_k$, so that $z\in R_{j,j,k}$.
+And each string $y_t$ is consumed in a phase of the computation in which $M$ goes
+from one occurrence of $q_j$ to the next occurrence of $q_j$, so that $y_r\in R_{j,j,j}$.
+This means that $w=xy_1y_2\cdots y_rz\in R_{i,j,j}R_{j,j,j}^*R_{j,j,k}$.
+
+We now know, in particular, that $R_{0,n,k}$ is a regular language for all $k$.
+But $R_{0,n,k}$ consists of all strings $w\in\Sigma^*$ such that when $M$ starts
+in state $q_0$ and reads $w$, it ends in state $q_k$ (with \textbf{no} restriction
+on the intermediate states in the computation, since every state of $M$ is in
+the set $\{q_0,q_1,\dots,q_{n-1}\}$).
+To finish the proof that $L(M)$ is regular, it is only necessary to note that
+$$L(M)=\bigcup_{q_k\in F} R_{0,n,k}$$
+which is regular since it is a union of regular languages.
+This equation is true since
+a string $w$ is in $L(M)$ if and only if when $M$ starts in state $q_0$ and reads $w$,
+in ends in some accepting state $q_k\in F$. This is the same as saying
+$w\in R_{0,n,k}$ for some $k$ with $q_k\in F$.
+\end{proof}
+
+
+\bigskip
+
+We have already seen that if two languages $L_1$ and $L_2$ are
+regular, then so are $L_1 \cup L_2$, $L_1L_2$, and $L_1^*$ 
+(and of course $L_2^*$).  We have not yet seen, however, how the 
+common
+set operations intersection and complementation affect regularity.
+Is the complement of a regular language regular?  How about the
+intersection of two regular languages?
+
+Both of these questions can be answered by thinking of regular
+languages in terms of their acceptance by DFAs.  Let's consider
+first the question of complementation.  Suppose we have an arbitrary
+regular language $L$.  We know there is a DFA $M$ that accepts $L$.
+Pause a moment and try to think of a modification that you could make
+to $M$ that would produce a new machine $M'$ that accepts $\overline{L}$....
+Okay, the obvious thing to try is to make $M'$ be a copy of $M$ 
+with all final states of $M$ becoming non-final states of $M'$ and
+vice versa.  This is in fact exactly right: $M'$ does in fact accept
+$\overline{L}$.  To verify this, consider an arbitrary string $w$.  The
+transition functions for the two machines $M$ and $M'$ are identical, so $\dstar
+(q_0, w)$ is the same state in both $M$ and $M'$; if that state is
+accepting in $M$ then it is non-accepting in $M'$, so if $w$ is
+accepted by $M$ it is not accepted by $M'$; if the state is
+non-accepting in $M$ then it is accepting in $M'$, so if $w$ is
+not accepted by $M$ then it is accepted by $M'$. Thus $M'$ accepts
+exactly those strings that $M$ does not, and hence accepts $\overline{L}$.  
+
+It is worth pausing for a moment and looking at the above argument
+a bit longer.  Would the argument have worked if we had looked at an
+arbitrary language $L$ and an arbitrary $N$FA $M$ that accepted $L$?
+That is, if we had built a new machine $M'$ in which the final and
+non-final states had been switched, would the new NFA $M'$ accept
+the complement of the language accepted by $M$?  The answer is
+``not necessarily".  Remember that acceptance in an NFA is determined
+based on whether or not at least one of the states reached by a
+string is accepting.  So any string $w$ with the property that
+$\pstar(q_0, w)$ contains both accepting and non-accepting states of $M$
+would be accepted both by $M$ and by $M'$.
+
+Now let's turn to the question of intersection.  Given two regular
+languages $L_1$ and $L_2$, is $L_1 \cap L_2$ regular?  Again, it is
+useful to think in terms of DFAs: given machines $M_1$ and $M_2$
+that accept $L_1$ and $L_2$, can you use them to build a new
+machine that accepts $L_1 \cap L_2$? The answer is yes, and the
+idea behind the construction bears some resemblance to that behind
+the NFA-to-DFA construction.  
+We want a new machine where transitions reflect the transitions
+of both $M_1$ and $M_2$ simultaneously, and we want to accept a
+string $w$ only if that those sequences of transitions lead to 
+final states in both $M_1$ and $M_2$. So we associate the
+states of our new machine $M$ with pairs of states from $M_1$
+and $M_2$.  For each state $(q_1,q_2)$ in the new machine and input symbol $a$,
+define $\delta((q_1,q_2),a)$ to be the state 
+$(\delta_1(q_1,a), \delta_2(q_2,a))$.
+The start state $q_0$ of $M$ is
+$(q_{01}, q_{02})$, where $q_{0i}$ is the start state
+of $M_i$.  The final states of $M$ are the the states of the form $(q_{f1},
+q_{f2})$ where $q_{f1}$ is an accepting state of $M_1$ and $q_{f2}$ is an
+accepting state of $M_2$.  You should convince yourself that $M$ accepts a
+string $x$ iff $x$ is accepted by both $M_1$ and $M_2$.
+
+The results of the previous section and the preceding discussion are summarized
+by the following theorem:
+
+\begin{theorem}\label{closure} 
+The intersection  of two
+regular languages is a regular language.  
+
+The union of two
+regular languages is a regular language.  
+
+The concatenation of two
+regular languages is a regular language.  
+
+The complement of a regular language is a regular language.
+
+The Kleene closure of a regular language is a regular language.
+\end{theorem}
+ 
+
+\begin{exercises}
+\problem Give a DFA that accepts the intersection of the languages accepted by
+the machines shown below.  (Suggestion: use the construction discussed in the
+chapter just before Theorem~\ref{closure}.)
+
+\fsafig{5ex}
+
+\problem Complete the proof of Theorem~\ref{retonfa} by showing how to modify a
+machine that accepts $L(r)$ into a machine that accepts $L(r^*)$.
+\problem Using the construction described in Theorem~\ref{retonfa}, build an NFA
+that accepts $L((ab\REOR a)^*(bb))$.
+\problem Prove that the reverse of a regular language is regular.
+\problem Show that for any DFA or NFA, there is an NFA with exactly one final
+state that accepts the same language.
+\problem Suppose we change the model of NFAs to allow NFAs to have multiple
+start states.  Show that for any ``NFA" with multiple start states, there is an
+NFA with exactly one start state that accepts the same language.
+\problem Suppose that $M_1=(Q_1,\Sigma,q_1,\delta_1,F_1)$ and 
+$M_2=(Q_2,\Sigma,q_2,\delta_2,F_2)$ are DFAs over the alphabet $\Sigma$.  It is possible
+to construct a DFA that accepts the langauge $L(M_1)\cap L(M_2)$ in a single step.
+Define the DFA $$ M = (Q_1\times Q_2, \Sigma, (q_1,q_2), \delta, F_1\times F_2)$$
+where $\delta$ is the function from $(Q_1\times Q_2)\times\Sigma$ to $Q_1\times Q_2$
+that is defined by: $\delta((p1,p2),\sigma))=(\delta_1(p_1,\sigma),\delta_2(p_2,\sigma))$.
+Convince yourself that this definition makes sense.  (For example, note that
+states in $M$ are pairs $(p_1,p_2)$ of states, where $p_1\in Q_1$ and $p_2\in Q_2$,
+and note that the start state $(q_1,q_2)$ in $M$ is in fact a state in $M$.)
+Prove that $L(M)=L(M_1)\cap L(M_2)$, and explain why this shows that the intersection of
+any two regular languages is regular.  This proof---if you can get past the
+notation---is more direct than the one outlined above.
+
+\end{exercises}
+
+
+\section{Non-regular Languages}
+
+The fact that our models for mechanical language-recognition accept exactly the
+same languages as those generated by our mechanical language-generation system
+would seem to be a very positive indication that in ``regular" 
+we have in fact managed to
+isolate whatever characteristic it is that makes a language ``mechanical". 
+Unfortunately, there are languages that we intuitively think of as being
+mechanically-recognizable (and which we could write C++ programs to recognize)
+that are not in fact regular.
+
+How does one prove that a language is not regular?  We could try proving that
+there is no DFA or NFA that accepts it, or no regular expression that generates
+it, but this kind of argument is generally rather difficult to make.  It is hard
+to rule out all possible automata and all possible regular expressions.  Instead,
+we will look at a property that all
+regular languages have; proving that a given language does not have this
+property then becomes a way of proving that that language is not regular.
+
+Consider the language 
+$L = \{ w \in \{a,b\}^* \ | \ n_a(w) =2 \bmod{3},  \ n_b(w)
+= 2 \bmod{3} \}$.  Below is a DFA that accepts this language, with states numbered
+1 through 9.
+
+\fsafig{21}
+
+Consider the sequence of states that the machine passes through while
+processing the string $abbbabb$. Note that there is a repeated state (state
+2).  We say that $abbbabb$ ``goes through the state 2 twice", meaning
+that in the course of the string being processed, the
+machine is in state 2 twice (at least). 
+Call the section of the string that takes you around the loop $y$, 
+the preceding section $x$,
+and the rest $z$.  Then $xz$ is accepted, $xyyz$ is accepted, $xyyyz$ is
+accepted, etc. Note that the string $aabb$ cannot
+be divided this way, because it does not go through the same state twice. 
+Which
+strings {\bf can} be divided this way?  
+Any string that goes through the same state
+twice.  This may include some relatively short strings and must include any
+string with length greater than or equal to 9, because there are only 9 states in
+the machine, and so repetition must occur after 9 input symbols at the latest.
+
+More generally, consider an arbitrary DFA $M$, and
+let the number of states in $M$ be $n$.  Then any string $w$ that is accepted
+by $M$ and has $n$ or more symbols must go through the same state twice, and
+can therefore be broken up into three pieces $x,y,z$ (where $y$ contains at
+least one symbol) so that $w=xyz$ and
+
+$xz$ is accepted by $M$
+
+$xyz$ is accepted by $M$ (after all, we started with $w$ in $L(M)$)
+
+$xyyz$ is accepted by $M$ 
+
+etc.
+
+Note that you can actually say even more: within the first $n$ characters of
+$w$ you must already get a repeated state, so you can always find an $x,y,z$ as
+described above where, in addition, the $xy$ portion of $w$ (the portion of $w$
+that takes you to and back to a repeated state) contains at most $n$ symbols.
+
+So altogether, if $M$ is an $n$-state DFA that accepts $L$, and $w$ is a string
+in $L$ whose length is at least $n$, then $w$ can be broken down into three
+pieces $x$, $y$, and $z$, $w=xyz$, such that
+
+(i) $x$ and $y$ together contain no more than $n$ symbols;
+
+(ii) $y$ contains at least one symbol;
+
+(iii) $xz$ is accepted by $M$
+
+\ \ \ \ \ ($xyz$ is accepted by $M$)
+
+\ \ \ \ \ $xyyz$ is accepted by $M$
+
+\ \ \ \ \ etc.
+
+\smallskip
+
+The usually-stated form of this result is the Pumping Lemma:
+
+\begin{theorem} If L is a regular language, then there is some number $n>0$ 
+such that any
+string $w$ in $L$ whose length is greater than or equal to $n$ can
+be broken down into three
+pieces $x$, $y$, and $z$, $w=xyz$, such that
+\begin{itemize}
+\item[(i)] $x$ and $y$ together contain no more than $n$ symbols;
+
+\item[(ii)] $y$ contains at least one symbol;
+
+\item[(iii)] $xz$ is accepted by $M$
+
+($xyz$ is accepted by $M$)
+
+$xyyz$ is accepted by $M$
+
+etc.
+\end{itemize}
+\end{theorem}
+
+Though the Pumping Lemma says something about regular languages, it is not used
+to prove that languages are regular.  It says ``{\bf if} a language is regular,
+then certain things happen", not ``if certain things happen, {\bf then} you can conclude
+that the language is regular."  However, the Pumping Lemma is useful for
+proving that languages are not regular, since the contrapositive of ``if a
+language is regular
+then certain things happen" is ``if certain things don't happen then you can conclude
+that the language is not regular."  So what are the ``certain things"?  
+Basically,
+the P.L. says that if a language is regular, there is some ``threshold" 
+length for
+strings, and every string that goes over that threshold can be broken down in a
+certain way.  Therefore, if we can show that ``there is some threshold length for
+strings such that every string that goes over that threshold can be broken down in a 
+certain way" is a false assertion about a language, we can conclude that the
+language is not regular. How do you show that there is no threshold length? 
+Saying a number is a threshold length for a language means that every string in
+the language that is at least that long can be broken down in the ways
+described.  So to show that a number is not a threshold value, we have to show
+that there is some string in the language that is at least that long that cannot
+be broken down in the appropriate way.
+
+\begin{theorem}
+$\{ a^nb^n \ | \ n \geq 0 \}$ is not regular.
+\end{theorem}
+
+\begin{proof} We do this by showing that there is no threshold value for the language.  Let
+$N$ be an arbitrary candidate for threshold value.  We want to show that it is
+not in fact a threshold value, so we want to find a string in the language
+whose length is at least $N$ and which can't be broken down in the way
+described by the Pumping Lemma.  What string should we try to prove
+unbreakable?  We can't pick strings like $a^{100}b^{100}$ because we're
+working with an arbitrary $N$ i.e.\ making no assumptions about $N$'s value; 
+picking $a^{100}b^{100}$ is implicitly assuming that $N$ is no bigger than 200
+--- for larger values of $N$, $a^{100}b^{100}$ would not be ``a string whose
+length is at least $N$".  Whatever string we pick, we {\bf have} to be sure 
+that its
+length is at least $N$, no matter what number $N$ is.  So we pick, for instance,
+$w = a^Nb^N$.  This string is in the language, and its length is at least $N$,
+no matter what number $N$ is. 
+If we can show that this string can't be broken down as described by the
+Pumping Lemma, then we'll have shown that $N$ doesn't work as a threshold
+value, and since $N$ was an arbitrary number, we will have shown that there is no
+threshold value for $L$ and hence $L$ is not regular.  So let's show that $w =
+a^Nb^N$ can't be broken down appropriately. 
+
+We need to show that you can't
+write $w = a^Nb^N$ as $w=xyz$ where $x$ and $y$ together contain at most $N$
+symbols, $y$ isn't empty, and all the strings $xz$, $xyyz$, $xyyyz$, etc.\ are
+still in $L$, i.e.\ of the form $a^nb^n$ for some number~$n$.  The best way to
+do this is to show that any choice for $y$ (with $x$ being whatever precedes it
+and $z$ being whatever follows) that satisfies the first two requirements fails
+to satisfy the third.  So what are our possible choices for $y$?
+Well, since $x$ and $y$ together can contain at most $N$
+symbols, and $w$ starts with $N$ $a$'s, both $x$ and $y$ must be made up
+entirely of $a$'s; since $y$ can't be empty, it must contain at least one $a$
+and (from (i)) no more than $N$ $a$'s. So the possible
+choices for $y$ are $y=a^k$ for some $1 \leq k \leq N$. We want to show now
+that none of these choices will satisfy the third requirement by showing that
+for any value of $k$, at least one of the strings $xz$, $xyyz$, $xyyyz$, etc
+will not be in $L$.  No matter what value we try for $k$, we don't have to 
+look far for our rogue string: the string
+$xz$, which is $a^Nb^N$ with $k$ $a$'s deleted from it, looks like
+$a^{N-k}b^N$, which is clearly not of the form $a^nb^n$.  So the only
+$y$'s that satisfy (i) and (ii) don't satisfy (iii); so $w$ can't be broken
+down as required; so $N$ is not a threshold value for $L$; and since $N$ was an
+arbitrary number, there is no threshold value for $L$; so $L$ is not regular.
+\end{proof}
+
+\smallskip
+
+The fact that languages like $\{a^nb^n\ | \ n \geq 0\}$ and $\{a^p \ |\ p \mbox{
+is prime}\}$ are not regular is a severe blow to any idea that regular
+expressions or finite-state automata capture the language-generation or
+language-recognition capabilities of a computer: They are both languages that 
+we could easily write programs to recognize.  It is not clear how the expressive
+power of regular expressions could be increased, nor how one might modify the
+FSA model to obtain a more powerful one.  However, 
+in the next chapter you will be
+introduced to the concept of a {\em grammar} as a tool for generating languages. 
+The simplest grammars still only produce regular languages, but you will see
+that more complicated grammars have the power to generate languages far beyond
+the realm of the regular.
+
+\begin{exercises}
+\problem Use the Pumping Lemma to show that the following languages over $\ab$ 
+are not regular.
+\ppart $L_1 = \{ x \ | \ n_a(x) = n_b(x)\}$
+\ppart $L_2 = \{ xx \ | \ x \in \ab^*\}$
+\ppart $L_3 = \{ xx^R \ | \ x \in \ab^*\}$
+\ppart $L_4 = \{ a^nb^m \ | \ n < m \}$
+
+\end{exercises}
+
+
+
