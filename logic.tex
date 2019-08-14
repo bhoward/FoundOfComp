@@ -525,16 +525,16 @@ the following English sentences:
 
 \problem Define a logical operator $\downarrow$ so that
 $p\downarrow q$ is logically equivalent to $\NOT(p\OR q)$.
-(This operator is usually referred to as ``\textsc{nor},'' short 
+(This operator, known as the \nw{Peirce Arrow},\footnote{Wikipedia helpfully points out that this is not to be confused with the Pierce-Arrow automobile; Google, as I was writing this, repeatedly insisted on correcting Peirce to Pierce\ldots. Charles Sanders Peirce [pronounced ``Purse''] (1839--1914) was an American scientist and philosopher who wrote many influential papers, and many more that would have been influential if they had been published during his lifetime. In addition to the functional completeness result mentioned here, he helped develop and promote modern logical notation and the use of truth tables, and he worked out the foundations of what became relational database theory a century later. Arthur Burks, a 1936 DePauw graduate who went on to help build ENIAC, credited Peirce with having the idea of building an electrical computing machine, based on wiring up switches to perform logical operations, fifty years before such a machine was built!} is usually referred to as ``\textsc{nor},'' short 
 for ``not or'').  Show that each of the propositions
 $\NOT p$, $p\AND q$, $p\OR q$, $p\IMP q$, $p\IFF q$, and
 $p\XOR q$ can be rewritten as a logically equivalent proposition
-that uses $\downarrow$ as its only operator.
+that uses $\downarrow$ as its only operator; we say that $\downarrow$ is a \nw{functionally complete} operator, since it may be used to express all of the other operations.
 
+\problem Show that the \nw{Sheffer Stroke} operator $\uparrow$, defined so that $p\uparrow q$ is
+logically equivalent to $\NOT(p\AND q)$, is also functionally complete.\footnote{Functional completeness is not merely an academic curiosity. The \textsc{nand} and \textsc{nor} gates are particularly simple to implement in silicon (each needs essentially one transistor per input), and building an entire circuit out of identical building blocks makes both design and fabrication easier. Indeed, the very first computer built from integrated circuits was the Apollo Guidance Computer, which used about 5600 three-input \textsc{nor} gates to help Apollo 11 land on the moon.} This operator is also known as ``\textsc{nand},'' short for ``not and.''
 
 \end{exercises}
-
-
 
 
 \section{Boolean Algebra}\label{S-logic-2}
@@ -1007,6 +1007,8 @@ State which law you are applying.
 \ppart I will have coffee and cake or pie.
 \ppart He has neither talent nor ambition.
 \ppart You can have spam, or you can have spam.
+
+\problem Use Boolean algebra to show that the implication operator ($\IMP$) is functionally complete, provided the constant $\F$ is also available (this is not unreasonable in an electronic circuit, where $\F$ is represented by the ground voltage). That is, show how to define $p\AND q$, $p\OR q$, and $\NOT p$ by giving equivalent expressions using only $\IMP$ and $\F$ in addition to the input variables $p$ and $q$.
 
 \end{exercises}
 

@@ -1073,13 +1073,19 @@ Similarly, $x\,\&\,y$ represents the set $X\cap Y$, and
 \texttt{\char`\~}$x$ represents the complement,
 $\overline{X}$.
 
+
 The operators $\,|\,$, \&, and~\texttt{\char`\~}
 are called \nw[bitwise logical operator]{bitwise logical operators}\index{logical operator!bitwise}
 because of the way they operate on the individual bits of the numbers
-to which they are applied.  If 0 and 1 are interpreted as the
+to which they are applied.  The languages descended from C have one more bitwise logical
+operator: $a\,\Caret\,b$ takes the exclusive-\textsc{or} at each
+corresponding bit position of $a$ and $b$. Recall that the
+exclusive-\textsc{or}, also written $p\XOR q$, is the variation
+of \textsc{or} that is true when either $p$ or $q$ is true, but not both.
+If 0 and 1 are interpreted as the
 logical values \textit{false} and \textit{true}, then the
 bitwise logical operators perform the logical operations
-$\OR$, $\AND$, and~$\NOT$ on individual bits.  To see why this
+$\OR$, $\AND$, $\NOT$, and~$\XOR$ on individual bits.  To see why this
 is true, let's look at the computations that these operators
 have to perform.
 
@@ -1223,6 +1229,35 @@ command, ``$c$.\textit{disableEvents}($x$)'', will disable the
 event types in $x$ for the component~$c$.  It does this by replacing
 the current set, $y$, with $y\,\&\,\texttt{\char`\~}x$.
 
+The bitwise operators are also useful when performing low-level bit manipulation,
+such as when writing code that interfaces with hardware devices. A binary number
+may be interpreted as a \nw{bit mask}, where each 1 bit selects its bit
+position. For example, the mask 01010000$_2$ selects the 64's place and the
+16's place. One way to produce such a mask is to use another bit operator: the
+\nw{shift} (\verb|<<|). The expression $x\,\texttt{<<}\,k$ results in $x$ being
+shifted $k$ bits to the left, with bits of 0 pushed in from the right
+(effectively multiplying by $2^k$). Since $64=2^6$ and $16=2^4$, the above mask
+may be produced by $1\,\texttt{<<}\,6\;|\;1\,\texttt{<<}\,4$.
+
+Using a mask $m$, the following simple operations are possible on a binary number $x$:
+\begin{itemize}
+\item $x\,|\,m$ turns on (sets to 1) all of the selected bits of $x$,
+leaving the rest unchanged;
+\item $x\,\&\,\texttt{\char`\~}m$ turns off all of the selected bits of $x$;
+\item $x\,\&\,m$ turns off all of the \emph{non-}selected bits of $x$;
+\item $x\,\Caret\,m$ ``toggles'' (flips between 0 and 1) all of the selected bits of $x$;
+\item $\texttt{\char`\~}x$ toggles all of the bits of $x$.
+\end{itemize}
+The following table shows samples of these operations:
+\[ \begin{array}{rl}
+x:                         & 01101011_2\\
+m:                         & 01010000_2\\ \hline
+x\,|\,m:                   & 01111011_2\\
+x\,\&\,\texttt{\char`\~}m: & 00101011_2\\
+x\,\&\,m:                  & 01000000_2\\
+x\,\Caret\,m:              & 00111011_2\\
+\texttt{\char`\~}x:        & 10010100_2
+\end{array} \]
 
 \begin{exercises}
 
@@ -1300,6 +1335,24 @@ a window that has a close box and both scroll bars and no other options?
 Inside your subroutine, how would you determine which options have been
 specified for the window?
 
+\problem Consider the following sequence of operations on two integer variables,
+$x$ and $y$ (again, this should work the same in all C-like languages):
+\begin{Verbatim}
+x = x \Caret y;
+y = y \Caret x;
+x = x \Caret y;
+\end{Verbatim}
+What is the net effect of this sequence on the values stored in $x$ and $y$?
+
+\problem Bitwise operations are also useful when working with character data.
+In the ASCII character encoding (which is also the first 128 characters of Unicode),
+the digits `0' through `9' have codes 48 through 57; the uppercase latin alphabet,
+`A' through `Z', have 65 through 90, and the corresponding lowercase letters have
+codes 97 through 122.
+\ppart Convert the endpoints of each of these code ranges to binary.
+\ppart Give an expression using only integer constants and bitwise operations that will convert the character code $c$ for an ASCII digit into its corresponding integer value. Do not worry about what it will do to non-digits.
+\ppart Give a similar expression that will convert an integer $n$ in the range 0 to 9 into the corresponding ASCII digit code. Do not worry about error cases.
+\ppart Give expressions that will take a letter whose ASCII code is $c$ and \textit{(i)} convert it to uppercase, \textit{(ii)} convert it to lowercase, and \textit{(iii)} toggle it between upper- and lowercase. Do not worry about error cases.
 
 \end{exercises}
 
