@@ -2,7 +2,7 @@
 
 Source for the book "Foundations of Computation" by
 Carol Critchlow (critchlo@hws.edu) and
-David Eck (eck@hws.edu, math.hws.edu/eck),
+David Eck (eck@hws.edu, http://math.hws.edu/eck),
 Department of Mathematics and Computer Science,
 Hobart and William Smith Colleges, with additional material
 by Brian T. Howard (bhoward@depauw.edu)
